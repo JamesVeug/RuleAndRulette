@@ -48,6 +48,18 @@ public class PixelImage implements Cloneable {
 		return image;
 	}
 	
+	public PixelImage getScaledInstance(int factor) {
+		PixelImage out = new PixelImage(this.width * factor, this.height * factor);
+		
+		for(int y = 0; y < out.height; y++) {
+			for(int x = 0; x < out.width; x++) {
+				out.setRGB(x, y, this.getRGB(x/factor, y/factor));
+			}
+		}
+		
+		return out;
+	}
+	
 	public PixelImage getSubImage(int offsetX, int offsetY, int width, int height) {
 		PixelImage out = new PixelImage(width, height);
 		

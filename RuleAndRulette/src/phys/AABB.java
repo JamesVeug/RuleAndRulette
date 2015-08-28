@@ -2,12 +2,24 @@ package phys;
 
 public class AABB {
 	
-	Vec2 center;
-	Vec2 extents;
+	public Vec2 center;
+	public Vec2 extents;
 	
-	public AABB(float x, float y, float width, float height) {
-		this.center = new Vec2(x, y);
-		this.extents = new Vec2(width/2, height/2);
+	public AABB(float width, float height) {
+		this.center = new Vec2();
+		this.extents = new Vec2(width/2f, height/2f);
+	}
+	
+	public AABB(float centerX, float centerY, float width, float height) {
+		center = new Vec2(centerX, centerY);
+		extents = new Vec2(width/2f, height/2f);
+	}
+	
+	public boolean intersects(AABB other) {
+		Vec2 c = this.center.sub(other.center);
+		Vec2 e = this.extents.add(other.extents);
+		
+		return Math.abs(c.x) < e.x && Math.abs(c.y) < e.y;
 	}
 
 }

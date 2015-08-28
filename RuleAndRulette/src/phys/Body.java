@@ -5,19 +5,23 @@ public class Body {
 	Vec2 position;
 	Vec2 velocity;
 	
-	private float width;
-	private float height;
+	public boolean _static;
 	
-	Body(Vec2 position, float width, float height) {
-		this.position = new Vec2();
-		this.velocity = new Vec2();
-		
-		this.width = width;
-		this.height = height;
+	Body() {
+		this(new Vec2());
 	}
 	
-	public AABB getAABB() {
-		return new AABB(position.x, position.y, width, height);
+	Body(Vec2 position) {
+		this.position = new Vec2(position);
+		this.velocity = new Vec2();
+	}
+	
+	public int getX() {
+		return (int)position.x;
+	}
+	
+	public int getY() {
+		return (int)position.y;
 	}
 
 }
