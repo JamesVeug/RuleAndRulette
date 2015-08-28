@@ -20,6 +20,7 @@ public class GUIFrame extends JFrame {
 		
 		setSize(800,600);
 		setVisible(true);
+		entireScreenPanel.requestFocus();
 		
 		setupGame();
 	}
@@ -30,5 +31,8 @@ public class GUIFrame extends JFrame {
 	public void setupGame(){
 		game = new Game();
 		
+		entireScreenPanel.setGame(game);
+		
+		game.startGame();
 	}
 }
