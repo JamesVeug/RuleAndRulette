@@ -7,6 +7,8 @@ import phys.Vec2;
 
 public abstract class Entity {
 	
+	public static final Vec2 GRAVITY = new Vec2(0, 9.8f);
+	
 	public final int ID = IDGenerator.next();
 	
 	private Vec2 position;
@@ -47,6 +49,7 @@ public abstract class Entity {
 	
 	public void update(float delta) {
 		position.addLocal(velocity);
+		position.addLocal(GRAVITY);
 	}
 	
 	public abstract void render(Graphics2D g);
