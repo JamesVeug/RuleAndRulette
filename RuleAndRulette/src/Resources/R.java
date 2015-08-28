@@ -20,8 +20,18 @@ import GameLogic.Characters.Entity;
 
 
 public class R {
+	
+	private static int DEFAULT_SCALE = 4;
 
-	public static PixelImage logo = loadPixelImage("assets/logo.png").getScaledInstance(4);
+	public static PixelImage logo = loadPixelImage("assets/logo.png").getScaledInstance(DEFAULT_SCALE);
+	
+	public static class characters {
+		public static PixelImage rule = loadPixelImage("assets/characters/rule.jpg").getScaledInstance(DEFAULT_SCALE);
+	}
+	
+	public static class environment {
+		public static PixelImage block = loadPixelImage("assets/environment/block.jpg").getScaledInstance(DEFAULT_SCALE);
+	}
 	
 	public static PixelImage loadPixelImage(String fname) {
 		try {
@@ -57,7 +67,7 @@ public class R {
 			}
 			protected void paintComponent(Graphics g) {
 				e.render((Graphics2D)g);
-				g.drawImage(R.logo.asBufferedImage(), body.getX(), body.getY(), null);
+				g.drawImage(R.environment.block.asBufferedImage(), body.getX(), body.getY(), null);
 			}
 		});
 		

@@ -7,13 +7,17 @@ import phys.Vec2;
 
 public class Entity {
 	
-	public final int id = IDGenerator.next();
+	public final int ID = IDGenerator.next();
 	
 	private Vec2 position;
 	private Vec2 velocity;
 	
 	public Entity() {
-		position = new Vec2();
+		this(0, 0);
+	}
+	
+	public Entity(float x, float y) {
+		position = new Vec2(x, y);
 		velocity = new Vec2();
 	}
 	
@@ -23,6 +27,10 @@ public class Entity {
 	
 	public int getY() {
 		return (int) position.y;
+	}
+	
+	public void  setPosition(float x, float y) {
+		this.position.set(x, y);
 	}
 	
 	public void setVelocityX(float x) {
