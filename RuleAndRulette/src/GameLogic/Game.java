@@ -8,14 +8,6 @@ import GameLogic.Characters.Entity;
 
 public class Game {
 	
-	private static int ORDER_STARTMOVE = 0;
-	private static int ORDER_STOPMOVE = 1;
-	
-	private static Direction BUTTON_RIGHT = Direction.RIGHT;
-	private static Direction BUTTON_LEFT = Direction.LEFT;
-	private static Direction BUTTON_UP = Direction.UP;
-	private static Direction BUTTON_DOWN = Direction.DOWN;
-	
 	
 	private Entity selectedCharacter;
 	
@@ -54,10 +46,17 @@ public class Game {
 		gameTimer.cancel();
 	}
 	
+	/**
+	 * Everytime the game iterates. This runs moving all the characters
+	 * @param l
+	 */
 	private void gameInteration(long l){
 		long timetaken = lasttime != 0 ? (l-lasttime) : l;
-		System.out.println("Print: " + timetaken);
+		//System.out.println("Print: " + timetaken);
 		lasttime = l;
+		
+		
+		
 	}
 
 	public Entity getRule() {
