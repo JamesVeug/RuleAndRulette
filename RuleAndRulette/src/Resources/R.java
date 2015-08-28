@@ -22,7 +22,7 @@ import GameLogic.Characters.Entity;
 public class R {
 	
 	private static int DEFAULT_SCALE = 4;
-
+	
 	public static PixelImage logo = loadPixelImage("assets/logo.png").getScaledInstance(DEFAULT_SCALE);
 	
 	public static class characters {
@@ -47,9 +47,12 @@ public class R {
 		final JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
-		final Body body = Physics.create(new Vec2(0, 500), true);
+		final Body body = Physics.create(new Vec2(0, 0), true);
 		
-		final Entity e = new Entity();
+		final Entity e = new Entity() { public void render(Graphics2D g) { 
+				g.drawImage(R.environment.block.asBufferedImage(), body.getX(), body.getY(), null);
+			};
+		};
 		
 		new Thread(new Runnable() {
 			public void run() {
@@ -67,7 +70,6 @@ public class R {
 			}
 			protected void paintComponent(Graphics g) {
 				e.render((Graphics2D)g);
-				g.drawImage(R.environment.block.asBufferedImage(), body.getX(), body.getY(), null);
 			}
 		});
 		

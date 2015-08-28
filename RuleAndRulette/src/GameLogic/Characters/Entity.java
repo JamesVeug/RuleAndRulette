@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 import Resources.R;
 import phys.Vec2;
 
-public class Entity {
+public abstract class Entity {
 	
 	public final int ID = IDGenerator.next();
 	
@@ -33,6 +33,10 @@ public class Entity {
 		this.position.set(x, y);
 	}
 	
+	public void setVelocity(float x, float y) {
+		this.velocity.set(x, y);
+	}
+	
 	public void setVelocityX(float x) {
 		velocity.x = x;
 	}
@@ -45,9 +49,7 @@ public class Entity {
 		position.addLocal(velocity);
 	}
 	
-	public void render(Graphics2D g) {
-		g.drawImage(R.logo.asBufferedImage(), null, getX(), getY());
-	}
+	public abstract void render(Graphics2D g);
 	
 	private static class IDGenerator {
 		private static int i = 0;
