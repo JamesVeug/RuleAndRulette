@@ -27,6 +27,7 @@ public class R {
 	
 	public static class characters {
 		public static PixelImage rule = loadPixelImage("assets/characters/rule.jpg").getScaledInstance(DEFAULT_SCALE);
+		public static PixelImage rulette = loadPixelImage("assets/characters/rulette.jpg").getScaledInstance(DEFAULT_SCALE);
 	}
 	
 	public static class environment {
