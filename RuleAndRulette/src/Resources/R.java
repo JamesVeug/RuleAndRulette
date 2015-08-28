@@ -33,6 +33,7 @@ public class R {
 	
 	public static class environment {
 		public static PixelImage block = loadPixelImage("assets/environment/block.jpg").getScaledInstance(DEFAULT_SCALE);
+		public static PixelImage spikes = loadPixelImage("assets/environment/spikes.png").getScaledInstance(DEFAULT_SCALE);
 	}
 	
 	public static class animations {

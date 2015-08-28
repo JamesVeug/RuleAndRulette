@@ -2,13 +2,12 @@ package GameLogic;
 
 import java.util.List;
 import java.util.Timer;
-import java.util.TimerTask;
-
 import GameLogic.Characters.Entity;
 
 public class Game {
 	
 	private float speed = 2.5f;
+	private float jumpspeed = 5f;
 	
 	private Entity selectedCharacter;
 	
@@ -21,6 +20,7 @@ public class Game {
 	
 	private Timer gameTimer;
 
+
 	public Game(){
 		
 	}
@@ -31,7 +31,7 @@ public class Game {
 	 */
 	public void startGame(){
 		
-		gameObjects = World.CreateWorld();
+		gameObjects = World.CreateWorld(1);
 		rule = gameObjects.get(gameObjects.size()-1);
 		rulette = gameObjects.get(gameObjects.size()-2);
 		selectedCharacter = rule;
@@ -86,23 +86,23 @@ public class Game {
 	}
 
 	public void startMovingCharacterRight(){	
-		selectedCharacter.setVelocityX(speed);
-		getNotSelectedCharacter().setVelocityX(-speed);
-	}
-	
-	public void startMovingCharacterLeft(){		
 		selectedCharacter.setVelocityX(-speed);
 		getNotSelectedCharacter().setVelocityX(speed);
 	}
 	
+	public void startMovingCharacterLeft(){		
+		selectedCharacter.setVelocityX(speed);
+		getNotSelectedCharacter().setVelocityX(-speed);
+	}
+	
 	public void startMovingCharacterUp(){		
-		selectedCharacter.setVelocityY(speed);
-		getNotSelectedCharacter().setVelocityY(-speed);
+		selectedCharacter.setVelocityY(-jumpspeed);
+		getNotSelectedCharacter().setVelocityY(-jumpspeed);
 	}
 	
 	public void startMovingCharacterDown(){	
-		selectedCharacter.setVelocityY(-speed);
-		getNotSelectedCharacter().setVelocityY(speed);
+	//		selectedCharacter.setVelocityY(-speed);
+	//		getNotSelectedCharacter().setVelocityY(-speed);
 	}
 	
 	public void stopMovingCharacterRight(){		
@@ -121,7 +121,7 @@ public class Game {
 	}
 	
 	public void stopMovingCharacterDown(){	
-		selectedCharacter.setVelocityY(0);
-		getNotSelectedCharacter().setVelocityY(0);
+	//		selectedCharacter.setVelocityY(0);
+	//		getNotSelectedCharacter().setVelocityY(0);
 	}
 }
