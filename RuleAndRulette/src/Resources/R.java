@@ -40,7 +40,6 @@ public class R {
 		final Body body = Physics.create(new Vec2(0, 500), true);
 		
 		final Entity e = new Entity();
-		Physics.createCollider(e.body, 60, 60);
 		
 		new Thread(new Runnable() {
 			public void run() {
