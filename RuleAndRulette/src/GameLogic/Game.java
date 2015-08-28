@@ -5,7 +5,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import GameLogic.Characters.Entity;
-import phys.Physics;
 
 public class Game {
 	
@@ -23,7 +22,8 @@ public class Game {
 	private Entity rule;
 	private Entity rulette;
 	
-	private List GameObjects;
+	private List<Entity> gameObjects;
+	
 	private long lasttime = 0l;
 	
 	private Timer gameTimer;
@@ -37,6 +37,8 @@ public class Game {
 	 * Starts a new thread and begins the game
 	 */
 	public void startGame(){
+		
+		gameObjects = World.CreateWorld();
 		
 		gameTimer = new Timer();
 		gameTimer.schedule(new TimerTask(){
@@ -70,38 +72,60 @@ public class Game {
 	public Entity getRulette() {
 		return rulette;
 	}
-
+	
+	public Entity getNotSelectedCharacter(){
+		if( selectedCharacter == rule ){
+			return rulette;
+		}
+		
+		return rule;
+	}
 
 	public void setRulette(Entity rulette) {
 		this.rulette = rulette;
 	}
-		
-	private boolean orderCharacter(int order, Direction d, Entity c){
-		//if( c.getFacingDirection() != c.getFacingDirection() ){
-			//return false;
-		//}
-		
-		if( order == ORDER_STOPMOVE ){
-			//c.stopMoving(d);
-			return true;
-			
-		}else if( order == ORDER_STARTMOVE ){
-			//c.startMoving(d);
-			return true;
-			
-		}
-		
-		
-		return false;
+	
+	public List<Entity> getEntities(){
+		return gameObjects;
 	}
 
-	public boolean startMovingCharacterRight(){	return orderCharacter(ORDER_STARTMOVE, BUTTON_RIGHT, selectedCharacter);	}
-	public boolean startMovingCharacterLeft(){	return orderCharacter(ORDER_STARTMOVE, BUTTON_LEFT, selectedCharacter);	}
-	public boolean startMovingCharacterUp(){		return orderCharacter(ORDER_STARTMOVE, BUTTON_UP, selectedCharacter);		}
-	public boolean startMovingCharacterDown(){	return orderCharacter(ORDER_STARTMOVE, BUTTON_DOWN, selectedCharacter);	}
+	public void startMovingCharacterRight(){	
+		selectedCharacter.setVelocityX(1);
+		getNotSelectedCharacter().setVelocityX(-1);
+	}
 	
-	public boolean stopMovingCharacterRight(){	return orderCharacter(ORDER_STOPMOVE, BUTTON_RIGHT, selectedCharacter);	}
-	public boolean stopMovingCharacterLeft(){	return orderCharacter(ORDER_STOPMOVE, BUTTON_LEFT, selectedCharacter);	}
-	public boolean stopMovingCharacterUp(){		return orderCharacter(ORDER_STOPMOVE, BUTTON_UP, selectedCharacter);		}
-	public boolean stopMovingCharacterDown(){	return orderCharacter(ORDER_STOPMOVE, BUTTON_DOWN, selectedCharacter);	}
+	public void startMovingCharacterLeft(){		
+		selectedCharacter.setVelocityX(-1);
+		getNotSelectedCharacter().setVelocityX(1);
+	}
+	
+	public void startMovingCharacterUp(){		
+		selectedCharacter.setVelocityY(1);
+		getNotSelectedCharacter().setVelocityY(-1);
+	}
+	
+	public void startMovingCharacterDown(){	
+		selectedCharacter.setVelocityY(-1);
+		getNotSelectedCharacter().setVelocityY(1);
+	}
+	
+	public void stopMovingCharacterRight(){		
+		selectedCharacter.setVelocityX(0);
+		getNotSelectedCharacter().setVelocityX(0);
+	}
+	
+	public void stopMovingCharacterLeft(){	
+		selectedCharacter.setVelocityX(0);
+		getNotSelectedCharacter().setVelocityX(0);
+	}
+	
+	public void stopMovingCharacterUp(){		
+		selectedCharacter.setVelocityY(0);
+		getNotSelectedCharacter().setVelocityY(0);	
+	}
+	
+	public void stopMovingCharacterDown(){	
+		selectedCharacter.setVelocityY(0);
+		getNotSelectedCharacter().setVelocityY(0);
+	}
 }

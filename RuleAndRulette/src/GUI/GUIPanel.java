@@ -2,12 +2,15 @@ package GUI;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.List;
 
 import javax.swing.JPanel;
 
 import GameLogic.Game;
+import GameLogic.Characters.Entity;
 
 public class GUIPanel extends JPanel implements KeyListener{
 	private static final long serialVersionUID = -2946375771339622409L;
@@ -25,10 +28,18 @@ public class GUIPanel extends JPanel implements KeyListener{
 	}
 	
 	@Override
-	public void paintComponent(Graphics g) {
+	public void paintComponent(Graphics gold) {
+		Graphics2D g = (Graphics2D)gold;
 		
 		// I DRAW STUFF HERE
-		//game.g
+		List<Entity> entities = game.getEntities();
+		if(entities == null ){
+			return;
+		}
+		
+		for(int i = 0; i < entities.size(); i++){
+			entities.get(i).render(g);
+		}
 		
 		
 		
