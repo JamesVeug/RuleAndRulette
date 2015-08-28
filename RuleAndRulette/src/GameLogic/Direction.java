@@ -1,4 +1,4 @@
-package GameLogic.Characters;
+package GameLogic;
 
 public class Direction {
 	public static final Direction RIGHT = new Direction(1);

@@ -1,6 +1,7 @@
 package GUI;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -22,6 +23,16 @@ public class GUIPanel extends JPanel implements KeyListener{
 	public void setGame(Game game) {
 		this.game = game;
 	}
+	
+	@Override
+	public void paintComponent(Graphics g) {
+		
+		// I DRAW STUFF HERE
+		//game.g
+		
+		
+		
+	};
 
 	@Override
 	public void keyTyped(KeyEvent e) {
