@@ -19,11 +19,21 @@ public class World {
 			world.add(block);
 		}
 		
+		// Walls
+		world.add(new Block(0, 128-32));
+		world.add(new Block(0, 128-64));
+		world.add(new Block(31*32, 128-32));
+		world.add(new Block(31*32, 128-64));
+		
+		
+		//
 		// Create Characters
-		Rule rule = new Rule(0,96);
+		// Characters need to be the last 2 in the list!
+		//
+		Rule rule = new Rule(1*32,96);
 		world.add(rule);
 		
-		Rulette rulette = new Rulette(32*32,96);
+		Rulette rulette = new Rulette(30*32,96);
 		world.add(rulette);
 		
 		return world;

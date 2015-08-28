@@ -8,6 +8,7 @@ import GameLogic.Characters.Entity;
 
 public class Game {
 	
+	private float speed = 2.5f;
 	
 	private Entity selectedCharacter;
 	
@@ -31,15 +32,9 @@ public class Game {
 	public void startGame(){
 		
 		gameObjects = World.CreateWorld();
-		
-		gameTimer = new Timer();
-		gameTimer.schedule(new TimerTask(){
-
-			@Override
-			public void run() {
-				gameInteration(System.currentTimeMillis());
-			}			
-		}, 0, 60);
+		rule = gameObjects.get(gameObjects.size()-1);
+		rulette = gameObjects.get(gameObjects.size()-2);
+		selectedCharacter = rule;
 	}
 	
 	public void stopGame(){
@@ -50,13 +45,15 @@ public class Game {
 	 * Everytime the game iterates. This runs moving all the characters
 	 * @param l
 	 */
-	private void gameInteration(long l){
+	public void gameInteration(long l){
 		long timetaken = lasttime != 0 ? (l-lasttime) : l;
-		//System.out.println("Print: " + timetaken);
-		lasttime = l;
 		
+		for(int i = 0; i < gameObjects.size(); i++){
+			Entity e = gameObjects.get(i);
+			e.update(1/timetaken);			
+		}
 		
-		
+		lasttime = l;		
 	}
 
 	public Entity getRule() {
@@ -89,23 +86,23 @@ public class Game {
 	}
 
 	public void startMovingCharacterRight(){	
-		selectedCharacter.setVelocityX(1);
-		getNotSelectedCharacter().setVelocityX(-1);
+		selectedCharacter.setVelocityX(speed);
+		getNotSelectedCharacter().setVelocityX(-speed);
 	}
 	
 	public void startMovingCharacterLeft(){		
-		selectedCharacter.setVelocityX(-1);
-		getNotSelectedCharacter().setVelocityX(1);
+		selectedCharacter.setVelocityX(-speed);
+		getNotSelectedCharacter().setVelocityX(speed);
 	}
 	
 	public void startMovingCharacterUp(){		
-		selectedCharacter.setVelocityY(1);
-		getNotSelectedCharacter().setVelocityY(-1);
+		selectedCharacter.setVelocityY(speed);
+		getNotSelectedCharacter().setVelocityY(-speed);
 	}
 	
 	public void startMovingCharacterDown(){	
-		selectedCharacter.setVelocityY(-1);
-		getNotSelectedCharacter().setVelocityY(1);
+		selectedCharacter.setVelocityY(-speed);
+		getNotSelectedCharacter().setVelocityY(speed);
 	}
 	
 	public void stopMovingCharacterRight(){		
