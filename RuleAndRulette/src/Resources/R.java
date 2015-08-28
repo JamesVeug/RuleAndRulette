@@ -21,7 +21,7 @@ import GameLogic.Characters.Entity;
 
 public class R {
 	
-	private static int DEFAULT_SCALE = 4;
+	private static int DEFAULT_SCALE = 1;
 	
 	public static PixelImage logo = loadPixelImage("assets/logo.png").getScaledInstance(DEFAULT_SCALE);
 	
