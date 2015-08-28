@@ -29,6 +29,7 @@ public class GUIPanel extends JPanel implements KeyListener{
 	
 	@Override
 	public void paintComponent(Graphics gold) {
+		super.paintComponent(gold);
 		Graphics2D g = (Graphics2D)gold;
 		
 		// I DRAW STUFF HERE

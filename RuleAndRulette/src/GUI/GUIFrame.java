@@ -1,5 +1,8 @@
 package GUI;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import javax.swing.JFrame;
 
 import GameLogic.Game;
@@ -9,6 +12,8 @@ public class GUIFrame extends JFrame {
 
 	GUIPanel entireScreenPanel; 
 	Game game;
+
+	private Timer gameTimer;
 	
 	public GUIFrame(){
 		super();
@@ -18,7 +23,7 @@ public class GUIFrame extends JFrame {
 		
 		
 		
-		setSize(800,600);
+		setSize(1024,600);
 		setVisible(true);
 		entireScreenPanel.requestFocus();
 		
@@ -34,5 +39,15 @@ public class GUIFrame extends JFrame {
 		entireScreenPanel.setGame(game);
 		
 		game.startGame();
+		
+		gameTimer = new Timer();
+		gameTimer.schedule(new TimerTask(){
+
+			@Override
+			public void run() {
+				game.gameInteration(System.currentTimeMillis());
+				entireScreenPanel.repaint();
+			}			
+		}, 0, 20);
 	}
 }
