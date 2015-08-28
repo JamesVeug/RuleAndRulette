@@ -1,5 +1,5 @@
 package GameLogic.Characters;
 
-public class Rulette extends Character {
+public class Rulette extends MoveableCharacter {
 
 }

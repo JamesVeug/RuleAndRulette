@@ -3,6 +3,7 @@ package GameLogic.Characters;
 public class Character {
 	private float x;
 	private float y;
+	private Direction facingDirection = Direction.RIGHT;
 	
 	public Character(){
 		
@@ -22,5 +23,13 @@ public class Character {
 
 	public void setY(float y) {
 		this.y = y;
+	}
+
+	public Direction getFacingDirection() {
+		return facingDirection;
+	}
+
+	public void setFacingDirection(Direction facingDirection) {
+		this.facingDirection = facingDirection;
 	}
 }

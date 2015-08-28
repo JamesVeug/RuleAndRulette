@@ -1,5 +1,5 @@
 package GameLogic.Characters;
 
-public class Rule extends Character {
+public class Rule extends MoveableCharacter {
 
 }
