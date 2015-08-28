@@ -46,7 +46,7 @@ public class Game {
 	 * @param l
 	 */
 	public void gameInteration(long l){
-		long timetaken = lasttime != 0 ? (l-lasttime) : l;
+		float timetaken = lasttime != 0 ? (l-lasttime) : l;
 		
 		// Check if Rule and Rulette have met
 		if( false ){
@@ -61,7 +61,7 @@ public class Game {
 		// Move all the tokens
 		for(int i = 0; i < gameObjects.size(); i++){
 			Entity e = gameObjects.get(i);
-			e.update(1/timetaken);			
+			e.update(1f/timetaken);			
 		}
 		
 		lasttime = l;		
