@@ -15,6 +15,7 @@ import javax.swing.WindowConstants;
 import phys.Body;
 import phys.Physics;
 import phys.Vec2;
+import visual.AnimatedSprite;
 import GUI.PixelImage;
 import GameLogic.Characters.Entity;
 
@@ -35,6 +36,10 @@ public class R {
 		public static PixelImage spikes = loadPixelImage("assets/environment/spikes.png").getScaledInstance(DEFAULT_SCALE);
 	}
 	
+	public static class animations {
+		public static AnimatedSprite mami = new AnimatedSprite(loadPixelImage("assets/animations/mami_run_f8_w70_h110.png"), 8, 1);
+	}
+	
 	public static PixelImage loadPixelImage(String fname) {
 		try {
 			return new PixelImage(ImageIO.read(new File(fname)));
@@ -51,6 +56,8 @@ public class R {
 		
 		final Body body = Physics.create(new Vec2(0, 0), true);
 		
+		
+		
 		final Entity e = new Entity() { public void render(Graphics2D g) { 
 				g.drawImage(R.environment.block.asBufferedImage(), body.getX(), body.getY(), null);
 			};
@@ -61,6 +68,7 @@ public class R {
 				for(;;) {
 					frame.repaint();
 					Physics.tick(1/60f);
+					R.animations.mami.update(1/60f);
 					LockSupport.parkNanos(100000);
 				}
 			}
@@ -72,6 +80,7 @@ public class R {
 			}
 			protected void paintComponent(Graphics g) {
 				e.render((Graphics2D)g);
+				g.drawImage(R.animations.mami.getImage().asBufferedImage(),20, 20, null);
 			}
 		});
 		
