@@ -1,3 +1,5 @@
+package Resources;
+
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.io.File;
@@ -7,6 +9,8 @@ import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
+
+import GUI.PixelImage;
 
 
 public class R {
@@ -32,7 +36,7 @@ public class R {
 				this.setPreferredSize(new Dimension(300, 300));
 			}
 			protected void paintComponent(Graphics g) {
-				g.drawImage(R.logo.getSubImage(20, 20, 30, 30).asBufferedImage(), 0, 0, null);
+				g.drawImage(R.logo.getSubImage(0, 0, 32, 32).asBufferedImage(), 0, 0, null);
 			}
 		});
 		

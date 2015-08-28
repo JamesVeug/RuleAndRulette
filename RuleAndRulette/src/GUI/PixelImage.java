@@ -1,3 +1,5 @@
+package GUI;
+
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 
@@ -58,17 +60,6 @@ public class PixelImage implements Cloneable {
 				}
 			}
 		}
-		
-		
-//		for(int srcY = 0; srcY < src.getHeight(); srcY++) {
-//			for(int srcX = 0; srcX < src.getWidth(); srcX++) {
-//				int dstX = x + srcX;
-//				int dstY = y + srcY;
-//				if(dstX >= 0 && dstX < dst.getWidth() && dstY >= 0 && dstY < dst.getHeight()) {
-//					dst.setRGB(dstX, dstY, src.getRGB(srcX, srcY));
-//				}
-//			}
-//		}
 		
 		return out;
 	}
