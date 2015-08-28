@@ -36,6 +36,20 @@ public class R {
 		public static PixelImage spikes = loadPixelImage("assets/environment/spikes.png").getScaledInstance(DEFAULT_SCALE);
 	}
 	
+	public static class gui {
+		public static PixelImage level = loadPixelImage("assets/gui/Level.png").getScaledInstance(DEFAULT_SCALE);
+		public static PixelImage zero = loadPixelImage("assets/gui/zero.png").getScaledInstance(DEFAULT_SCALE);
+		public static PixelImage one = loadPixelImage("assets/gui/one.png").getScaledInstance(DEFAULT_SCALE);
+		public static PixelImage two = loadPixelImage("assets/gui/two.png").getScaledInstance(DEFAULT_SCALE);
+		public static PixelImage three = loadPixelImage("assets/gui/three.png").getScaledInstance(DEFAULT_SCALE);
+		public static PixelImage four = loadPixelImage("assets/gui/four.png").getScaledInstance(DEFAULT_SCALE);
+		public static PixelImage five = loadPixelImage("assets/gui/five.png").getScaledInstance(DEFAULT_SCALE);
+		public static PixelImage six = loadPixelImage("assets/gui/six.png").getScaledInstance(DEFAULT_SCALE);
+		public static PixelImage seven = loadPixelImage("assets/gui/seven.png").getScaledInstance(DEFAULT_SCALE);
+		public static PixelImage eight = loadPixelImage("assets/gui/eight.png").getScaledInstance(DEFAULT_SCALE);
+		public static PixelImage nine = loadPixelImage("assets/gui/nine.png").getScaledInstance(DEFAULT_SCALE);
+	}
+	
 	public static class animations {
 		public static AnimatedSprite mami = new AnimatedSprite(loadPixelImage("assets/animations/mami_run_f8_w70_h110.png"), 8, 60);
 	}
@@ -45,7 +59,7 @@ public class R {
 			return new PixelImage(ImageIO.read(new File(fname)));
 		} catch (IOException e) {
 			System.err.println("Error loading \"" + fname + "\": " + e.getMessage());
-			e.printStackTrace();
+			//e.printStackTrace();
 			return null;
 		}
 	}

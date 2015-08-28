@@ -19,6 +19,7 @@ public class Game {
 	private long lasttime = 0l;
 	
 	private Timer gameTimer;
+	private int currentLevel = 1;
 
 
 	public Game(){
@@ -134,5 +135,15 @@ public class Game {
 	public void stopMovingCharacterDown(){	
 	//		selectedCharacter.setVelocityY(0);
 	//		getNotSelectedCharacter().setVelocityY(0);
+	}
+
+
+	public int getCurrentLevel() {
+		return currentLevel;
+	}
+
+
+	public void jump() {
+		currentLevel++;
 	}
 }
