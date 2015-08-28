@@ -25,6 +25,14 @@ public class Entity {
 		return (int) position.y;
 	}
 	
+	public void setVelocityX(float x) {
+		velocity.x = x;
+	}
+	
+	public void setVelocityY(float y) {
+		velocity.y = y;
+	}
+	
 	public void update(float delta) {
 		position.addLocal(velocity);
 	}
