@@ -11,8 +11,8 @@ public abstract class Entity {
 	
 	public final int ID = IDGenerator.next();
 	
-	private Vec2 position;
-	private Vec2 velocity;
+	protected Vec2 position;
+	protected Vec2 velocity;
 	
 	public Entity() {
 		this(0, 0);
