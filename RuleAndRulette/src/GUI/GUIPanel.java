@@ -32,6 +32,10 @@ public class GUIPanel extends JPanel implements KeyListener{
 		super.paintComponent(gold);
 		Graphics2D g = (Graphics2D)gold;
 		
+		if( game == null ){
+			return;
+		}
+		
 		// I DRAW STUFF HERE
 		List<Entity> entities = game.getEntities();
 		if(entities == null ){
@@ -43,8 +47,14 @@ public class GUIPanel extends JPanel implements KeyListener{
 		}
 		
 		
-		
+		drawUI(g);
 	};
+
+	private void drawUI(Graphics2D g) {
+		// Draw which level we are on
+		
+		
+	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {

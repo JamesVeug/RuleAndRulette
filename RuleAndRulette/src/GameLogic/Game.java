@@ -48,6 +48,17 @@ public class Game {
 	public void gameInteration(long l){
 		long timetaken = lasttime != 0 ? (l-lasttime) : l;
 		
+		// Check if Rule and Rulette have met
+		if( false ){
+			
+			// We have met, so stop the game and change level.
+			
+			// Pause for a second
+			
+			// Change level
+		}
+		
+		// Move all the tokens
 		for(int i = 0; i < gameObjects.size(); i++){
 			Entity e = gameObjects.get(i);
 			e.update(1/timetaken);			
