@@ -12,6 +12,6 @@ public class Rulette extends Entity{
 
 	@Override
 	public void render(Graphics2D g) {
-		g.drawImage(R.logo.asBufferedImage(), null, getX(), getY());
+		g.drawImage(R.characters.rulette.asBufferedImage(), null, getX(), getY());
 	}
 }

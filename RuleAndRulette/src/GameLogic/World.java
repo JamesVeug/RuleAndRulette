@@ -3,6 +3,7 @@ package GameLogic;
 import java.util.ArrayList;
 import java.util.List;
 
+import GameLogic.Characters.Block;
 import GameLogic.Characters.Entity;
 import GameLogic.Characters.Rule;
 import GameLogic.Characters.Rulette;
@@ -14,7 +15,7 @@ public class World {
 		
 		// Create blocks
 		for( int i = 0; i < 32; i++){
-			Entity block = new Entity(i*32, 128);			
+			Block block = new Block(i*32, 128);			
 			world.add(block);
 		}
 		
