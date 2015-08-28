@@ -49,7 +49,7 @@ public abstract class Entity {
 	
 	public void update(float delta) {
 		position.addLocal(velocity);
-		position.addLocal(GRAVITY);
+		velocity.addLocal(GRAVITY); //happens second so that can cancel gravity
 	}
 	
 	public abstract void render(Graphics2D g);

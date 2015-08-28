@@ -36,7 +36,7 @@ public class R {
 	}
 	
 	public static class animations {
-		public static AnimatedSprite mami = new AnimatedSprite(loadPixelImage("assets/animations/mami_run_f8_w70_h110.png"), 8, 1);
+		public static AnimatedSprite mami = new AnimatedSprite(loadPixelImage("assets/animations/mami_run_f8_w70_h110.png"), 8, 60);
 	}
 	
 	public static PixelImage loadPixelImage(String fname) {
