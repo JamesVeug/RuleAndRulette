@@ -80,8 +80,7 @@ public class GUIPanel extends JPanel {
 		// entities.get(i).render(canvas);
 		// }
 
-		g.drawImage(canvas.asBufferedImage(), null, (int) (camera.x),
-				(int) (camera.y));
+		g.drawImage(canvas.asBufferedImage(), null, (int) (camera.x), (int) (camera.y));
 
 		drawUI(g);
 	};

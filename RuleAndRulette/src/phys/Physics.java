@@ -56,7 +56,7 @@ public class Physics implements ContactListener {
 		
 		for(int i = 0; i < numBoxes; i++) {
 			Entity entity = new PhysBox(x, y);
-			entity.getBody().applyLinearImpulse(new Vec2(MathUtils.randomFloat(-1, 1), MathUtils.randomFloat(-1, 1)).mulLocal(0.2f), entity.getBody().getLocalCenter());
+//			entity.getBody().applyLinearImpulse(new Vec2(MathUtils.randomFloat(-1, 1), MathUtils.randomFloat(-1, 1)).mulLocal(0.2f), entity.getBody().getLocalCenter());
 			spawned.add(entity);
 		}
 	}
@@ -213,6 +213,8 @@ public class Physics implements ContactListener {
 			super(x, y, false);
 			
 			square = images[((int)(Math.random()*images.length))%images.length];
+			
+			this.getBody().applyLinearImpulse(new Vec2(MathUtils.randomFloat(-1, 1), MathUtils.randomFloat(-1, 1)).mulLocal(0.25f), this.getBody().getLocalCenter());
 		}
 
 		@Override
