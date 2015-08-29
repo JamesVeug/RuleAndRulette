@@ -15,6 +15,7 @@ import org.jbox2d.common.Vec2;
 
 import GameLogic.Game;
 import GameLogic.Input;
+import GameLogic.Score;
 import Resources.R;
 
 public class GUIPanel extends JPanel {
@@ -66,11 +67,7 @@ public class GUIPanel extends JPanel {
 		Graphics2D g = (Graphics2D) gold;
 
 		//level
-		Graphics2D g2d = canvas.asBufferedImage().createGraphics();
-		g2d.setFont(new Font(R.fonts.kenpixel_mini_square.getName(), Font.PLAIN, 30));
-		g2d.setColor(Color.black);
-		g2d.drawString("Level: " + game.getCurrentLevel(), 38, 60);
-		g2d.dispose();
+		drawUI(g);
 		
 		drawStatus(canvas);
 		
@@ -120,6 +117,57 @@ public class GUIPanel extends JPanel {
 		g.dispose();
 	}
 
+	private void drawUI(Graphics2D g){
+		Graphics2D g2d = canvas.asBufferedImage().createGraphics();
+		g2d.setFont(new Font(R.fonts.kenpixel_mini_square.getName(), Font.PLAIN, 30));
+		
+		// Level
+		g2d.setColor(Color.black);
+		String level = String.valueOf(game.getCurrentLevel());
+		while( level.length() < 4){ level = "0"+level; }
+		g2d.drawString("Level: " + level, 36, 56);
+		
+		// Score
+		g2d.setColor(Color.black);
+		int scoreX = 300;
+		int scoreY = 56;
+		String string = String.valueOf(Score.getScore());
+		while( string.length() < 13){ string = "0"+string; }
+		g2d.drawString("Score: " + string, scoreX, scoreY);
+		
+		
+		//
+		// SOUND
+		//
+		
+		// Clip Sound
+		int clipSpeakerX = 800;
+		int clipSpeakerY = 32;
+		if( Sound.Sound.isClipsMuted() ){
+			g2d.drawImage(R.gui.volume.mute.getScaledInstance(2).asBufferedImage(), clipSpeakerX, clipSpeakerY, null);
+		}
+		else{
+			g2d.drawImage(R.gui.volume.unmute.getScaledInstance(2).asBufferedImage(), clipSpeakerX, clipSpeakerY, null);
+		}
+		int clipVolume = Math.round(Sound.Sound.getClipVolume()*100);
+		g2d.drawString(clipVolume + "%", clipSpeakerX+32, clipSpeakerY+26);
+		
+		// Music Sound
+		int musicSpeakerX = 896;
+		int musicSpeakerY = 32;
+		if( Sound.Sound.isMusicMuted() ){
+			g2d.drawImage(R.gui.volume.mute.getScaledInstance(2).asBufferedImage(), musicSpeakerX, musicSpeakerY, null);
+		}
+		else{
+			g2d.drawImage(R.gui.volume.unmute.getScaledInstance(2).asBufferedImage(), musicSpeakerX, musicSpeakerY, null);
+		}
+		int musicVolume = Math.round(Sound.Sound.getMusicVolume()*100);
+		g2d.drawString(musicVolume + "%", musicSpeakerX+32, musicSpeakerY+26);
+		
+		
+		
+		g2d.dispose();		
+	}
 //	private void drawUI(Graphics2D g) {
 		// Draw which level we are on
 //		BufferedImage levelImage = R.gui.level.asBufferedImage();
