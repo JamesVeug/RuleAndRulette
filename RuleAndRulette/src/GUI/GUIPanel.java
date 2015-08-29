@@ -67,12 +67,18 @@ public class GUIPanel extends JPanel {
 		Graphics2D g = (Graphics2D) gold;
 
 		//level
-		drawUI(g);
-		
-		drawStatus(canvas);
+//		drawUI(canvas);
+//		
+//		drawStatus(canvas);
 		
 		g.drawImage(canvas.asBufferedImage(), null, (int) (camera.x), (int) (camera.y));
 	};
+	
+	public void __RENDER() {
+		drawUI(canvas);
+		
+		drawStatus(canvas);
+	}
 	
 	private void drawStatus(PixelImage canvas){
 		if( game.getStatus() == Game.GAMESTATUS_WON ){
@@ -117,7 +123,7 @@ public class GUIPanel extends JPanel {
 		g.dispose();
 	}
 
-	private void drawUI(Graphics2D g){
+	private void drawUI(PixelImage canvas){
 		Graphics2D g2d = canvas.asBufferedImage().createGraphics();
 		g2d.setFont(new Font(R.fonts.kenpixel_mini_square.getName(), Font.PLAIN, 30));
 		

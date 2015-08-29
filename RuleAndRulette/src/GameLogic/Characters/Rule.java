@@ -19,6 +19,7 @@ public class Rule extends Entity{
 	
 	private AnimatedSprite anim;
 
+	private float hurt = 0f;
 	
 	public Rule(float x, float y) {
 		super(x, y, false);
@@ -36,7 +37,16 @@ public class Rule extends Entity{
 			anim = R.animations.rule.idle;
 		}
 		
+		if(hurt > 0) {
+			anim = R.animations.rule.hurt;
+			hurt -= delta;
+		}
+		
 		anim.update(delta);
+	}
+	
+	public void hurt() {
+		this.hurt = 0.2f;
 	}
 
 //	@Override

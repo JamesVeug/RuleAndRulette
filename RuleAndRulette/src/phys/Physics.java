@@ -6,7 +6,10 @@ import java.awt.Point;
 import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import org.jbox2d.callbacks.ContactImpulse;
 import org.jbox2d.callbacks.ContactListener;
@@ -25,6 +28,7 @@ import org.jbox2d.dynamics.contacts.Contact;
 
 import GUI.GUIPanel;
 import GUI.PixelImage;
+import GameLogic.Score;
 import GameLogic.Characters.Block;
 import GameLogic.Characters.Entity;
 import GameLogic.Characters.Rule;
@@ -80,6 +84,115 @@ public class Physics implements ContactListener {
 		body.createFixture(pshape, 0);
 	}
 	
+	public static class HeartPool {
+		private static Queue<HeartBox> items = new LinkedList<HeartBox>();
+		
+		public static int size() { return items.size(); }
+		
+		public static HeartBox get(float x, float y) {
+			if(!items.isEmpty()) {
+				HeartBox out = items.poll();
+				out.getBody().setActive(true);
+				out.setPosition(x, y);
+				out.time = 0f;
+				out.isDead = false;
+				return out;
+			} else {
+				return new HeartBox(x, y);
+			}
+		}
+		
+		public static void free(HeartBox item) {
+			Physics.spawned.remove(item);
+			item.setPosition(-1000, -1000);
+			item.getBody().setActive(false);
+			items.offer(item);
+		}
+	}
+	
+	public static class PhysPool {
+		private static Queue<PhysBox> items = new LinkedList<PhysBox>();
+		
+		public static int size() { return items.size(); } 
+		
+		public static PhysBox get(float x, float y) {
+			if(!items.isEmpty()) {
+				PhysBox out = items.poll();
+				out.setPosition(x, y);	
+				out.getBody().setActive(true);
+				out.time = 0f;
+				out.isDead = false;
+				return out;
+			} else {
+				return new PhysBox(x, y);
+			}
+		}
+		
+		public static void free(PhysBox item) {
+			Physics.spawned.remove(item);
+			item.setPosition(-1000, -1000);
+			item.getBody().setActive(false);
+			items.offer(item);
+		}
+	}
+	
+//	public static class HeartSpawner {
+//		
+//		private static LinkedList<HeartBox> hearts = new LinkedList<HeartBox>();
+//		private static LinkedList<HeartBox> live = new LinkedList<HeartBox>();
+//		
+//		private HeartSpawner instance = new HeartSpawner(200);
+//		private HeartSpawner(int n) {
+//			for(int i = 0; i < n; i++) {
+//				HeartBox box = new HeartBox(-1, -1);
+//				box.getBody().setActive(false);
+//				hearts.addLast(box);
+//			}
+//		}
+//
+//		public static void spawn(float x, float y, int num) {
+//			if(hearts.size() < num) {
+//				int end = num - hearts.size();
+//				for(int i = 0; i < end; i++) {
+//					HeartBox box = new HeartBox(-1, -1);
+//					box.getBody().setActive(false);
+//					hearts.addLast(box);
+//				}
+//			}
+//			
+//			for(int i = 0; i < num && !hearts.isEmpty(); i++) {
+//				HeartBox box = hearts.getFirst();
+//				box.setPosition(x, y);	
+//				box.getBody().setActive(true);
+//				box.getBody().applyLinearImpulse(new Vec2(MathUtils.randomFloat(-1, 1), MathUtils.randomFloat(-1, 1)).mulLocal(0.2f), box.getBody().getLocalCenter());
+//			}
+//		}
+//		
+//		private static void free(HeartBox box) {
+//			box.setPosition(-1, -1);
+//			box.getBody().setActive(false);
+//			hearts.addLast(box);
+//		}
+//		
+//		public static void tick(float delta) {
+//			for(Iterator<HeartBox> iter = live.iterator(); iter.hasNext();) {
+//				HeartBox box = iter.next();
+//				box.update(delta);
+//				if(box.isDead()) {
+//					iter.remove();
+//					free(box);
+//				}
+//			}
+//		}
+//		
+//		public static void render(PixelImage canvas) {
+//			for(HeartBox box : live) {
+//				box.render(canvas);
+//			}
+//		}
+//		
+//	}
+	
 	public static HashSet<Entity> spawned = new LinkedHashSet<Entity>();
 	
 	public static void spawn(final float x, final float y, int numBoxes) {
@@ -87,9 +200,11 @@ public class Physics implements ContactListener {
 		Sound.playSound(R.sound.effects.explosion);
 		
 		for(int i = 0; i < numBoxes; i++) {
-			Entity entity = new PhysBox(x, y);
-//			entity.getBody().applyLinearImpulse(new Vec2(MathUtils.randomFloat(-1, 1), MathUtils.randomFloat(-1, 1)).mulLocal(0.2f), entity.getBody().getLocalCenter());
+//			Entity entity = new PhysBox(x, y);
+			Entity entity = PhysPool.get(x+MathUtils.randomFloat(0, 1), y+MathUtils.randomFloat(0, 1));
+			entity.getBody().applyLinearImpulse(new Vec2(MathUtils.randomFloat(-1, 1), MathUtils.randomFloat(-1, 1)).mulLocal(0.2f), entity.getBody().getLocalCenter());
 			spawned.add(entity);
+//			Score.addScore(999);
 		}
 	}
 	
@@ -98,9 +213,11 @@ public class Physics implements ContactListener {
 		Sound.playSound(R.sound.effects.explosion);
 		
 		for(int i = 0; i < numBoxes; i++) {
-			Entity entity = new HeartBox(x, y);
-//			entity.getBody().applyLinearImpulse(new Vec2(MathUtils.randomFloat(-1, 1), MathUtils.randomFloat(-1, 1)).mulLocal(0.2f), entity.getBody().getLocalCenter());
+//			Entity entity = new HeartBox(x, y);
+			Entity entity = HeartPool.get(x+MathUtils.randomFloat(0, 1), y+MathUtils.randomFloat(0, 1));
+			entity.getBody().applyLinearImpulse(new Vec2(MathUtils.randomFloat(-1, 1), MathUtils.randomFloat(-1, 1)).mulLocal(0.2f), entity.getBody().getLocalCenter());
 			spawned.add(entity);
+//			Score.addScore(999);
 		}
 	}
 
@@ -125,7 +242,12 @@ public class Physics implements ContactListener {
 			if((a.getClass() == Rule.class && a.touching == 0)) { 
 				GUIPanel.shake(5f);
 				Physics.a = a;
+				if(Math.random() < 0.02f) { ((Rule)a).hurt(); }
 //				spawn(a.getPosition().x, a.getPosition().y, 20);
+			}
+			
+			if(a.getClass() == Rulette.class && a.touching == 0) {
+				if(Math.random() < 0.02f) { ((Rulette)a).hurt(); }
 			}
 			
 			a.touching++;
@@ -143,9 +265,14 @@ public class Physics implements ContactListener {
 				}
 			}
 			
+			if(b.getClass() == Rule.class && b.touching == 0) {
+				if(Math.random() < 0.02f) { ((Rule)b).hurt(); }
+			}
+			
 			if(b.getClass() == Rulette.class && b.touching == 0) {
 				GUIPanel.shake(5f);
 				Physics.b = b;
+				if(Math.random() < 0.02f) { ((Rulette)b).hurt(); }
 	//			spawn(a.getPosition().x, a.getPosition().y, 20);
 			}
 			
@@ -274,7 +401,7 @@ public class Physics implements ContactListener {
 		public static float LIFETIME = 1.5f;
 		
 		private float lifetime = (float)(Math.random())*LIFETIME*1f;
-		private float time = 0;
+		private float time;
 		
 		private boolean isDead = false;
 		
@@ -294,10 +421,11 @@ public class Physics implements ContactListener {
 		
 		public PhysBox(float x, float y) {
 			super(x, y, false);
+			time = 0f;
 			
 			square = images[((int)(Math.random()*images.length))%images.length];
 			
-			this.getBody().applyLinearImpulse(new Vec2(MathUtils.randomFloat(-1, 1), MathUtils.randomFloat(-1, 1)).mulLocal(0.25f), this.getBody().getLocalCenter());
+//			this.getBody().applyLinearImpulse(new Vec2(MathUtils.randomFloat(-1, 1), MathUtils.randomFloat(-1, 1)).mulLocal(0.25f), this.getBody().getLocalCenter());
 		}
 
 		@Override
@@ -344,7 +472,7 @@ public class Physics implements ContactListener {
 		public static float LIFETIME = 1.5f;
 		
 		private float lifetime = (float)(Math.random())*LIFETIME*1f;
-		private float time = 0;
+		private float time;
 		
 		public boolean isDead = false;
 		
@@ -354,8 +482,14 @@ public class Physics implements ContactListener {
 		
 		public HeartBox(float x, float y) {
 			super(x, y, false);
+			time = 0f;
 			
-			this.getBody().applyLinearImpulse(new Vec2(MathUtils.randomFloat(-1, 1), MathUtils.randomFloat(-1, 1)).mulLocal(0.25f), this.getBody().getLocalCenter());
+//			this.getBody().applyLinearImpulse(new Vec2(MathUtils.randomFloat(-1, 1), MathUtils.randomFloat(-1, 1)).mulLocal(0.25f), this.getBody().getLocalCenter());
+		}
+		
+		public void reset() {
+			this.isDead = false;
+			this.time = 0;
 		}
 
 		@Override

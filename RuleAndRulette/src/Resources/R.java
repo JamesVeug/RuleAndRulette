@@ -119,11 +119,13 @@ public class R {
 		public static class rule {
 			public static AnimatedSprite idle = new AnimatedSprite(loadPixelImage("assets/animations/rule/rule_idle_f8_w32_h32.png"), 8, 8);
 			public static AnimatedSprite walk = new AnimatedSprite(loadPixelImage("assets/animations/rule/rule_walk_f7_w32_h32.png"), 7, 16);
+			public static AnimatedSprite hurt = new AnimatedSprite(loadPixelImage("assets/animations/rule/rule_hurt_f1_w32_h32.png"), 1, 1);
 		}
 		
 		public static class rulette {
 			public static AnimatedSprite idle = new AnimatedSprite(loadPixelImage("assets/animations/rulette/rulette_idle_f8_w32_h32.png"), 8, 8);
 			public static AnimatedSprite walk = new AnimatedSprite(loadPixelImage("assets/animations/rulette/rulette_walk_f7_w32_h32.png"), 7, 16);
+			public static AnimatedSprite hurt = new AnimatedSprite(loadPixelImage("assets/animations/rulette/rulette_hurt_f1_w32_h32.png"), 1, 1);
 		}
 		
 		public static AnimatedSprite mami_run = new AnimatedSprite(loadPixelImage("assets/animations/mami_run_f8_w70_h110.png"), 8, 16);
