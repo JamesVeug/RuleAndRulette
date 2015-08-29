@@ -25,6 +25,7 @@ public class Game {
 	private long lasttime = 0l;
 	
 	private Timer gameTimer;
+	private int currentLevel = 1;
 
 
 	public Game(){
@@ -183,5 +184,15 @@ public class Game {
 //		if(getNotSelectedCharacter().touching > 0) {
 //			getNotSelectedCharacter().getBody().applyLinearImpulse(new Vec2(0, -jumpspeed), selectedCharacter.getBody().getLocalCenter());
 //		}
+	}
+
+
+	public int getCurrentLevel() {
+		return currentLevel;
+	}
+
+
+	public void jump() {
+		currentLevel++;
 	}
 }
