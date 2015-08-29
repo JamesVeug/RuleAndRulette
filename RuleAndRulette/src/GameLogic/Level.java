@@ -190,7 +190,7 @@ public class Level {
 		"!                              !\n" +
 		"!                              !\n" +
 		"!                              !\n" +
-		"!               ##             !\n" +
+		"!           ########           !\n" +
 		"!XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX!\n" +
 		"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n",
 		

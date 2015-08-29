@@ -27,7 +27,7 @@ public class Game {
 	private List<Entity> gameObjects;
 	
 	private long lasttime = 0l;
-	private long levelTransitionTime = 100;
+	private long levelTransitionTime = 2000;
 	
 	private int gameStatus = GAMESTATUS_PLAYING;
 	private Timer gameTimer;
@@ -85,9 +85,8 @@ public class Game {
 		// We have met, so stop the game and change level.
 					
 		// Pause for a second
-		gameStatus = GAMESTATUS_WON;
-		
-		if( lasttime < 1000l ){
+		if( gameStatus == Game.GAMESTATUS_PLAYING ){
+			gameStatus = GAMESTATUS_WON;
 			lasttime = System.currentTimeMillis();
 		}
 		
@@ -114,9 +113,8 @@ public class Game {
 		// We have met, so stop the game and change level.
 					
 		// Pause for a second
-		gameStatus = GAMESTATUS_FAILED;
-		
-		if( lasttime < 1000l ){
+		if( gameStatus == Game.GAMESTATUS_PLAYING ){
+			gameStatus = GAMESTATUS_FAILED;
 			lasttime = System.currentTimeMillis();
 		}
 		
@@ -140,7 +138,8 @@ public class Game {
 	 */
 	public void gameInteration(float delta){
 		// Check if Rule and Rulette have met
-		if( rule.getBounds().intersects(rulette.getBounds()) ){
+		if( rule.getBounds().intersects(rulette.getBounds()) || gameStatus == GAMESTATUS_WON){
+			
 			gameWon();			
 			return;
 		}
