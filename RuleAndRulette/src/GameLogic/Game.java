@@ -47,7 +47,7 @@ public class Game {
 
 		Sound.playMusic(R.sound.music.getRandom());
 		
-		currentLevel = 1;
+		currentLevel = 0;
 		loadLevel(currentLevel);		
 	}
 	
@@ -72,6 +72,64 @@ public class Game {
 		gameTimer.cancel();
 	}
 	
+	private void gameWon(){
+		Physics.hearts = true;
+		
+		Physics.spawnHeart(this.getRule().getPosition().x, this.getRule().getPosition().y, 25);
+		Physics.spawnHeart(this.getRulette().getPosition().x, this.getRulette().getPosition().y, 25);
+		
+		// We have met, so stop the game and change level.
+					
+		// Pause for a second
+		gameStatus = GAMESTATUS_WON;
+		
+		if( lasttime < 1000l ){
+			lasttime = System.currentTimeMillis();
+		}
+		
+		long timetaken = System.currentTimeMillis() - lasttime;
+		if( timetaken < levelTransitionTime  ){
+			return;
+		}
+		
+		// Change level			
+		loadLevel(++currentLevel);
+		
+		// Reset time
+		lasttime = 0l;
+		
+		Physics.hearts = false;
+	}
+	
+	private void gameLost(){
+		Physics.hearts = true;
+		
+		Physics.spawnHeart(this.getRule().getPosition().x, this.getRule().getPosition().y, 25);
+		Physics.spawnHeart(this.getRulette().getPosition().x, this.getRulette().getPosition().y, 25);
+		
+		// We have met, so stop the game and change level.
+					
+		// Pause for a second
+		gameStatus = GAMESTATUS_FAILED;
+		
+		if( lasttime < 1000l ){
+			lasttime = System.currentTimeMillis();
+		}
+		
+		long timetaken = System.currentTimeMillis() - lasttime;
+		if( timetaken < levelTransitionTime  ){
+			return;
+		}
+		
+		// Change level			
+		loadLevel(++currentLevel);
+		
+		// Reset time
+		lasttime = 0l;
+		
+		Physics.hearts = false;
+	}
+	
 	/**
 	 * GameLoop provides the accurate delta time we need to step our entities
 	 * @param delta
@@ -79,35 +137,12 @@ public class Game {
 	public void gameInteration(float delta){
 		// Check if Rule and Rulette have met
 		if( rule.getBounds().intersects(rulette.getBounds()) ){
-			
-			Physics.hearts = true;
-			
-			Physics.spawnHeart(this.getRule().getPosition().x, this.getRule().getPosition().y, 25);
-			Physics.spawnHeart(this.getRulette().getPosition().x, this.getRulette().getPosition().y, 25);
-			
-			// We have met, so stop the game and change level.
-						
-			// Pause for a second
-			gameStatus = GAMESTATUS_WON;
-			
-			if( lasttime < 1000l ){
-				lasttime = System.currentTimeMillis();
-			}
-			
-			long timetaken = System.currentTimeMillis() - lasttime;
-			if( timetaken < levelTransitionTime  ){
-				return;
-			}
-			
-			// Change level			
-			loadLevel(++currentLevel);
-			
-			// Reset time
-			lasttime = 0l;
-			
-			Physics.hearts = false;
-			
+			gameWon();			
 			return;
+		}
+		else if( false ){
+			// If we have died
+			gameLost();
 		}
 		
 		Vec2 move = new Vec2();
