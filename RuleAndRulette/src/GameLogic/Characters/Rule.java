@@ -18,18 +18,11 @@ public class Rule extends Entity{
 	boolean flipped = false;
 	
 	private AnimatedSprite anim;
-	
-//	private static class animations {
-//		public final static AnimatedSprite WALK_RIGHT = R.animations.mami_run;
-//	}
 
-	public Rule(int i, int j) {
-		super(i,j,false);
-		anim = R.animations.rule.idle;
-	}
 	
 	public Rule(float x, float y) {
 		super(x, y, false);
+		this.anim = R.animations.rule.idle;
 	}
 	
 	@Override

@@ -15,13 +15,9 @@ public class Rulette extends Entity{
 	
 	private AnimatedSprite anim;
 	
-	public Rulette(int i, int j) {
-		super(i,j,false);
-		anim = R.animations.rulette.idle;
-	}
-	
 	public Rulette(float x, float y) {
 		super(x, y, false);
+		anim = R.animations.rulette.idle;
 	}
 
 //	@Override

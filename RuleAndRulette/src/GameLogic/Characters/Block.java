@@ -13,11 +13,6 @@ public class Block extends Entity{
 		super(x, y, isStatic);
 	}
 
-//	@Override
-//	public void render(Graphics2D g) {
-//		g.drawImage(R.environment.block.asBufferedImage(), null, getX(), getY());
-//	}
-
 	@Override
 	public void render(PixelImage canvas) {
 		Point p = getRenderPoint();
