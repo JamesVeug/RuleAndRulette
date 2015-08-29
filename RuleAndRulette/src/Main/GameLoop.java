@@ -7,7 +7,8 @@ import phys.Physics;
 import phys.Physics.HeartBox;
 import phys.Physics.IDeadable;
 import phys.Physics.PhysBox;
-import GUI.GUIPanel;
+import GUI.GUIFrame;
+import GUI.GUIGame;
 import GUI.PixelImage;
 import GameLogic.Game;
 import GameLogic.Time;
@@ -38,19 +39,21 @@ public class GameLoop extends Thread {
 	
 	private long syncRate;
 	private Game game;
-	private GUIPanel panel;
+	private GUIGame panel;
+	private GUIFrame frame;
 	
 	/**
 	 * Creates a new GameLoop with the given parameters
 	 * @param fps Desired frames per second.
 	 * @param fixedUPS fixedUpdate() calls per second.
 	 */
-	public GameLoop(int fps, int fixedUPS, Game game, GUIPanel panel) {
+	public GameLoop(int fps, int fixedUPS, Game game, GUIGame panel, GUIFrame frame) {
 		syncRate = (long) ((1D/fps)*1000000000); //fps in nanoseconds.
 		fixedDeltaTime = 1f/fixedUPS;// fixed updates per seconds in seconds.
 		
 		this.game = game;
 		this.panel = panel;
+		this.frame = frame;
 	}
 	
 	/**
@@ -180,7 +183,7 @@ public class GameLoop extends Thread {
 		
 		panel.__RENDER();
 
-		panel.repaint();
+		frame.repaint();
 	}
 	
 	/** 
