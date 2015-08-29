@@ -1,17 +1,37 @@
 package phys;
 
+import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 
 import org.jbox2d.callbacks.ContactImpulse;
 import org.jbox2d.callbacks.ContactListener;
 import org.jbox2d.collision.Manifold;
+import org.jbox2d.collision.shapes.CircleShape;
+import org.jbox2d.collision.shapes.PolygonShape;
+import org.jbox2d.common.MathUtils;
 import org.jbox2d.common.Vec2;
+import org.jbox2d.dynamics.BodyDef;
+import org.jbox2d.dynamics.BodyType;
+import org.jbox2d.dynamics.Fixture;
+import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 import org.jbox2d.dynamics.contacts.Contact;
 
+import GUI.GUIPanel;
+import GUI.PixelImage;
+import GameLogic.Characters.Block;
 import GameLogic.Characters.Entity;
+import GameLogic.Characters.Rule;
+import GameLogic.Characters.Rulette;
+import Resources.R;
 
 public class Physics implements ContactListener {
+	
+	public static final float SCALE = 100f;
+	public static final float INVSCALE = 1/SCALE;
 	
 	public static final Vec2 DEFAULT_GRAVITY = new Vec2(0, 9.8f);
 	
@@ -21,17 +41,47 @@ public class Physics implements ContactListener {
 	
 	public static final Physics instance = new Physics();
 	
+	public static Entity a = null;
+	public static Entity b = null;
+	
+	
 	private Physics() { 
 		world.setContactListener(this);
 	}
+	
+	public static HashSet<Entity> spawned = new LinkedHashSet<Entity>();
+	
+	public static void spawn(final float x, final float y, int numBoxes) {
+		
+		for(int i = 0; i < numBoxes; i++) {
+			Entity entity = new Block(x, y, false);
+			entity.getBody().applyLinearImpulse(new Vec2(MathUtils.randomFloat(-1, 1), MathUtils.randomFloat(-1, 1)).mulLocal(0.2f), entity.getBody().getLocalCenter());
+			spawned.add(entity);
+		}
+	}
 
+	
+	
 	@Override
 	public void beginContact(Contact contact) {
 		Entity a = (Entity) contact.m_fixtureA.m_body.m_userData;
 		Entity b = (Entity) contact.m_fixtureB.m_body.m_userData;
 		
+		if((a.getClass() == Rule.class && a.touching == 0)) { 
+			GUIPanel.shake(5f);
+			Physics.a = a;
+//			spawn(a.getPosition().x, a.getPosition().y, 20);
+		}
+		
+		if(b.getClass() == Rulette.class && b.touching == 0) {
+			GUIPanel.shake(5f);
+			Physics.b = b;
+//			spawn(a.getPosition().x, a.getPosition().y, 20);
+		}
+		
 		a.touching++;
 		b.touching++;
+		
 		
 //		System.out.println("Begin Contact");
 		
@@ -134,5 +184,39 @@ public class Physics implements ContactListener {
 //		
 //		
 //	}
+	
+	private static class PhysBox extends Entity {
+
+		private float x, y;
+		
+		
+		public PhysBox(float x, float y, boolean isStatic) {
+			super(x, y, isStatic);
+			this.x = x; this.y = y;
+		}
+
+		@Override
+		public void update(float delta) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void render(Graphics2D g) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void render(PixelImage canvas) {
+			PixelImage.blit(R.environment.block.getScaledInstance(0.2f), canvas, getX(), getY());
+		}
+
+		@Override
+		public Rectangle2D getBounds() {
+			return new Rectangle2D.Float(x, y, R.environment.block.getWidth()*0.2f, R.environment.block.getHeight()*0.2f);
+		}
+		
+	}
 
 }

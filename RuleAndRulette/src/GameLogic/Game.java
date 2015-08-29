@@ -104,7 +104,7 @@ public class Game {
 		
 		this.getNotSelectedCharacter().setVelocityX(move.x);
 		
-		if(Input.isKeyDown(KeyEvent.VK_SPACE)) {
+		if(Input.isKeyDown(KeyEvent.VK_SPACE)) {			
 			Input.removeKey(KeyEvent.VK_SPACE);
 			if(selectedCharacter.touching > 0) {
 				Sound.playSound(R.sound.jump);
