@@ -1,7 +1,6 @@
 package GUI;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Timer;
 
 import javax.swing.JFrame;
@@ -9,7 +8,6 @@ import javax.swing.WindowConstants;
 
 import phys.Physics;
 import phys.Physics.IDeadable;
-import phys.Physics.PhysBox;
 import GameLogic.Game;
 import GameLogic.Time;
 import GameLogic.Characters.Entity;
@@ -21,8 +19,6 @@ public class GUIFrame extends JFrame {
 
 	GUIPanel entireScreenPanel; 
 	Game game;
-
-	private Timer gameTimer;
 
 	private PixelImage canvas;
 	

@@ -3,57 +3,73 @@ package Sound;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
-import javax.sound.sampled.Line.Info;
+import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.Line;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.Mixer;
-import javax.sound.sampled.SourceDataLine;
 
 import GameLogic.Time;
 
 public class Sound {
 	
 	private static Mixer mixer;
-	private static Clip clip;
+	private static List<Clip> clips;
+	private static List<Clip> music;
 	private static DataLine.Info dataInfo; 
 	
 	private static AudioFormat format = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, 44100, 16, 2, 4, 44100, false);
-	private static boolean playSounds = true;
+	private static boolean playClips = true;
+	private static boolean playMusic = true;
 	
 	private static final float REPEAT_THRESHOLD = 0.1f; // the same sound can not be played closer than 0.1f seconds apart
 	private static final HashMap<String, Float> soundPlayedAt = new HashMap<String, Float>();
 	
-	public static void SetEnabled(boolean status){
-		playSounds = status;
+	private static float volume_clip = 1; // 1 = 100%, 0 == 0%
+	private static float volume_music = 1; // 1 = 100%, 0 == 0%
+	
+	public static void muteClips(){
+		playClips = false;
+	}
+	
+	public static void unmuteClips(){
+		playClips = true;
+	}
+	public static void muteMusic(){
+		playMusic = false;
+	}
+	
+	public static void unmuteMusic(){
+		playMusic = true;
+	}
+	
+	public static boolean isMusicMuted(){
+		return !playMusic;
+	}
+	
+	public static boolean isClipsMuted(){
+		return !playClips;
 	}
 	
 	public static void setupMixer(){
 		Mixer.Info[] mixInfos = AudioSystem.getMixerInfo();
-		/*for( Mixer.Info info : mixInfos){
-			System.out.println(info.getName() + " ... " + info.getDescription());
-		}*/
 		mixer = AudioSystem.getMixer(mixInfos[0]);
 		dataInfo = new DataLine.Info(Clip.class, null);
-		/*try{
-			clip = (Clip)mixer.getLine(dataInfo);
-		}catch(LineUnavailableException e ){
-			e.printStackTrace();
-		}*/
-		
-		//AudioFormat f = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, 44100, 16, 2, 4, 44100, false);
-		
+		clips = new ArrayList<>();
+		music = new ArrayList<>();
 	}
-	
 
-	public static synchronized void playSound(final URL url) {
+	public static synchronized void playSound(final URL url, final boolean loops, final boolean isMusic) {
 		// Don't play sounds
-		if( playSounds == false ){
+		if( (isMusic && !playMusic) || (!isMusic && !playClips) ){
 			return;
 		}
 		
@@ -69,24 +85,44 @@ public class Sound {
 		    public void run() {
 		    	try {
 		    		
-		    		/*Clip clip = null;
-		    		clip = (Clip)getLine(format, dataInfo);
-		    		if( clip == null ){
-		    			System.err.println("clip is null!");
-		    			return;
-		    		}*/
 					Clip clip = (Clip)mixer.getLine(dataInfo);
+					
+					if( isMusic ){
+						music.add(clip);
+					}
+					else{
+						clips.add(clip);
+					}
 		    		
 			        //Clip clip = AudioSystem.getClip();
 			        AudioInputStream inputStream = AudioSystem.getAudioInputStream(url);
 			        clip.open(inputStream);
 			        clip.start(); 
 			        
+			        // Change volume
+			        FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+			        if( isMusic ){
+			        	gainControl.setValue(volume_music);
+			        }
+			        else{
+			        	gainControl.setValue(volume_clip);
+			        }
+		        	
+			        // Loop or no loop
+			        // That is the question
+		        	if( loops ){
+		        		clip.loop(Clip.LOOP_CONTINUOUSLY);
+		        	}
+		        	else{
+		        		clip.start();
+		        	}
+			        
 			        do{
 			        	Thread.sleep(50);
 			        }while( clip.isActive());
 			        clip.stop();
 			        clip.close();
+			        clips.remove(clip);
 			        
 			        
 		    	} catch (Exception e) {
@@ -113,49 +149,117 @@ public class Sound {
 		return true;
 	}
 	
-	public static synchronized void playSound(final String path) {
+	public static synchronized void playSound(final String path, boolean loops, boolean music) {
 		try {
 			if(!canPlaySound(path)) { return; } //if we can't play the sound (played too recently)
 			soundPlayedAt.put(path, Time.time);
-			playSound(new File(path).toURL());
+			playSound(new File(path).toURL(), loops, music);
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 	}
 	
-	public static SourceDataLine getLine(AudioFormat audioFormat, Info info){
-		SourceDataLine dataline = null;
-		for (Mixer.Info mixerInfo : AudioSystem.getMixerInfo()) {
-		    try {
-		        Mixer mixer = AudioSystem.getMixer(mixerInfo);
-		        dataline = (SourceDataLine)mixer.getLine(info);
-		        if(dataline==null) {
-		            continue; //Doesn't support this format
-		        }
-		        dataline.open(audioFormat);
-		        dataline.start();
-		    }
-		    catch (Exception ex) {
-		        //If we get here it's a buggered line, so loop round again
-		        continue;
-		    }
-		    try {
-		        dataline.close();
-		    }
-		    catch (Exception ex) {
-		        ex.printStackTrace(); //Shouldn't get here
-		    }
-		}
+	public static synchronized void playSound(final String path) {
+		playSound(path, false, false);
+	}
+	
+	public static synchronized void playMusic(final String path) {
+		playSound(path, true, true);
+	}
 
+	public static void increaseMusicVolume() {
+		volume_music = Math.min(1,volume_music+0.1f);
+		assignMusicVolume();
+	}
 
-		if(dataline==null) {
-		    //No dataline capable of *really* playing the stream
-			return null;
-		}
-		else {
-		    //We have a non-lying dataline!
-			return dataline;
-		}
+	public static void decreaseMusicVolume() {
+		volume_music = Math.max(0,volume_music-0.1f);
+		assignMusicVolume();
+	}
+	
+	public static void increaseClipVolume() {
+		volume_clip = Math.min(1,volume_clip+0.1f);
+		assignClipVolume();
+	}
+
+	public static void decreaseClipVolume() {
+		volume_clip = Math.max(0,volume_clip-0.1f);
+		assignClipVolume();
+	}
+	
+	/**
+	 * Returns a float from 0 to 1 that determines the percentage of the volume.
+	 * Clips are any sound that is not music
+	 * @return 0.1.....1.0
+	 */
+	public static float getClipVolume(){
+		return volume_clip;
+	}
+	
+	/**
+	 * Returns a float from 0 to 1 that determines the percentage of the volume.
+	 * @return 0.1.....1.0
+	 */
+	public static float getMusicVolume(){
+		return volume_music;
+	}
+	
+	private static void assignClipVolume(){
+        System.out.println("setting volume to "+volume_clip);
+        for(Line line : clips){
+            try{
+                FloatControl control = (FloatControl)line.getControl(FloatControl.Type.MASTER_GAIN);
+                float diff = control.getMaximum()-control.getMinimum();
+                float change = diff*volume_clip;
+                float value = control.getMinimum()+change;
+                control.setValue(limit(control,value));
+                System.out.println("	"+value);
+            }
+            catch(java.lang.IllegalArgumentException e) { continue; }
+         }
+    }
+	
+	private static void assignMusicVolume(){
+        System.out.println("setting volume to "+volume_music);
+        for(Line line : music){
+            try{
+                FloatControl control = (FloatControl)line.getControl(FloatControl.Type.MASTER_GAIN);
+                float diff = control.getMaximum()-control.getMinimum();
+                float change = diff*volume_music;
+                float value = control.getMinimum()+change;
+                control.setValue(limit(control,value));
+                System.out.println("	"+value);
+            }
+            catch(java.lang.IllegalArgumentException e) { continue; }
+         }
+    }
+	
+	public static void stopAllSounds(){
+		while(!clips.isEmpty()){
+			Clip clip = clips.get(clips.size()-1);
+			
+			clip.stop();
+			clip.close();
+			
+			// Remove the clip
+			clips.remove(clips.size()-1);
+        }
+	}
+	
+	public static void stopAllMusic(){
+		while(!music.isEmpty()){
+			Clip clip = music.get(music.size()-1);
+			
+			clip.stop();
+			clip.close();
+			
+			// Remove the clip
+			music.remove(music.size()-1);
+        }
+	}
+
+	private static float limit(FloatControl control,float level){ 
+		return Math.min(control.getMaximum(), Math.max(control.getMinimum(), level)); 
 	}
 }
