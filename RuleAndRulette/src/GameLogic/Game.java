@@ -68,6 +68,10 @@ public class Game {
 		gameStatus = GAMESTATUS_PLAYING;
 	}
 	
+	public void resetLevel(){
+		loadLevel(currentLevel);
+	}
+	
 	public void stopGame(){
 		gameTimer.cancel();
 	}

@@ -51,7 +51,7 @@ public class GUIFrame extends JFrame {
 		game.startGame();
 		
 		//starts the game loop
-		GameLoop loop = new GameLoop(60, 50) {
+		GameLoop loop = new GameLoop(60, 25) {
 //			World world;
 //			{
 //				world = new World(new Vec2(0, -9.8f));
