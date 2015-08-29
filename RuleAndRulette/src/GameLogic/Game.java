@@ -7,6 +7,8 @@ import java.util.Timer;
 import org.jbox2d.common.Vec2;
 
 import GameLogic.Characters.Entity;
+import Resources.R;
+import Sound.Sound;
 
 public class Game {
 	
@@ -105,9 +107,11 @@ public class Game {
 		if(Input.isKeyDown(KeyEvent.VK_SPACE)) {
 			Input.removeKey(KeyEvent.VK_SPACE);
 			if(selectedCharacter.touching > 0) {
+				Sound.playSound(R.sound.jump);
 				selectedCharacter.getBody().applyLinearImpulse(new Vec2(0, -jumpspeed), selectedCharacter.getBody().getLocalCenter());
 			}
 			if(getNotSelectedCharacter().touching > 0) {
+				Sound.playSound(R.sound.jump);
 				getNotSelectedCharacter().getBody().applyLinearImpulse(new Vec2(0, -jumpspeed), selectedCharacter.getBody().getLocalCenter());
 			}
 		}

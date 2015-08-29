@@ -2,29 +2,26 @@ package Resources;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.locks.LockSupport;
 
 import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
-import phys.Body;
-import phys.Physics;
 import visual.AnimatedSprite;
 import GUI.PixelImage;
 import GameLogic.Characters.Entity;
 import GameLogic.Characters.Rule;
 import GameLogic.Characters.Rulette;
 import Main.GameLoop;
+import Main.Main;
 
 
 public class R {
@@ -57,6 +54,10 @@ public class R {
 		public static PixelImage nine = loadPixelImage("assets/gui/nine.png").getScaledInstance(DEFAULT_SCALE);
 	}
 	
+	public static class sound{
+		public static String jump =  loadSoundURL("Jump.wav");
+	}
+	
 	public static class animations {
 		
 		public static class rule {
@@ -81,6 +82,10 @@ public class R {
 			//e.printStackTrace();
 			return null;
 		}
+	}
+	
+	public static String loadSoundURL(String fname) {
+		return "assets/sounds/"+fname;
 	}
 	
 	private static PixelImage canvas;

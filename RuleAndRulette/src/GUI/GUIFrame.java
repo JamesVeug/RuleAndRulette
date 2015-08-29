@@ -1,29 +1,12 @@
 package GUI;
 
-import java.awt.Rectangle;
-import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Timer;
-import java.util.TimerTask;
-
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
-import org.jbox2d.collision.shapes.PolygonShape;
-import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.Body;
-import org.jbox2d.dynamics.BodyDef;
-import org.jbox2d.dynamics.BodyType;
-import org.jbox2d.dynamics.World;
-
 import phys.Physics;
 import GameLogic.Game;
-import GameLogic.Characters.Block;
 import GameLogic.Characters.Entity;
-import GameLogic.Characters.Rule;
-import GameLogic.Characters.Rulette;
 import Main.GameLoop;
 
 public class GUIFrame extends JFrame {
@@ -87,7 +70,7 @@ public class GUIFrame extends JFrame {
 			protected void tick(float delta) {
 				game.gameInteration(delta);
 				
-				System.out.println("Rule: " + game.getRule().touching + " Rulette " + game.getRulette().touching);
+				//System.out.println("Rule: " + game.getRule().touching + " Rulette " + game.getRulette().touching);
 			}
 
 			@Override
