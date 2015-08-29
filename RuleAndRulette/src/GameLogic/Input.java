@@ -8,6 +8,7 @@ import java.util.Set;
 public class Input implements KeyListener {
 	
 	private static Set<Integer> pressedKeys = new HashSet<Integer>();
+	private static Set<Integer> pressedKeysOnce = new HashSet<Integer>();
 	
 	public static Input instance = new Input();
 	
@@ -18,20 +19,28 @@ public class Input implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if(!pressedKeys.contains(e.getKeyCode())) {
-			pressedKeys.add(e.getKeyCode());
+		int keycode = e.getKeyCode();
+		if(!pressedKeys.contains(keycode)) {
+			pressedKeys.add(keycode);
+			pressedKeysOnce.add(keycode);
 		}
 	}
 
 	@Override
-	public void keyReleased(KeyEvent e) {
-		if(pressedKeys.contains(e.getKeyCode())) {
-			pressedKeys.remove(e.getKeyCode());
+	public void keyReleased(KeyEvent e) {		
+		int keycode = e.getKeyCode();
+		if(pressedKeys.contains(keycode)) {
+			pressedKeys.remove(keycode);
+			pressedKeysOnce.remove(keycode);
 		}
 	}
 	
 	public static boolean isKeyDown(int keycode) {
 		return pressedKeys.contains(keycode);
+	}
+	
+	public static boolean isKeyDownOnce(int keycode) {
+		return pressedKeysOnce.remove(keycode);
 	}
 	
 	public static void removeKey(int keycode) {
