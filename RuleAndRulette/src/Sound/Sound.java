@@ -33,22 +33,43 @@ public class Sound {
 	private static final float REPEAT_THRESHOLD = 0.1f; // the same sound can not be played closer than 0.1f seconds apart
 	private static final HashMap<String, Float> soundPlayedAt = new HashMap<String, Float>();
 	
-	private static float volume_clip = 1; // 1 = 100%, 0 == 0%
-	private static float volume_music = 1; // 1 = 100%, 0 == 0%
+	// Volume of current soudn and music
+	private static float volume_clip = 0.8f; // 1 = 100%, 0 == 0%
+	private static float volume_music = 0.9f; // 1 = 100%, 0 == 0%
+	
+	// When we mute, we want to assign the volume to be this value
+	// So when we unmute, we can change back to what we originally was.
+	private static float unmuted_volume_clip = 1; // 1 = 100%, 0 == 0%
+	private static float unmuted_volume_music = 1; // 1 = 100%, 0 == 0%
 	
 	public static void muteClips(){
 		playClips = false;
+		unmuted_volume_clip = volume_clip;
+		volume_clip = 0;
+		assignClipVolume();
+		//System.out.println("Muted clips");
 	}
 	
 	public static void unmuteClips(){
 		playClips = true;
+		volume_clip = unmuted_volume_clip;
+		assignClipVolume();
+		//System.out.println("Unmuted clips");
 	}
+	
 	public static void muteMusic(){
 		playMusic = false;
+		unmuted_volume_music = volume_music;
+		volume_music = 0;
+		assignMusicVolume();
+		//System.out.println("Muted Music");
 	}
 	
 	public static void unmuteMusic(){
 		playMusic = true;
+		volume_music = unmuted_volume_music;
+		assignMusicVolume();
+		//System.out.println("Unmuted Music");
 	}
 	
 	public static boolean isMusicMuted(){
@@ -102,10 +123,10 @@ public class Sound {
 			        // Change volume
 			        FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
 			        if( isMusic ){
-			        	gainControl.setValue(volume_music);
+			        	gainControl.setValue(getMusicValue(clip));
 			        }
 			        else{
-			        	gainControl.setValue(volume_clip);
+			        	gainControl.setValue(getClipValue(clip));
 			        }
 		        	
 			        // Loop or no loop
@@ -206,30 +227,42 @@ public class Sound {
 	}
 	
 	private static void assignClipVolume(){
-        System.out.println("setting volume to "+volume_clip);
+        //System.out.println("setting clip volume to "+volume_clip);
         for(Line line : clips){
             try{
-                FloatControl control = (FloatControl)line.getControl(FloatControl.Type.MASTER_GAIN);
-                float diff = control.getMaximum()-control.getMinimum();
-                float change = diff*volume_clip;
-                float value = control.getMinimum()+change;
-                control.setValue(limit(control,value));
-                System.out.println("	"+value);
+        		FloatControl control = (FloatControl)line.getControl(FloatControl.Type.MASTER_GAIN);
+                float value = getClipValue(line);
+                control.setValue(value);
+                //System.out.println("	"+value);
             }
             catch(java.lang.IllegalArgumentException e) { continue; }
          }
     }
 	
+	private static float getClipValue(Line line){
+		FloatControl control = (FloatControl)line.getControl(FloatControl.Type.MASTER_GAIN);
+        float diff = control.getMaximum()-control.getMinimum();
+        float change = diff*volume_clip;
+        float value = control.getMinimum()+change;
+        return limit(control,value);
+	}
+	
+	private static float getMusicValue(Line line){
+		FloatControl control = (FloatControl)line.getControl(FloatControl.Type.MASTER_GAIN);
+        float diff = control.getMaximum()-control.getMinimum();
+        float change = diff*volume_music;
+        float value = control.getMinimum()+change;
+        return limit(control,value);
+	}
+	
 	private static void assignMusicVolume(){
-        System.out.println("setting volume to "+volume_music);
+        //System.out.println("setting music volume to "+volume_music);
         for(Line line : music){
             try{
                 FloatControl control = (FloatControl)line.getControl(FloatControl.Type.MASTER_GAIN);
-                float diff = control.getMaximum()-control.getMinimum();
-                float change = diff*volume_music;
-                float value = control.getMinimum()+change;
+                float value = getMusicValue(line);
                 control.setValue(limit(control,value));
-                System.out.println("	"+value);
+                //System.out.println("	"+value);
             }
             catch(java.lang.IllegalArgumentException e) { continue; }
          }

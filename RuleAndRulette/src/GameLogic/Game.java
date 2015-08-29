@@ -141,23 +141,23 @@ public class Game {
 		
 		
 		
-		if( Input.isKeyDown(KeyEvent.VK_PAGE_UP) ){
+		if( Input.isKeyDownOnce(KeyEvent.VK_PAGE_UP) ){
 			Sound.increaseClipVolume();
 		}
-		else if( Input.isKeyDown(KeyEvent.VK_PAGE_DOWN) ){
+		else if( Input.isKeyDownOnce(KeyEvent.VK_PAGE_DOWN) ){
 			Sound.decreaseClipVolume();
 		}
-		else if( Input.isKeyDown(KeyEvent.VK_HOME) ){
+		else if( Input.isKeyDownOnce(KeyEvent.VK_HOME) ){
 			Sound.increaseMusicVolume();
 		}
-		else if( Input.isKeyDown(KeyEvent.VK_END) ){
+		else if( Input.isKeyDownOnce(KeyEvent.VK_END) ){
 			Sound.decreaseMusicVolume();
 		}
-		else if( Input.isKeyDown(KeyEvent.VK_INSERT) ){
+		else if( Input.isKeyDownOnce(KeyEvent.VK_INSERT) ){
 			if( Sound.isMusicMuted() ) Sound.unmuteMusic();
 			else Sound.muteMusic();
 		}
-		else if( Input.isKeyDown(KeyEvent.VK_DELETE) ){
+		else if( Input.isKeyDownOnce(KeyEvent.VK_DELETE) ){
 			if( Sound.isClipsMuted() ) Sound.unmuteClips();
 			else Sound.muteClips();
 		}
