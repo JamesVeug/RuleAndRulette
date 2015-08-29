@@ -87,13 +87,23 @@ public class GUIFrame extends JFrame {
 			protected void tick(float delta) {
 				game.gameInteration(delta);
 				
-				System.out.println("Rule: " + game.getRule().touching + " Rulette " + game.getRulette().touching);
+//				System.out.println("Rule: " + game.getRule().touching + " Rulette " + game.getRulette().touching);
 			}
 
 			@Override
 			protected void fixedTick(float delta) {
 				//physics simulation stuff goes here
 				Physics.world.step(delta, 6, 2);
+				
+				if(Physics.a != null) {
+					Physics.spawn(Physics.a.getPosition().x, Physics.a.getPosition().y, 100);
+					Physics.a = null;
+				}
+				
+				if(Physics.b != null) {
+					Physics.spawn(Physics.b.getPosition().x, Physics.b.getPosition().y, 100);
+					Physics.b = null;
+				}
 			}
 
 			@Override
@@ -101,6 +111,25 @@ public class GUIFrame extends JFrame {
 				canvas.clear();
 				for(Entity e : game.getEntities()) {
 					e.render(canvas);
+				}
+				
+				for(Entity e : Physics.spawned) {
+					e.render(canvas);
+				}
+				
+				boolean first = true;
+				for(Iterator<Entity> iter = Physics.spawned.iterator(); iter.hasNext();) {
+					
+					if(first) {
+						Entity e = iter.next();
+						Physics.world.destroyBody(e.getBody());
+						iter.remove();
+						first = false;
+					} else {
+						Entity entity = iter.next();
+						entity.getBody().getFixtureList().setSensor(true);
+						break;
+					}
 				}
 
 				entireScreenPanel.repaint();

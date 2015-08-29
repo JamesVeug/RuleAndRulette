@@ -7,8 +7,11 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.util.List;
+import java.util.concurrent.locks.LockSupport;
 
 import javax.swing.JPanel;
+
+import org.jbox2d.common.Vec2;
 
 import GameLogic.Game;
 import GameLogic.Input;
@@ -18,6 +21,31 @@ import Resources.R;
 public class GUIPanel extends JPanel implements KeyListener{
 	private static final long serialVersionUID = -2946375771339622409L;
 	
+	private static Vec2 camera = new Vec2();
+	
+	public static void shake(final float intensity) {
+		new Thread(new Runnable() {
+			public void run() {
+				Vec2 dest = new Vec2();
+				
+				for(int i = 0; i < 5; i++) {
+					dest.x = (float) (-1 + Math.random()*2);
+					dest.y = (float) (-1 + Math.random()*2);
+					
+					dest.normalize();
+					dest.mulLocal(intensity);
+					
+					for(float t = 0; t < 1; t+=0.07f) {
+						camera.x = t*camera.x + (1-t)*dest.x;
+						camera.y = t*camera.y + (1-t)*dest.y;
+						LockSupport.parkNanos(100000);
+					}
+				}
+				
+				camera.setZero();
+			}
+		}).start();		
+	}
 	
 	private Game game;
 	
@@ -54,7 +82,7 @@ public class GUIPanel extends JPanel implements KeyListener{
 //			entities.get(i).render(canvas);
 //		}
 		
-		g.drawImage(canvas.asBufferedImage(), null, 0, 0);
+		g.drawImage(canvas.asBufferedImage(), null, (int)(camera.x), (int)(camera.y));
 		
 		
 		drawUI(g);
