@@ -85,7 +85,7 @@ public class Physics implements ContactListener {
 		Entity b = (Entity) contact.m_fixtureB.m_body.m_userData;
 		
 		if(a.getClass() == Rule.class) {// || a.getClass() == Rulette.class) {
-			System.out.println("A: " + a.getBody().getLinearVelocity().y);
+//			System.out.println("A: " + a.getBody().getLinearVelocity().y);
 			if(a.getBody().getLinearVelocity().length() > 2.5f) {
 				Sound.playSound(R.sound.effects.land_hard);
 			} else if (a.getBody().getLinearVelocity().length() > 1f) {
@@ -94,7 +94,7 @@ public class Physics implements ContactListener {
 		}
 		
 		if(b.getClass() == Rule.class) {// || b.getClass() == Rulette.class) {
-			System.out.println("B: " + b.getBody().getLinearVelocity().y);
+//			System.out.println("B: " + b.getBody().getLinearVelocity().y);
 			if(b.getBody().getLinearVelocity().length() > 2.5f) {
 				Sound.playSound(R.sound.effects.land_hard);
 			} else if (b.getBody().getLinearVelocity().length() > 1f) {

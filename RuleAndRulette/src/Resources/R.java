@@ -50,7 +50,7 @@ public class R {
 	}
 	
 	public static class environment {
-		public static PixelImage block = loadPixelImage("assets/environment/block.jpg");
+		public static PixelImage block = loadPixelImage("assets/environment/block.png");
 		public static PixelImage spikes = loadPixelImage("assets/environment/spikes.png");
 		public static PixelImage heart = loadPixelImage("assets/environment/heart.png");
 	}
