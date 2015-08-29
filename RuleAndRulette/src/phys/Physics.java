@@ -54,11 +54,11 @@ public class Physics implements ContactListener {
 	
 	public static void spawn(final float x, final float y, int numBoxes) {
 		
-		/*for(int i = 0; i < numBoxes; i++) {
+		for(int i = 0; i < numBoxes; i++) {
 			Entity entity = new PhysBox(x, y);
 			entity.getBody().applyLinearImpulse(new Vec2(MathUtils.randomFloat(-1, 1), MathUtils.randomFloat(-1, 1)).mulLocal(0.2f), entity.getBody().getLocalCenter());
 			spawned.add(entity);
-		}*/
+		}
 	}
 
 	
