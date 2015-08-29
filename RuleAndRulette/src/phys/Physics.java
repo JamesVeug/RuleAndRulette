@@ -23,7 +23,7 @@ import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 import org.jbox2d.dynamics.contacts.Contact;
 
-import GUI.GUIPanel;
+import GUI.GUIGame;
 import GUI.PixelImage;
 import GameLogic.Characters.Block;
 import GameLogic.Characters.Entity;
@@ -123,7 +123,7 @@ public class Physics implements ContactListener {
 			}
 			
 			if((a.getClass() == Rule.class && a.touching == 0)) { 
-				GUIPanel.shake(5f);
+				GUIGame.shake(5f);
 				Physics.a = a;
 //				spawn(a.getPosition().x, a.getPosition().y, 20);
 			}
@@ -144,7 +144,7 @@ public class Physics implements ContactListener {
 			}
 			
 			if(b.getClass() == Rulette.class && b.touching == 0) {
-				GUIPanel.shake(5f);
+				GUIGame.shake(5f);
 				Physics.b = b;
 	//			spawn(a.getPosition().x, a.getPosition().y, 20);
 			}
