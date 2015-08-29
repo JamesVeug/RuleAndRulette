@@ -186,25 +186,42 @@ public class Physics implements ContactListener {
 //		
 //	}
 	
-	private static class PhysBox extends Entity {
+	public static class PhysBox extends Entity {
 		
 		public static int SIZE = 16;
+		public static float LIFETIME = 1.5f;
 		
-		private PixelImage square = new PixelImage(SIZE,SIZE);
+		private float lifetime = (float)(Math.random())*LIFETIME*1f;
+		private float time = 0;
 		
+		public boolean isDead = false;
+		
+		private static PixelImage[] images = new PixelImage[100];
+		static {
+			for(int i = 0; i < images.length; i++) {
+				images[i] = new PixelImage(SIZE, SIZE);
+				Graphics2D g = images[i].asBufferedImage().createGraphics();
+				g.setColor(new Color((int)(Math.random()*Integer.MAX_VALUE)));
+				g.drawRect(0, 0, SIZE-1, SIZE-1);
+				g.dispose();
+			}
+		}
+		
+		private PixelImage square;
 		
 		public PhysBox(float x, float y) {
 			super(x, y, false);
 			
-			Graphics2D g = square.asBufferedImage().createGraphics();
-			g.setColor(new Color((int)(Math.random()*Integer.MAX_VALUE)));
-			g.drawRect(0, 0, SIZE-1, SIZE-1);
-			g.dispose();
+			square = images[((int)(Math.random()*images.length))%images.length];
 		}
 
 		@Override
 		public void update(float delta) {
-			// TODO Auto-generated method stub
+			time += delta;
+			
+			if(time >= lifetime) {
+				isDead = true;
+			}
 			
 		}
 

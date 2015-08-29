@@ -1,5 +1,6 @@
 package GUI;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Timer;
 
@@ -7,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 import phys.Physics;
+import phys.Physics.PhysBox;
 import GameLogic.Game;
 import GameLogic.Characters.Entity;
 import Main.GameLoop;
@@ -89,6 +91,21 @@ public class GUIFrame extends JFrame {
 					Physics.spawn(Physics.b.getPosition().x, Physics.b.getPosition().y, 100);
 					Physics.b = null;
 				}
+				
+				HashSet<Entity> deads = new HashSet<Entity>();
+				
+				for(Entity e : Physics.spawned) {
+					e.update(delta);
+					if(((PhysBox)e).isDead) {
+						deads.add(e);
+					}
+				}
+				
+				Physics.spawned.removeAll(deads);
+				
+				for(Entity e : deads) {
+					Physics.world.destroyBody(e.getBody());
+				}
 			}
 
 			@Override
@@ -102,20 +119,20 @@ public class GUIFrame extends JFrame {
 					e.render(canvas);
 				}
 				
-				boolean first = true;
-				for(Iterator<Entity> iter = Physics.spawned.iterator(); iter.hasNext();) {
-					
-					if(first) {
-						Entity e = iter.next();
-						Physics.world.destroyBody(e.getBody());
-						iter.remove();
-						first = false;
-					} else {
-						Entity entity = iter.next();
-						entity.getBody().getFixtureList().setSensor(true);
-						break;
-					}
-				}
+//				boolean first = true;
+//				for(Iterator<Entity> iter = Physics.spawned.iterator(); iter.hasNext();) {
+//					
+//					if(first) {
+//						Entity e = iter.next();
+//						Physics.world.destroyBody(e.getBody());
+//						iter.remove();
+//						first = false;
+//					} else {
+//						Entity entity = iter.next();
+//						entity.getBody().getFixtureList().setSensor(true);
+//						break;
+//					}
+//				}
 
 				entireScreenPanel.repaint();
 			}
