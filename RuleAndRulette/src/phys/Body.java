@@ -1,5 +1,7 @@
 package phys;
 
+import org.jbox2d.common.Vec2;
+
 public class Body {
 	
 	Vec2 position;

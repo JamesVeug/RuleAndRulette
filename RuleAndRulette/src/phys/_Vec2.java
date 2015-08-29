@@ -28,35 +28,44 @@ package phys;
 /**
  * A 2D column vector
  */
-public class Vec2 {
-	/** Should we count Vec2 creations? */
+public class _Vec2 {
+	/** Should we count _Vec2 creations? */
 	static public boolean watchCreations = true;
 	/**
-	 * Running count of Vec2 creations.  Must be zeroed out
+	 * Running count of _Vec2 creations.  Must be zeroed out
 	 * manually (perhaps at start of time step).  Incremented
-	 * in Vec2 constructor if watchCreations flag is true.
+	 * in _Vec2 constructor if watchCreations flag is true.
 	 * <BR><BR>
 	 * Mainly used for optimization purposes, since temporary
-	 * Vec2 creation is often a bottleneck.
+	 * _Vec2 creation is often a bottleneck.
 	 */
 	static public int creationCount = 0;
 
 	public float x, y;
 
-	public Vec2() {
+	public _Vec2() {
 		this(0, 0);
 	}
 
-	public Vec2(float x, float y) {
-		if (Vec2.watchCreations) {
-			++Vec2.creationCount;
+	public _Vec2(float x, float y) {
+		if (_Vec2.watchCreations) {
+			++_Vec2.creationCount;
 		}
 		this.x = x;
 		this.y = y;
 		// testbed.PTest.debugCount++;
 	}
+	
+	public _Vec2(double x, double y) {
+		if (_Vec2.watchCreations) {
+			++_Vec2.creationCount;
+		}
+		this.x = (float) x;
+		this.y = (float) y;
+		// testbed.PTest.debugCount++;
+	}
 
-	public Vec2( Vec2 toCopy) {
+	public _Vec2( _Vec2 toCopy) {
 		this(toCopy.x, toCopy.y);
 	}
 
@@ -73,64 +82,64 @@ public class Vec2 {
 	}
 
 	/** Set this vector to another vector. */
-	public final Vec2 set(Vec2 v) {
+	public final _Vec2 set(_Vec2 v) {
 		this.x = v.x;
 		this.y = v.y;
 		return this;
 	}
 
 	/** Return the sum of this vector and another; does not alter either one. */
-	public final Vec2 add(Vec2 v) {
-		return new Vec2(x + v.x, y + v.y);
+	public final _Vec2 add(_Vec2 v) {
+		return new _Vec2(x + v.x, y + v.y);
 	}
 	
 	
 
 	/** Return the difference of this vector and another; does not alter either one. */
-	public final Vec2 sub(Vec2 v) {
-		return new Vec2(x - v.x, y - v.y);
+	public final _Vec2 sub(_Vec2 v) {
+		return new _Vec2(x - v.x, y - v.y);
 	}
 
 	/** Return this vector multiplied by a scalar; does not alter this vector. */
-	public final Vec2 mul(float a) {
-		return new Vec2(x * a, y * a);
+	public final _Vec2 mul(float a) {
+		return new _Vec2(x * a, y * a);
 	}
 
 	/** Return the negation of this vector; does not alter this vector. */
-	public final Vec2 negate() {
-		return new Vec2(-x, -y);
+	public final _Vec2 negate() {
+		return new _Vec2(-x, -y);
 	}
 
 	/** Flip the vector and return it - alters this vector. */
-	public final Vec2 negateLocal() {
+	public final _Vec2 negateLocal() {
 		x = -x;
 		y = -y;
 		return this;
 	}
 
 	/** Add another vector to this one and returns result - alters this vector. */
-	public final Vec2 addLocal(Vec2 v) {
+	public final _Vec2 addLocal(_Vec2 v) {
 		x += v.x;
 		y += v.y;
 		return this;
 	}
 	
 	/** Adds values to this vector and returns result - alters this vector. */
-	public final Vec2 addLocal( float x, float y) {
+	public final _Vec2 addLocal( float x, float y) {
 		this.x+=x;
 		this.y+=y;
 		return this;
 	}
 
 	/** Subtract another vector from this one and return result - alters this vector. */
-	public final Vec2 subLocal(Vec2 v) {
+	public final _Vec2 subLocal(_Vec2 v) {
 		x -= v.x;
 		y -= v.y;
 		return this;
 	}
 
 	/** Multiply this vector by a number and return result - alters this vector. */
-	public final Vec2 mulLocal(float a) {
+	public final _Vec2 mulLocal(float a) {
 		x *= a;
 		y *= a;
 		return this;
@@ -167,8 +176,8 @@ public class Vec2 {
 	}
 
 	/** Return a new vector that has positive components. */
-	public final Vec2 abs() {
-		return new Vec2((float)(Math.abs(x)), (float)(Math.abs(y)));
+	public final _Vec2 abs() {
+		return new _Vec2((float)(Math.abs(x)), (float)(Math.abs(y)));
 	}
 
 	/* djm created */
@@ -179,8 +188,8 @@ public class Vec2 {
 
 	@Override
 	/** Return a copy of this vector. */
-	public final Vec2 clone() {
-		return new Vec2(x, y);
+	public final _Vec2 clone() {
+		return new _Vec2(x, y);
 	}
 
 	@Override
@@ -192,67 +201,67 @@ public class Vec2 {
 	 * Static
 	 */
 
-	public final static Vec2 abs(Vec2 a) {
-		return new Vec2((float)(Math.abs(a.x)), (float)(Math.abs(a.y)));
+	public final static _Vec2 abs(_Vec2 a) {
+		return new _Vec2((float)(Math.abs(a.x)), (float)(Math.abs(a.y)));
 	}
 
 	/* djm created */
-	public final static void absToOut(Vec2 a, Vec2 out){
+	public final static void absToOut(_Vec2 a, _Vec2 out){
 		out.x = (float)(Math.abs(a.x));
 		out.y = (float)(Math.abs(a.y));
 	}
 
-	public final static float dot(Vec2 a, Vec2 b) {
+	public final static float dot(_Vec2 a, _Vec2 b) {
 		return a.x * b.x + a.y * b.y;
 	}
 
-	public final static float cross(Vec2 a, Vec2 b) {
+	public final static float cross(_Vec2 a, _Vec2 b) {
 		return a.x * b.y - a.y * b.x;
 	}
 
-	public final static Vec2 cross(Vec2 a, float s) {
-		return new Vec2(s * a.y, -s * a.x);
+	public final static _Vec2 cross(_Vec2 a, float s) {
+		return new _Vec2(s * a.y, -s * a.x);
 	}
 
 	/* djm created */
-	public final static void crossToOut(Vec2 a, float s, Vec2 out){
+	public final static void crossToOut(_Vec2 a, float s, _Vec2 out){
 		float tempy = -s * a.x;
 		out.x = s * a.y;
 		out.y = tempy;
 	}
 
-	public final static Vec2 cross(float s, Vec2 a) {
-		return new Vec2(-s * a.y, s * a.x);
+	public final static _Vec2 cross(float s, _Vec2 a) {
+		return new _Vec2(-s * a.y, s * a.x);
 	}
 
 	/* djm created */
-	public final static void crossToOut(float s, Vec2 a, Vec2 out){
+	public final static void crossToOut(float s, _Vec2 a, _Vec2 out){
 		float tempY = s * a.x;
 		out.x = -s * a.y;
 		out.y = tempY;
 	}
 	
-	public final static void negateToOut(Vec2 a, Vec2 out){
+	public final static void negateToOut(_Vec2 a, _Vec2 out){
 		out.x = -a.x;
 		out.y = -a.y;
 	}
 
-	public final static Vec2 min(Vec2 a, Vec2 b) {
-		return new Vec2(a.x < b.x ? a.x : b.x, a.y < b.y ? a.y : b.y);
+	public final static _Vec2 min(_Vec2 a, _Vec2 b) {
+		return new _Vec2(a.x < b.x ? a.x : b.x, a.y < b.y ? a.y : b.y);
 	}
 
-	public final static Vec2 max(Vec2 a, Vec2 b) {
-		return new Vec2(a.x > b.x ? a.x : b.x, a.y > b.y ? a.y : b.y);
+	public final static _Vec2 max(_Vec2 a, _Vec2 b) {
+		return new _Vec2(a.x > b.x ? a.x : b.x, a.y > b.y ? a.y : b.y);
 	}
 
 	/* djm created */
-	public final static void minToOut(Vec2 a, Vec2 b, Vec2 out) {
+	public final static void minToOut(_Vec2 a, _Vec2 b, _Vec2 out) {
 		out.x = a.x < b.x ? a.x : b.x;
 		out.y = a.y < b.y ? a.y : b.y;
 	}
 
 	/* djm created */
-	public final static void maxToOut(Vec2 a, Vec2 b, Vec2 out) {
+	public final static void maxToOut(_Vec2 a, _Vec2 b, _Vec2 out) {
 		out.x = a.x > b.x ? a.x : b.x;
 		out.y = a.y > b.y ? a.y : b.y;
 	}
@@ -280,7 +289,7 @@ public class Vec2 {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Vec2 other = (Vec2) obj;
+		_Vec2 other = (_Vec2) obj;
 		if (Float.floatToIntBits(x) != Float.floatToIntBits(other.x))
 			return false;
 		if (Float.floatToIntBits(y) != Float.floatToIntBits(other.y))

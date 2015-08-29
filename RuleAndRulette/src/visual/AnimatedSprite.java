@@ -29,7 +29,7 @@ public class AnimatedSprite {
 	public void update(float delta) {
 		this.time += delta;
 		
-		if(this.time >= 60/(float)fps) {
+		if(this.time >= 1/(float)fps) {
 			this.time = 0;
 			frame = (frame+1)%numFrames;
 		}

@@ -2,9 +2,12 @@ package GUI;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import java.util.Arrays;
 
 
 public class PixelImage implements Cloneable {
+	
+	public static final int DEFAULT_CLEAR_COLOR = -1;
 	
 	private int width;
 	private int height;
@@ -26,6 +29,14 @@ public class PixelImage implements Cloneable {
 		
 		//draw in the src image
 		this.image.createGraphics().drawImage(src, null, 0, 0);
+	}
+	
+	public void clear() {
+		fill(DEFAULT_CLEAR_COLOR);
+	}
+	
+	public void fill(int rgb) {
+		Arrays.fill(data, rgb);
 	}
 	
 	public int getRGB(int x, int y) {
@@ -76,6 +87,17 @@ public class PixelImage implements Cloneable {
 		return out;
 	}
 	
+	public PixelImage flipLocal() {
+		for(int x = 0; x < this.getWidth()/2; x++) {
+			for(int y = 0; y < this.getHeight(); y++) {
+				int tmp = this.getRGB(x, y);
+				this.setRGB(x, y, this.getRGB(this.getWidth()-1-x, y));
+				this.setRGB(this.getWidth()-1-x, y, tmp);
+			}
+		}
+		return this;
+	}
+	
 	public PixelImage clone() {
 		PixelImage out = new PixelImage(width, height);
 		
@@ -92,7 +114,10 @@ public class PixelImage implements Cloneable {
 				int dstX = x + srcX;
 				int dstY = y + srcY;
 				if(dstX >= 0 && dstX < dst.getWidth() && dstY >= 0 && dstY < dst.getHeight()) {
-					dst.setRGB(dstX, dstY, src.getRGB(srcX, srcY));
+					int alpha = src.getRGB(srcX, srcY) >> 24 & 0xFF;
+					if(alpha != 0) {
+						dst.setRGB(dstX, dstY, src.getRGB(srcX, srcY));
+					}
 				}
 			}
 		}

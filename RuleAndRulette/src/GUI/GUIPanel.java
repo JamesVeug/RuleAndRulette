@@ -10,6 +10,7 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import GameLogic.Game;
+import GameLogic.Input;
 import GameLogic.Characters.Entity;
 
 public class GUIPanel extends JPanel implements KeyListener{
@@ -17,10 +18,15 @@ public class GUIPanel extends JPanel implements KeyListener{
 	
 	
 	private Game game;
+	
+	private PixelImage canvas;
 
-	public GUIPanel(){
+	public GUIPanel(PixelImage canvas){
 		setBackground(Color.gray);
 		this.addKeyListener(this);
+		
+		this.addKeyListener(Input.instance);
+		this.canvas = canvas;
 	}
 
 	public void setGame(Game game) {
@@ -32,19 +38,21 @@ public class GUIPanel extends JPanel implements KeyListener{
 		super.paintComponent(gold);
 		Graphics2D g = (Graphics2D)gold;
 		
-		if( game == null ){
-			return;
-		}
+//		if( game == null ){
+//			return;
+//		}
+//		
+//		// I DRAW STUFF HERE
+//		List<Entity> entities = game.getEntities();
+//		if(entities == null ){
+//			return;
+//		}
+//		
+//		for(int i = 0; i < entities.size(); i++){
+//			entities.get(i).render(canvas);
+//		}
 		
-		// I DRAW STUFF HERE
-		List<Entity> entities = game.getEntities();
-		if(entities == null ){
-			return;
-		}
-		
-		for(int i = 0; i < entities.size(); i++){
-			entities.get(i).render(g);
-		}
+		g.drawImage(canvas.asBufferedImage(), null, 0, 0);
 		
 		
 		drawUI(g);
@@ -79,6 +87,12 @@ public class GUIPanel extends JPanel implements KeyListener{
 		else if( e.getKeyCode() == KeyEvent.VK_S ){
 			//System.out.println("Start moving Down");
 			game.startMovingCharacterDown();
+		}
+		
+		switch(e.getKeyCode()) {
+		case KeyEvent.VK_SPACE :
+			game.jumpMovingCharacter();
+			break;
 		}
 		
 	}
