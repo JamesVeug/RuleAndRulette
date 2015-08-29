@@ -1,6 +1,16 @@
 package Main;
 
+import java.util.HashSet;
 import java.util.concurrent.locks.LockSupport;
+
+import phys.Physics;
+import phys.Physics.IDeadable;
+import GUI.GUIPanel;
+import GUI.PixelImage;
+import GameLogic.Game;
+import GameLogic.Time;
+import GameLogic.Characters.Entity;
+import Resources.R;
 
 /**
  * The GameLoop class provides abstract methods for you to implement and <br>
@@ -8,7 +18,7 @@ import java.util.concurrent.locks.LockSupport;
  * @author Hamish Rae-Hodgson
  *
  */
-public abstract class GameLoop extends Thread {
+public class GameLoop extends Thread {
 	private boolean running = true;
 	private boolean runningSlow = false;
 	
@@ -25,15 +35,20 @@ public abstract class GameLoop extends Thread {
 	private float fixedTime; //elapsed time in seconds
 	
 	private long syncRate;
+	private Game game;
+	private GUIPanel panel;
 	
 	/**
 	 * Creates a new GameLoop with the given parameters
 	 * @param fps Desired frames per second.
 	 * @param fixedUPS fixedUpdate() calls per second.
 	 */
-	public GameLoop(int fps, int fixedUPS) {
+	public GameLoop(int fps, int fixedUPS, Game game, GUIPanel panel) {
 		syncRate = (long) ((1D/fps)*1000000000); //fps in nanoseconds.
 		fixedDeltaTime = 1f/fixedUPS;// fixed updates per seconds in seconds.
+		
+		this.game = game;
+		this.panel = panel;
 	}
 	
 	/**
@@ -84,19 +99,90 @@ public abstract class GameLoop extends Thread {
 	 * Called approximately every 1/fps seconds.
 	 * @param delta The time since the last call to tick() in seconds.
 	 */
-	protected abstract void tick(float delta);
+	protected void tick(float delta){
+		Time.tick(delta);
+		
+		game.gameInteration(delta);
+	}
 	
 	/**
 	 * Called exactly fixedUPS times a second. delta is always exactly 1/fixedUPS<br>
 	 * delta critical work should go here - such as physics.
 	 * @param delta The step to advance by.
 	 */
-	protected abstract void fixedTick(float delta);
+	protected void fixedTick(float delta){
+		//physics simulation stuff goes here
+		Physics.world.step(delta, 6, 2);
+		
+		if(Physics.a != null) {
+//			if(Physics.hearts) {
+//				Physics.spawnHeart(Physics.a.getPosition().x, Physics.a.getPosition().y, 50);
+//			} else {
+				Physics.spawn(Physics.a.getPosition().x, Physics.a.getPosition().y, 100);
+//			}
+			
+			Physics.a = null;
+		}
+		
+		if(Physics.b != null) {
+//			if(Physics.hearts) {
+//				Physics.spawnHeart(Physics.b.getPosition().x, Physics.b.getPosition().y, 50);
+//			} else {
+				Physics.spawn(Physics.b.getPosition().x, Physics.b.getPosition().y, 100);
+//			}
+			
+			Physics.b = null;
+		}
+		
+		HashSet<Entity> deads = new HashSet<Entity>();
+		
+		for(Entity e : Physics.spawned) {
+			e.update(delta);
+			if(((IDeadable)e).isDead()) {
+				deads.add(e);
+			}
+		}
+		
+		Physics.spawned.removeAll(deads);
+		
+		for(Entity e : deads) {
+			Physics.world.destroyBody(e.getBody());
+		}
+	}
 	
 	/**
 	 * You should do all your rendering from here.
 	 */
-	protected abstract void render();
+	protected void render(){
+		panel.getCanvas().clear();
+		
+		PixelImage.blit(R.environment.level, panel.getCanvas(), 0, 0);
+		
+		for(Entity e : game.getEntities()) {
+			e.render(panel.getCanvas());
+		}
+		
+		for(Entity e : Physics.spawned) {
+			e.render(panel.getCanvas());
+		}
+		
+//		boolean first = true;
+//		for(Iterator<Entity> iter = Physics.spawned.iterator(); iter.hasNext();) {
+//			
+//			if(first) {
+//				Entity e = iter.next();
+//				Physics.world.destroyBody(e.getBody());
+//				iter.remove();
+//				first = false;
+//			} else {
+//				Entity entity = iter.next();
+//				entity.getBody().getFixtureList().setSensor(true);
+//				break;
+//			}
+//		}
+
+		panel.repaint();
+	}
 	
 	/** 
 	 * If nanos is greater than 0 sleeps the thread for the length of nanos.

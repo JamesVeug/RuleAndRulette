@@ -22,6 +22,7 @@ public class GUIPanel extends JPanel {
 	private static final long serialVersionUID = -2946375771339622409L;
 
 	private static Vec2 camera = new Vec2();
+	private PixelImage canvas;
 
 	public static void shake(final float intensity) {
 		new Thread(new Runnable() {
@@ -49,12 +50,11 @@ public class GUIPanel extends JPanel {
 
 	private Game game;
 
-	private PixelImage canvas;
 
-	public GUIPanel(PixelImage canvas) {
+	public GUIPanel() {
 		setBackground(Color.gray);
 		this.addKeyListener(Input.instance);
-		this.canvas = canvas;
+		this.canvas = new PixelImage(1024, 576);
 	}
 
 	public void setGame(Game game) {
@@ -168,70 +168,9 @@ public class GUIPanel extends JPanel {
 		
 		g2d.dispose();		
 	}
-//	private void drawUI(Graphics2D g) {
-		// Draw which level we are on
-//		BufferedImage levelImage = R.gui.level.asBufferedImage();
-//		g.drawImage(levelImage, null, 0, 0);
-//		BufferedImage[] levelNumbers = getCurrentLevelImage();
-//		int heightDiff = Math.abs(levelImage.getHeight() / 2
-//				- levelNumbers[0].getHeight() / 2);
-//		int y = levelImage.getMinY() + heightDiff;
-//		for (int i = 0; i < levelNumbers.length; i++) {
-//			g.drawImage(levelNumbers[i], null, levelImage.getMinX()
-//					+ levelImage.getWidth() + (i * levelNumbers[0].getWidth()),
-//					y);
-//		}
-		
-//		String level = "Level: " + game.getCurrentLevel();
-//		
-//		g.setFont(new Font(R.fonts.kenpixel_mini_square.getName(), Font.PLAIN, 30));
-//		g.setColor(Color.black);
-//		Rectangle2D bounds = g.getFontMetrics().getStringBounds(level, g);
-////		int x = (int) (centerOfScreen.getX() - bounds.getWidth()/2);
-////		int y = (int) (centerOfScreen.getY() + bounds.getHeight()/4);
-//		g.drawString(level, 38, 60);
-//	}
 
-//	private BufferedImage[] getCurrentLevelImage() {
-//		String string = String.valueOf(game.getCurrentLevel());
-//		int numbers = string.length();
-//		BufferedImage[] images = new BufferedImage[numbers];
-//		for (int i = 0; i < numbers; i++) {
-//			int insideNumber = Integer
-//					.parseInt(String.valueOf(string.charAt(i)));
-//			switch (insideNumber) {
-//			case 1:
-//				images[i] = R.gui.one.asBufferedImage();
-//				break;
-//			case 2:
-//				images[i] = R.gui.two.asBufferedImage();
-//				break;
-//			case 3:
-//				images[i] = R.gui.three.asBufferedImage();
-//				break;
-//			case 4:
-//				images[i] = R.gui.four.asBufferedImage();
-//				break;
-//			case 5:
-//				images[i] = R.gui.five.asBufferedImage();
-//				break;
-//			case 6:
-//				images[i] = R.gui.six.asBufferedImage();
-//				break;
-//			case 7:
-//				images[i] = R.gui.seven.asBufferedImage();
-//				break;
-//			case 8:
-//				images[i] = R.gui.eight.asBufferedImage();
-//				break;
-//			case 9:
-//				images[i] = R.gui.nine.asBufferedImage();
-//				break;
-//			case 0:
-//				images[i] = R.gui.zero.asBufferedImage();
-//			}
-//		}
-//		return images;
-//	}
+	public PixelImage getCanvas() {
+		return canvas;
+	}
 
 }
