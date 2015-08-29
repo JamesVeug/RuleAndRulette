@@ -1,5 +1,6 @@
 package phys;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
@@ -54,7 +55,7 @@ public class Physics implements ContactListener {
 	public static void spawn(final float x, final float y, int numBoxes) {
 		
 		for(int i = 0; i < numBoxes; i++) {
-			Entity entity = new Block(x, y, false);
+			Entity entity = new PhysBox(x, y);
 			entity.getBody().applyLinearImpulse(new Vec2(MathUtils.randomFloat(-1, 1), MathUtils.randomFloat(-1, 1)).mulLocal(0.2f), entity.getBody().getLocalCenter());
 			spawned.add(entity);
 		}
@@ -186,13 +187,19 @@ public class Physics implements ContactListener {
 //	}
 	
 	private static class PhysBox extends Entity {
-
-		private float x, y;
+		
+		public static int SIZE = 16;
+		
+		private PixelImage square = new PixelImage(SIZE,SIZE);
 		
 		
-		public PhysBox(float x, float y, boolean isStatic) {
-			super(x, y, isStatic);
-			this.x = x; this.y = y;
+		public PhysBox(float x, float y) {
+			super(x, y, false);
+			
+			Graphics2D g = square.asBufferedImage().createGraphics();
+			g.setColor(new Color((int)(Math.random()*Integer.MAX_VALUE)));
+			g.drawRect(0, 0, SIZE-1, SIZE-1);
+			g.dispose();
 		}
 
 		@Override
@@ -209,12 +216,12 @@ public class Physics implements ContactListener {
 
 		@Override
 		public void render(PixelImage canvas) {
-			PixelImage.blit(R.environment.block.getScaledInstance(0.2f), canvas, getX(), getY());
+			PixelImage.blit(square, canvas, getX(), getY());
 		}
 
 		@Override
 		public Rectangle2D getBounds() {
-			return new Rectangle2D.Float(x, y, R.environment.block.getWidth()*0.2f, R.environment.block.getHeight()*0.2f);
+			return new Rectangle2D.Float(this.getPosition().x-SIZE/2, this.getPosition().y-SIZE/2, SIZE-1, SIZE-1);
 		}
 		
 	}

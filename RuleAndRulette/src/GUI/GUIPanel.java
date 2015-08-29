@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.concurrent.locks.LockSupport;
 
@@ -15,6 +16,7 @@ import org.jbox2d.common.Vec2;
 import GameLogic.Game;
 import GameLogic.Input;
 import GameLogic.Characters.Entity;
+import Resources.R;
 
 public class GUIPanel extends JPanel implements KeyListener{
 	private static final long serialVersionUID = -2946375771339622409L;
@@ -88,8 +90,15 @@ public class GUIPanel extends JPanel implements KeyListener{
 
 	private void drawUI(Graphics2D g) {
 		// Draw which level we are on
+		BufferedImage levelImage = R.gui.level.asBufferedImage();
+		g.drawImage(levelImage, null, 0,0);
+		BufferedImage[] levelNumbers = getCurrentLevelImage();
 		
-		
+		int heightDiff = Math.abs(levelImage.getHeight()/2-levelNumbers[0].getHeight()/2);
+		int y = levelImage.getMinY()+heightDiff;
+		for(int i = 0; i < levelNumbers.length; i++){
+			g.drawImage(levelNumbers[i], null, levelImage.getMinX()+levelImage.getWidth()+(i*levelNumbers[0].getWidth()),y);
+		}
 	}
 
 	@Override
