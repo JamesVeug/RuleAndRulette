@@ -179,7 +179,7 @@ public class Game {
 		}	
 		
 		
-		
+		// SOUND
 		if( Input.isKeyDownOnce(KeyEvent.VK_PAGE_UP) ){
 			Sound.increaseClipVolume();
 		}
@@ -199,6 +199,12 @@ public class Game {
 		else if( Input.isKeyDownOnce(KeyEvent.VK_DELETE) ){
 			if( Sound.isClipsMuted() ) Sound.unmuteClips();
 			else Sound.muteClips();
+		}
+		
+		
+		// Reset Game
+		if( Input.isKeyDownOnce(KeyEvent.VK_R) ){
+			resetLevel();
 		}
 	}
 
