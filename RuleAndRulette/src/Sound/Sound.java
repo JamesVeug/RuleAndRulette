@@ -89,7 +89,6 @@ public class Sound {
 		    	}
 		    }
 		}).start();
-	  System.out.println("Finished");
 	}	
 	
 	public static synchronized void playSound(final String path) {

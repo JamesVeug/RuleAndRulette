@@ -12,6 +12,9 @@ import Resources.R;
 import Sound.Sound;
 
 public class Game {
+	public static final int GAMESTATUS_PLAYING = 0;
+	public static final int GAMESTATUS_FAILED = 1;
+	public static final int GAMESTATUS_WON = 2;
 	
 	public static List<Entity> DEBUG_ENTITY_LIST;
 	
@@ -26,7 +29,9 @@ public class Game {
 	private List<Entity> gameObjects;
 	
 	private long lasttime = 0l;
+	private long levelTransitionTime = 100;
 	
+	private int gameStatus = GAMESTATUS_PLAYING;
 	private Timer gameTimer;
 	private int currentLevel;
 
@@ -48,7 +53,7 @@ public class Game {
 	
 	public void loadLevel(int number){
 		
-		// Remvoe world
+		// Remove world
 		if( gameObjects != null ){
 			for(Entity e : gameObjects){
 				Physics.world.destroyBody(e.getBody());
@@ -61,6 +66,7 @@ public class Game {
 		rulette = gameObjects.get(gameObjects.size()-1);
 		selectedCharacter = rule;
 		DEBUG_ENTITY_LIST = gameObjects;
+		gameStatus = GAMESTATUS_PLAYING;
 	}
 	
 	public void stopGame(){
@@ -75,17 +81,28 @@ public class Game {
 		// Check if Rule and Rulette have met
 		if( rule.getBounds().intersects(rulette.getBounds()) ){
 			
+			
 			// We have met, so stop the game and change level.
 						
 			// Pause for a second
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+			gameStatus = GAMESTATUS_WON;
+			
+			if( lasttime == 0l ){
+				lasttime = System.currentTimeMillis();
+			}
+			
+			long timetaken = System.currentTimeMillis() - lasttime;
+			if( timetaken < levelTransitionTime  ){
+				return;
 			}
 			
 			// Change level			
 			loadLevel(++currentLevel);
+			
+			// Reset time
+			lasttime = 0l;
+			
+			return;
 		}
 		
 		Vec2 move = new Vec2();
@@ -153,5 +170,10 @@ public class Game {
 
 	public void jump() {
 		currentLevel++;
+	}
+
+
+	public int getStatus() {
+		return gameStatus;
 	}
 }
