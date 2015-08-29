@@ -52,6 +52,11 @@ public class R {
 		public static PixelImage seven = loadPixelImage("assets/gui/seven.png").getScaledInstance(DEFAULT_SCALE);
 		public static PixelImage eight = loadPixelImage("assets/gui/eight.png").getScaledInstance(DEFAULT_SCALE);
 		public static PixelImage nine = loadPixelImage("assets/gui/nine.png").getScaledInstance(DEFAULT_SCALE);
+		
+		public static PixelImage heart = loadPixelImage("assets/gui/heart.png").getScaledInstance(DEFAULT_SCALE);
+		public static PixelImage broken_heart = loadPixelImage("assets/gui/broken_heart.png").getScaledInstance(DEFAULT_SCALE);
+		public static PixelImage success = loadPixelImage("assets/gui/success.png").getScaledInstance(DEFAULT_SCALE);
+		public static PixelImage failed = loadPixelImage("assets/gui/failed.png").getScaledInstance(DEFAULT_SCALE);
 	}
 	
 	public static class sound{

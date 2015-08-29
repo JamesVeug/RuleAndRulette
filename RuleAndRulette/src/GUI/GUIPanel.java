@@ -1,10 +1,12 @@
 package GUI;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.concurrent.locks.LockSupport;
@@ -84,7 +86,23 @@ public class GUIPanel extends JPanel {
 				(int) (camera.y));
 
 		drawUI(g);
+		
+		if( game.getStatus() == Game.GAMESTATUS_WON ){
+			drawWonStatus(g);
+		}
 	};
+
+	private void drawWonStatus(Graphics2D g) {
+		Point2D centerOfScreen = new Point2D.Double(((int)this.getWidth()/2), ((int)(this.getHeight()/2)));
+		
+
+		BufferedImage heart = R.gui.heart.asBufferedImage();
+		g.drawImage(heart, ((int)centerOfScreen.getX()-heart.getWidth()/2), ((int)centerOfScreen.getY()-heart.getHeight()/2), null);
+		
+		BufferedImage success = R.gui.success.asBufferedImage();
+		g.drawImage(success, ((int)centerOfScreen.getX()-success.getWidth()/2), ((int)centerOfScreen.getY()-success.getHeight()/2), null);
+		
+	}
 
 	private void drawUI(Graphics2D g) {
 		// Draw which level we are on
