@@ -72,12 +72,18 @@ public class GUIPanel extends JPanel {
 		g2d.drawString("Level: " + game.getCurrentLevel(), 38, 60);
 		g2d.dispose();
 		
-		if( game.getStatus() == Game.GAMESTATUS_WON ){
-			drawWonStatus(canvas);
-		}
+		drawStatus(canvas);
 		
 		g.drawImage(canvas.asBufferedImage(), null, (int) (camera.x), (int) (camera.y));
 	};
+	
+	private void drawStatus(PixelImage canvas){
+		if( game.getStatus() == Game.GAMESTATUS_WON ){
+			drawWonStatus(canvas);
+		} else if( game.getStatus() == Game.GAMESTATUS_FAILED ){
+			drawFailStatus(canvas);
+		}
+	}
 
 	private void drawWonStatus(PixelImage canvas) {
 		Graphics2D g = canvas.asBufferedImage().createGraphics();
@@ -94,6 +100,23 @@ public class GUIPanel extends JPanel {
 		int x = (int) (centerOfScreen.getX() - bounds.getWidth()/2);
 		int y = (int) (centerOfScreen.getY() + bounds.getHeight()/4);
 		g.drawString("Success", x, y);
+		g.dispose();
+	}
+	
+	private void drawFailStatus(PixelImage canvas) {
+		Graphics2D g = canvas.asBufferedImage().createGraphics();
+		
+		Point2D centerOfScreen = new Point2D.Double(canvas.getWidth()/2, canvas.getHeight()/2);
+
+		BufferedImage brokenheart = R.gui.broken_heart.asBufferedImage();
+		g.drawImage(brokenheart, ((int)centerOfScreen.getX()-brokenheart.getWidth()/2), ((int)(centerOfScreen.getY()/2)-brokenheart.getHeight()/2), null);
+		
+		g.setFont(new Font(R.fonts.kenpixel_mini_square.getName(), Font.PLAIN, 60));
+		g.setColor(Color.black);
+		Rectangle2D bounds = g.getFontMetrics().getStringBounds("Failed", g);
+		int x = (int) (centerOfScreen.getX() - bounds.getWidth()/2);
+		int y = (int) (centerOfScreen.getY() + bounds.getHeight()/4);
+		g.drawString("Failed", x, y);
 		g.dispose();
 	}
 
