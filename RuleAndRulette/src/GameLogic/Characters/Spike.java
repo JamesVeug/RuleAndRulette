@@ -8,14 +8,14 @@ import Resources.R;
 
 public class Spike extends Entity{
 
-	public Spike(int i, int j) {
-		super(i,j,true);
-	}
-
 //	@Override
 //	public void render(Graphics2D g) {
 //		g.drawImage(R.environment.spikes.asBufferedImage(), null, getX(), getY());
 //	}
+
+	public Spike(float x, float y) {
+		 super(x, y, true);
+	}
 
 	@Override
 	public void render(PixelImage canvas) {

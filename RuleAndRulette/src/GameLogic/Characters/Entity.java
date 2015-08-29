@@ -33,7 +33,6 @@ public abstract class Entity {
 	
 	private Body body;
 
-	
 	public Entity(boolean isStatic) {
 		this(0, 0, isStatic);
 	}

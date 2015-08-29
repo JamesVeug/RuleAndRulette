@@ -7,6 +7,7 @@ import GameLogic.Characters.Block;
 import GameLogic.Characters.Entity;
 import GameLogic.Characters.Rule;
 import GameLogic.Characters.Rulette;
+import GameLogic.Characters.Spike;
 
 public class Level {
 	
@@ -205,7 +206,7 @@ public class Level {
 					rulette = new Rulette(x*TILE_WIDTH + TILE_WIDTH/2f, y*TILE_HEIGHT + TILE_HEIGHT/2f);
 					break;
 				case KEY_SPIKE :
-					//rulette = new Rulette(x*TILE_WIDTH, y*TILE_HEIGHT);
+					entities.add(new Spike(x*TILE_WIDTH + TILE_WIDTH/2f, y*TILE_HEIGHT + TILE_HEIGHT/2f));
 					break;
 				}
 			}

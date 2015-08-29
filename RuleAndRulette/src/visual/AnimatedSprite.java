@@ -2,7 +2,7 @@ package visual;
 
 import GUI.PixelImage;
 
-public class AnimatedSprite {
+public class AnimatedSprite implements Cloneable {
 	
 	private PixelImage image;
 	private int numFrames;
@@ -37,6 +37,10 @@ public class AnimatedSprite {
 	
 	public PixelImage getImage() {
 		return image.getSubImage(frame*tileX, 0, tileX, image.getHeight());
+	}
+	
+	public AnimatedSprite clone() {
+		return new AnimatedSprite(image.clone(), numFrames, fps);
 	}
 	
 }
