@@ -53,6 +53,7 @@ public class R {
 		public static PixelImage block = loadPixelImage("assets/environment/block.png");
 		public static PixelImage spikes = loadPixelImage("assets/environment/spikes.png");
 		public static PixelImage heart = loadPixelImage("assets/environment/heart.png");
+		public static PixelImage level = loadPixelImage("assets/environment/level.png");
 	}
 	
 	public static class gui {
@@ -73,6 +74,12 @@ public class R {
 		public static PixelImage broken_heart = loadPixelImage("assets/gui/broken_heart.png");
 		public static PixelImage success = loadPixelImage("assets/gui/success.png");
 		public static PixelImage failed = loadPixelImage("assets/gui/failed.png");
+		
+		public static class volume {
+			public static PixelImage mute = loadPixelImage("assets/gui/volume_mute.png");
+			public static PixelImage unmute = loadPixelImage("assets/gui/volume_unmute.png");
+		}
+		
 	}
 	
 	public static class sound{

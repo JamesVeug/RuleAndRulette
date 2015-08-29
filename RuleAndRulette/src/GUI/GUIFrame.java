@@ -14,6 +14,7 @@ import GameLogic.Game;
 import GameLogic.Time;
 import GameLogic.Characters.Entity;
 import Main.GameLoop;
+import Resources.R;
 
 public class GUIFrame extends JFrame {
 	private static final long serialVersionUID = -1822196509785001746L;
@@ -30,11 +31,10 @@ public class GUIFrame extends JFrame {
 		
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
-		this.canvas = new PixelImage(1024, 600);
+		this.canvas = new PixelImage(1024, 576);
 		
 		entireScreenPanel = new GUIPanel(this.canvas);
 		add(entireScreenPanel);
-		
 		
 		
 		setSize(1024,600);
@@ -125,6 +125,9 @@ public class GUIFrame extends JFrame {
 			@Override
 			protected void render() {
 				canvas.clear();
+				
+				PixelImage.blit(R.environment.level, canvas, 0, 0);
+				
 				for(Entity e : game.getEntities()) {
 					e.render(canvas);
 				}
