@@ -1,6 +1,7 @@
 package GameLogic.Characters;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.geom.Rectangle2D;
 
 import GUI.PixelImage;
@@ -12,19 +13,20 @@ public class Block extends Entity{
 		super(x, y, isStatic);
 	}
 
-	@Override
-	public void render(Graphics2D g) {
-		g.drawImage(R.environment.block.asBufferedImage(), null, getX(), getY());
-	}
+//	@Override
+//	public void render(Graphics2D g) {
+//		g.drawImage(R.environment.block.asBufferedImage(), null, getX(), getY());
+//	}
 
 	@Override
 	public void render(PixelImage canvas) {
-		PixelImage.blit(R.environment.block, canvas, this.getX(), this.getY());
+		Point p = getRenderPoint();
+		PixelImage.blit(R.environment.block, canvas, p.x, p.y);
 	}
 
 	@Override
 	public Rectangle2D getBounds() {
-		return new Rectangle2D.Float(this.getPosition().x, this.getPosition().y, R.environment.block.getWidth(), R.environment.block.getHeight());
+		return new Rectangle2D.Float(this.getPosition().x - R.environment.block.getWidth()/2f, this.getPosition().y - R.environment.block.getHeight()/2f, R.environment.block.getWidth(), R.environment.block.getHeight());
 	}
 
 	@Override

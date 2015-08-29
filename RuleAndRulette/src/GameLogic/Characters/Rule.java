@@ -1,6 +1,7 @@
 package GameLogic.Characters;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.geom.Rectangle2D;
 
 import org.jbox2d.collision.shapes.CircleShape;
@@ -45,18 +46,19 @@ public class Rule extends Entity{
 		anim.update(delta);
 	}
 
-	@Override
-	public void render(Graphics2D g) {
-		g.drawImage(R.characters.rule.asBufferedImage(), null, getX(), getY());
-	}
+//	@Override
+//	public void render(Graphics2D g) {
+//		g.drawImage(R.characters.rule.asBufferedImage(), null, getX(), getY());
+//	}
 	
 	public void render(PixelImage canvas) {
-		PixelImage.blit(flipped ? anim.getImage().flipLocal() : anim.getImage(), canvas, this.getX(), this.getY());
+		Point p = getRenderPoint();
+		PixelImage.blit(flipped ? anim.getImage().flipLocal() : anim.getImage(), canvas, p.x, p.y);
 	}
 
 	@Override
 	public Rectangle2D getBounds() {
-		return new Rectangle2D.Float(this.getPosition().x, this.getPosition().y, R.characters.rule.getWidth(), R.characters.rule.getHeight());
+		return new Rectangle2D.Float(this.getPosition().x - R.characters.rule.getWidth()/2f, this.getPosition().y - R.characters.rule.getHeight()/2f, R.characters.rule.getWidth(), R.characters.rule.getHeight());
 	}
 
 	

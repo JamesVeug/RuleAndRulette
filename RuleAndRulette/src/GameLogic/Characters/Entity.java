@@ -1,6 +1,7 @@
 package GameLogic.Characters;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 
@@ -66,12 +67,17 @@ public abstract class Entity {
 		return body;
 	}
 	
-	public int getX() {
-		return (int) (body.getPosition().x*SCALE);
-	}
+//	public int getX() {
+//		return (int) (body.getPosition().x*SCALE);
+//	}
+//	
+//	public int getY() {
+//		return (int) (body.getPosition().y*SCALE);
+//	}
 	
-	public int getY() {
-		return (int) (body.getPosition().y*SCALE);
+	public Point getRenderPoint() {
+		Rectangle2D bounds = getBounds();
+		return new Point((int)(body.getPosition().x*SCALE - bounds.getWidth()/2f), (int)(body.getPosition().y*SCALE - bounds.getHeight()/2f));
 	}
 	
 //	/** immutable */
@@ -120,7 +126,7 @@ public abstract class Entity {
 	
 	public abstract void update(float delta);
 	
-	public abstract void render(Graphics2D g);
+//	public abstract void render(Graphics2D g);
 	
 	public abstract void render(PixelImage canvas);
 	

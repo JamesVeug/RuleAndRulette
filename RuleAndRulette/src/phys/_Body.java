@@ -2,18 +2,18 @@ package phys;
 
 import org.jbox2d.common.Vec2;
 
-public class Body {
+public class _Body {
 	
 	Vec2 position;
 	Vec2 velocity;
 	
 	public boolean _static;
 	
-	Body() {
+	_Body() {
 		this(new Vec2());
 	}
 	
-	Body(Vec2 position) {
+	_Body(Vec2 position) {
 		this.position = new Vec2(position);
 		this.velocity = new Vec2();
 	}
