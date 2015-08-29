@@ -193,16 +193,16 @@ public class Level {
 			for(int x = 0; x < lines[y].length(); x++) {
 				switch(lines[y].charAt(x)) {
 				case KEY_BLOCK :
-					entities.add(new Block(x*TILE_WIDTH, y*TILE_HEIGHT, true));
+					entities.add(new Block(x*TILE_WIDTH + TILE_WIDTH/2f, y*TILE_HEIGHT + TILE_HEIGHT/2f, true));
 					break;
 				case KEY_MOVEABLE_BLOCK :
-					entities.add(new Block(x*TILE_WIDTH, y*TILE_HEIGHT, false));
+					entities.add(new Block(x*TILE_WIDTH + TILE_WIDTH/2f, y*TILE_HEIGHT + TILE_HEIGHT/2f, false));
 					break;
 				case KEY_RULE :
-					rule = new Rule(x*TILE_WIDTH, y*TILE_HEIGHT);
+					rule = new Rule(x*TILE_WIDTH + TILE_WIDTH/2f, y*TILE_HEIGHT + TILE_HEIGHT/2f);
 					break;
 				case KEY_RULETTE :
-					rulette = new Rulette(x*TILE_WIDTH, y*TILE_HEIGHT);
+					rulette = new Rulette(x*TILE_WIDTH + TILE_WIDTH/2f, y*TILE_HEIGHT + TILE_HEIGHT/2f);
 					break;
 				case KEY_SPIKE :
 					rulette = new Rulette(x*TILE_WIDTH, y*TILE_HEIGHT);
