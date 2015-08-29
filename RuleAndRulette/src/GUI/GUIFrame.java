@@ -8,8 +8,10 @@ import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 import phys.Physics;
+import phys.Physics.IDeadable;
 import phys.Physics.PhysBox;
 import GameLogic.Game;
+import GameLogic.Time;
 import GameLogic.Characters.Entity;
 import Main.GameLoop;
 
@@ -72,6 +74,8 @@ public class GUIFrame extends JFrame {
 			
 			@Override
 			protected void tick(float delta) {
+				Time.tick(delta);
+				
 				game.gameInteration(delta);
 				
 				//System.out.println("Rule: " + game.getRule().touching + " Rulette " + game.getRulette().touching);
@@ -83,12 +87,22 @@ public class GUIFrame extends JFrame {
 				Physics.world.step(delta, 6, 2);
 				
 				if(Physics.a != null) {
-					Physics.spawn(Physics.a.getPosition().x, Physics.a.getPosition().y, 100);
+//					if(Physics.hearts) {
+//						Physics.spawnHeart(Physics.a.getPosition().x, Physics.a.getPosition().y, 50);
+//					} else {
+						Physics.spawn(Physics.a.getPosition().x, Physics.a.getPosition().y, 100);
+//					}
+					
 					Physics.a = null;
 				}
 				
 				if(Physics.b != null) {
-					Physics.spawn(Physics.b.getPosition().x, Physics.b.getPosition().y, 100);
+//					if(Physics.hearts) {
+//						Physics.spawnHeart(Physics.b.getPosition().x, Physics.b.getPosition().y, 50);
+//					} else {
+						Physics.spawn(Physics.b.getPosition().x, Physics.b.getPosition().y, 100);
+//					}
+					
 					Physics.b = null;
 				}
 				
@@ -96,7 +110,7 @@ public class GUIFrame extends JFrame {
 				
 				for(Entity e : Physics.spawned) {
 					e.update(delta);
-					if(((PhysBox)e).isDead) {
+					if(((IDeadable)e).isDead()) {
 						deads.add(e);
 					}
 				}

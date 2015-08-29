@@ -28,6 +28,7 @@ import GameLogic.Characters.Entity;
 import GameLogic.Characters.Rule;
 import GameLogic.Characters.Rulette;
 import Resources.R;
+import Sound.Sound;
 
 public class Physics implements ContactListener {
 	
@@ -42,6 +43,8 @@ public class Physics implements ContactListener {
 	
 	public static final Physics instance = new Physics();
 	
+	public static boolean hearts = false;
+	
 	public static Entity a = null;
 	public static Entity b = null;
 	
@@ -54,8 +57,21 @@ public class Physics implements ContactListener {
 	
 	public static void spawn(final float x, final float y, int numBoxes) {
 		
+		Sound.playSound(R.sound.effects.explosion);
+		
 		for(int i = 0; i < numBoxes; i++) {
 			Entity entity = new PhysBox(x, y);
+//			entity.getBody().applyLinearImpulse(new Vec2(MathUtils.randomFloat(-1, 1), MathUtils.randomFloat(-1, 1)).mulLocal(0.2f), entity.getBody().getLocalCenter());
+			spawned.add(entity);
+		}
+	}
+	
+	public static void spawnHeart(final float x, final float y, int numBoxes) {
+		
+		Sound.playSound(R.sound.effects.explosion);
+		
+		for(int i = 0; i < numBoxes; i++) {
+			Entity entity = new HeartBox(x, y);
 //			entity.getBody().applyLinearImpulse(new Vec2(MathUtils.randomFloat(-1, 1), MathUtils.randomFloat(-1, 1)).mulLocal(0.2f), entity.getBody().getLocalCenter());
 			spawned.add(entity);
 		}
@@ -67,6 +83,24 @@ public class Physics implements ContactListener {
 	public void beginContact(Contact contact) {
 		Entity a = (Entity) contact.m_fixtureA.m_body.m_userData;
 		Entity b = (Entity) contact.m_fixtureB.m_body.m_userData;
+		
+		if(a.getClass() == Rule.class) {// || a.getClass() == Rulette.class) {
+			System.out.println("A: " + a.getBody().getLinearVelocity().y);
+			if(a.getBody().getLinearVelocity().length() > 2.5f) {
+				Sound.playSound(R.sound.effects.land_hard);
+			} else if (a.getBody().getLinearVelocity().length() > 1f) {
+				Sound.playSound(R.sound.effects.land_soft);
+			}
+		}
+		
+		if(b.getClass() == Rule.class) {// || b.getClass() == Rulette.class) {
+			System.out.println("B: " + b.getBody().getLinearVelocity().y);
+			if(b.getBody().getLinearVelocity().length() > 2.5f) {
+				Sound.playSound(R.sound.effects.land_hard);
+			} else if (b.getBody().getLinearVelocity().length() > 1f) {
+				Sound.playSound(R.sound.effects.land_soft);
+			}
+		}
 		
 		if((a.getClass() == Rule.class && a.touching == 0)) { 
 			GUIPanel.shake(5f);
@@ -186,7 +220,12 @@ public class Physics implements ContactListener {
 //		
 //	}
 	
-	public static class PhysBox extends Entity {
+	public static interface IDeadable {
+		public boolean isDead();
+		public void setDead(boolean isDead);
+	}
+	
+	public static class PhysBox extends Entity implements IDeadable {
 		
 		public static int SIZE = 16;
 		public static float LIFETIME = 1.5f;
@@ -194,7 +233,7 @@ public class Physics implements ContactListener {
 		private float lifetime = (float)(Math.random())*LIFETIME*1f;
 		private float time = 0;
 		
-		public boolean isDead = false;
+		private boolean isDead = false;
 		
 		private static PixelImage[] images = new PixelImage[100];
 		static {
@@ -204,6 +243,7 @@ public class Physics implements ContactListener {
 				g.setColor(new Color((int)(Math.random()*Integer.MAX_VALUE)));
 				g.drawRect(0, 0, SIZE-1, SIZE-1);
 				g.dispose();
+//				images[i] = R.environment.heart;
 			}
 		}
 		
@@ -241,6 +281,73 @@ public class Physics implements ContactListener {
 		@Override
 		public Rectangle2D getBounds() {
 			return new Rectangle2D.Float(this.getPosition().x-SIZE/2, this.getPosition().y-SIZE/2, SIZE-1, SIZE-1);
+		}
+
+		@Override
+		public boolean isDead() {
+			return isDead;
+		}
+
+		@Override
+		public void setDead(boolean isDead) {
+			this.isDead = isDead;
+		}
+		
+	}
+	
+	public static class HeartBox extends Entity implements IDeadable {
+		
+		public static float LIFETIME = 1.5f;
+		
+		private float lifetime = (float)(Math.random())*LIFETIME*1f;
+		private float time = 0;
+		
+		public boolean isDead = false;
+		
+		private static PixelImage heart = R.environment.heart.getScaledInstance(0.5f);
+		
+		private PixelImage image = heart;
+		
+		public HeartBox(float x, float y) {
+			super(x, y, false);
+			
+			this.getBody().applyLinearImpulse(new Vec2(MathUtils.randomFloat(-1, 1), MathUtils.randomFloat(-1, 1)).mulLocal(0.25f), this.getBody().getLocalCenter());
+		}
+
+		@Override
+		public void update(float delta) {
+			time += delta;
+			
+			if(time >= lifetime) {
+				isDead = true;
+			}
+			
+		}
+
+		@Override
+		public void render(Graphics2D g) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void render(PixelImage canvas) {
+			PixelImage.blit(image, canvas, getX(), getY());
+		}
+
+		@Override
+		public Rectangle2D getBounds() {
+			return new Rectangle2D.Float(this.getPosition().x-heart.getWidth()/2, this.getPosition().y-heart.getHeight()/2, heart.getWidth()-1, heart.getHeight()-1);
+		}
+
+		@Override
+		public boolean isDead() {
+			return isDead;
+		}
+
+		@Override
+		public void setDead(boolean isDead) {
+			this.isDead = isDead;
 		}
 		
 	}

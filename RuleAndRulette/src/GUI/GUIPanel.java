@@ -2,11 +2,13 @@ package GUI;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.concurrent.locks.LockSupport;
@@ -96,10 +98,17 @@ public class GUIPanel extends JPanel {
 		
 
 		BufferedImage heart = R.gui.heart.asBufferedImage();
-		g.drawImage(heart, ((int)centerOfScreen.getX()-heart.getWidth()/2), ((int)centerOfScreen.getY()-heart.getHeight()/2), null);
+		g.drawImage(heart, ((int)centerOfScreen.getX()-heart.getWidth()/2), ((int)(centerOfScreen.getY()/2)-heart.getHeight()/2), null);
 		
 		BufferedImage success = R.gui.success.asBufferedImage();
-		g.drawImage(success, ((int)centerOfScreen.getX()-success.getWidth()/2), ((int)centerOfScreen.getY()-success.getHeight()/2), null);
+//		g.drawImage(success, ((int)centerOfScreen.getX()-success.getWidth()/2), ((int)centerOfScreen.getY()-success.getHeight()/2), null);
+		
+		g.setFont(new Font(R.fonts.kenpixel_mini_square.getName(), Font.PLAIN, 60));
+		g.setColor(Color.black);
+		Rectangle2D bounds = g.getFontMetrics().getStringBounds("Success", g);
+		int x = (int) (centerOfScreen.getX() - bounds.getWidth()/2);
+		int y = (int) (centerOfScreen.getY() + bounds.getHeight()/4);
+		g.drawString("Success", x, y);
 		
 	}
 

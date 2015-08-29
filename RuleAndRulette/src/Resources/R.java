@@ -1,7 +1,10 @@
 package Resources;
 
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Graphics;
+import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -26,44 +29,82 @@ import Main.Main;
 
 public class R {
 	
-	private static int DEFAULT_SCALE = 1;
+	public static PixelImage logo = loadPixelImage("assets/logo.png");
 	
-	public static PixelImage logo = loadPixelImage("assets/logo.png").getScaledInstance(DEFAULT_SCALE);
+	public static class fonts {
+		public static Font kenpixel_mini_square;
+		static {
+			try {
+				kenpixel_mini_square = Font.createFont(Font.TRUETYPE_FONT, new File("assets/fonts/kenpixel_mini_square.ttf"));
+				GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(kenpixel_mini_square);
+			} catch (FontFormatException | IOException e) {
+				System.err.println("Could not load font: " + e.getMessage());
+				e.printStackTrace();
+			} 
+		}
+	}
 	
 	public static class characters {
-		public static PixelImage rule = loadPixelImage("assets/characters/rule.jpg").getScaledInstance(DEFAULT_SCALE);
-		public static PixelImage rulette = loadPixelImage("assets/characters/rulette.jpg").getScaledInstance(DEFAULT_SCALE);
+		public static PixelImage rule = loadPixelImage("assets/characters/rule.jpg");
+		public static PixelImage rulette = loadPixelImage("assets/characters/rulette.jpg");
 	}
 	
 	public static class environment {
-		public static PixelImage block = loadPixelImage("assets/environment/block.jpg").getScaledInstance(DEFAULT_SCALE);
-		public static PixelImage spikes = loadPixelImage("assets/environment/spikes.png").getScaledInstance(DEFAULT_SCALE);
+		public static PixelImage block = loadPixelImage("assets/environment/block.jpg");
+		public static PixelImage spikes = loadPixelImage("assets/environment/spikes.png");
+		public static PixelImage heart = loadPixelImage("assets/environment/heart.png");
 	}
 	
 	public static class gui {
-		public static PixelImage level = loadPixelImage("assets/gui/Level.png").getScaledInstance(DEFAULT_SCALE);
-		public static PixelImage zero = loadPixelImage("assets/gui/zero.png").getScaledInstance(DEFAULT_SCALE);
-		public static PixelImage one = loadPixelImage("assets/gui/one.png").getScaledInstance(DEFAULT_SCALE);
-		public static PixelImage two = loadPixelImage("assets/gui/two.png").getScaledInstance(DEFAULT_SCALE);
-		public static PixelImage three = loadPixelImage("assets/gui/three.png").getScaledInstance(DEFAULT_SCALE);
-		public static PixelImage four = loadPixelImage("assets/gui/four.png").getScaledInstance(DEFAULT_SCALE);
-		public static PixelImage five = loadPixelImage("assets/gui/five.png").getScaledInstance(DEFAULT_SCALE);
-		public static PixelImage six = loadPixelImage("assets/gui/six.png").getScaledInstance(DEFAULT_SCALE);
-		public static PixelImage seven = loadPixelImage("assets/gui/seven.png").getScaledInstance(DEFAULT_SCALE);
-		public static PixelImage eight = loadPixelImage("assets/gui/eight.png").getScaledInstance(DEFAULT_SCALE);
-		public static PixelImage nine = loadPixelImage("assets/gui/nine.png").getScaledInstance(DEFAULT_SCALE);
+		public static PixelImage level = loadPixelImage("assets/gui/Level.png");
+		public static PixelImage zero = loadPixelImage("assets/gui/zero.png");
+		public static PixelImage one = loadPixelImage("assets/gui/one.png");
+		public static PixelImage two = loadPixelImage("assets/gui/two.png");
+		public static PixelImage three = loadPixelImage("assets/gui/three.png");
+		public static PixelImage four = loadPixelImage("assets/gui/four.png");
+		public static PixelImage five = loadPixelImage("assets/gui/five.png");
+		public static PixelImage six = loadPixelImage("assets/gui/six.png");
+		public static PixelImage seven = loadPixelImage("assets/gui/seven.png");
+		public static PixelImage eight = loadPixelImage("assets/gui/eight.png");
+		public static PixelImage nine = loadPixelImage("assets/gui/nine.png");
 		
-		public static PixelImage heart = loadPixelImage("assets/gui/heart.png").getScaledInstance(DEFAULT_SCALE);
-		public static PixelImage broken_heart = loadPixelImage("assets/gui/broken_heart.png").getScaledInstance(DEFAULT_SCALE);
-		public static PixelImage success = loadPixelImage("assets/gui/success.png").getScaledInstance(DEFAULT_SCALE);
-		public static PixelImage failed = loadPixelImage("assets/gui/failed.png").getScaledInstance(DEFAULT_SCALE);
+//		public static PixelImage heart = loadPixelImage("assets/gui/heart.png");
+		public static PixelImage heart = loadPixelImage("assets/environment/heart.png").getScaledInstance(5);
+		public static PixelImage broken_heart = loadPixelImage("assets/gui/broken_heart.png");
+		public static PixelImage success = loadPixelImage("assets/gui/success.png");
+		public static PixelImage failed = loadPixelImage("assets/gui/failed.png");
 	}
 	
 	public static class sound{
-		public static String jump =  loadSoundURL("Jump.wav");
-		public static String land_hard =  loadSoundURL("land_hard.wav");
-		public static String land_soft =  loadSoundURL("land_soft.wav");
-		public static String explosion =  loadSoundURL("explosion.wav");
+		
+		public static class music {
+			
+			public static String getRandom() {
+				return bu_an_eating_candy_loud;
+//				return new String[] {
+//					bu_a_hunting_road,
+//					bu_a_sea_and_branches,
+//					bu_an_eating_candy
+//				}[(int) (Math.random()*3)];
+			}
+			
+			public static String bu_a_hunting_road = loadSoundURL("music/bu-a-hunting-road.wav");
+			public static String bu_a_sea_and_branches = loadSoundURL("music/bu-a-sea-and-branches.wav");
+			public static String bu_an_eating_candy = loadSoundURL("music/bu-an-eating-candy.wav");
+			public static String bu_an_eating_candy_loud = loadSoundURL("music/bu-an-eating-candy-loud.wav");
+		}
+		
+		public static class effects {
+			public static String jump =  loadSoundURL("effects/jump.wav");
+			public static String land_hard =  loadSoundURL("effects/land_hard.wav");
+			public static String land_soft =  loadSoundURL("effects/land_soft.wav");
+			public static String explosion =  loadSoundURL("effects/explosion.wav");
+		}
+		
+//		public static String jump =  loadSoundURL("Jump.wav");
+//		public static String land_hard =  loadSoundURL("land_hard.wav");
+//		public static String land_soft =  loadSoundURL("land_soft.wav");
+//		public static String explosion =  loadSoundURL("explosion.wav");
 	}
 	
 	public static class animations {
@@ -96,95 +137,95 @@ public class R {
 		return "assets/sounds/"+fname;
 	}
 	
-	private static PixelImage canvas;
-	
-	public static void main(String[] args) {		
-		final JFrame frame = new JFrame();
-		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		
-//		new Thread(new Runnable() {
-//			public void run() {
-//				for(;;) {
-//					frame.repaint();
-//					Physics.tick(1/60f);
-//					R.animations.mami.update(1/60f);
-//					LockSupport.parkNanos(100000);
-//				}
-//			}
-//		}).start();
-				
-		
-		final PixelImage canvas1 = new PixelImage(1920, 1080);
-		final PixelImage canvas2 = new PixelImage(1920, 1080);
-		
-		canvas = canvas1;
-		
-		GameLoop loop = new GameLoop(60, 50) {
-
-			List<Entity> entities = new ArrayList<Entity>();
-			
-//			{
-//				for(int i = 0; i < 100; i++) {
+//	private static PixelImage canvas;
+//	
+//	public static void main(String[] args) {		
+//		final JFrame frame = new JFrame();
+//		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+//		
+////		new Thread(new Runnable() {
+////			public void run() {
+////				for(;;) {
+////					frame.repaint();
+////					Physics.tick(1/60f);
+////					R.animations.mami.update(1/60f);
+////					LockSupport.parkNanos(100000);
+////				}
+////			}
+////		}).start();
+//				
+//		
+//		final PixelImage canvas1 = new PixelImage(1920, 1080);
+//		final PixelImage canvas2 = new PixelImage(1920, 1080);
+//		
+//		canvas = canvas1;
+//		
+//		GameLoop loop = new GameLoop(60, 50) {
+//
+//			List<Entity> entities = new ArrayList<Entity>();
+//			
+////			{
+////				for(int i = 0; i < 100; i++) {
+////					float x = (float)(Math.random()*1920);
+////					float y = (float)(Math.random()*1080);
+////					entities.add(Math.random() < 0.5f ? new Rule(x, y) : new Rulette(x, y));
+////				}
+////			}
+//			
+//			@Override
+//			protected void tick(float delta) {
+//				for(int i = 0; i < 5; i++) {
 //					float x = (float)(Math.random()*1920);
 //					float y = (float)(Math.random()*1080);
 //					entities.add(Math.random() < 0.5f ? new Rule(x, y) : new Rulette(x, y));
 //				}
+//				
+//				for(Iterator<Entity> iter = entities.iterator(); iter.hasNext();) {
+//					Entity e = iter.next();
+//					e.update(delta);
+//					if(e.getY() > 1080) {
+//						iter.remove();
+//					}
+//				}
 //			}
-			
-			@Override
-			protected void tick(float delta) {
-				for(int i = 0; i < 5; i++) {
-					float x = (float)(Math.random()*1920);
-					float y = (float)(Math.random()*1080);
-					entities.add(Math.random() < 0.5f ? new Rule(x, y) : new Rulette(x, y));
-				}
-				
-				for(Iterator<Entity> iter = entities.iterator(); iter.hasNext();) {
-					Entity e = iter.next();
-					e.update(delta);
-					if(e.getY() > 1080) {
-						iter.remove();
-					}
-				}
-			}
-
-			@Override
-			protected void fixedTick(float delta) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			protected void render() {
-				canvas.clear();
-				for(Entity e : entities) {
-					e.render(canvas);
-				}
-
-				frame.repaint();
-			}
-			
-		};
-		
-		loop.start();
-		
-		
-		
-		
-		frame.add(new JComponent() {
-			{
-				this.setPreferredSize(new Dimension(1920, 1080));
-			}
-			protected void paintComponent(Graphics g) {
-				g.drawImage(canvas.asBufferedImage() ,0, 0, null);
-//				e.render((Graphics2D)g);
-//				g.drawImage(R.animations.mami.getImage().asBufferedImage(),20, 20, null);
-			}
-		});
-		
-		frame.pack();
-		frame.setVisible(true);
-		
-	}
+//
+//			@Override
+//			protected void fixedTick(float delta) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//
+//			@Override
+//			protected void render() {
+//				canvas.clear();
+//				for(Entity e : entities) {
+//					e.render(canvas);
+//				}
+//
+//				frame.repaint();
+//			}
+//			
+//		};
+//		
+//		loop.start();
+//		
+//		
+//		
+//		
+//		frame.add(new JComponent() {
+//			{
+//				this.setPreferredSize(new Dimension(1920, 1080));
+//			}
+//			protected void paintComponent(Graphics g) {
+//				g.drawImage(canvas.asBufferedImage() ,0, 0, null);
+////				e.render((Graphics2D)g);
+////				g.drawImage(R.animations.mami.getImage().asBufferedImage(),20, 20, null);
+//			}
+//		});
+//		
+//		frame.pack();
+//		frame.setVisible(true);
+//		
+//	}
 	
 }

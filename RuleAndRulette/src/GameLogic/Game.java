@@ -16,8 +16,6 @@ public class Game {
 	public static final int GAMESTATUS_FAILED = 1;
 	public static final int GAMESTATUS_WON = 2;
 	
-	public static List<Entity> DEBUG_ENTITY_LIST;
-	
 	private float speed = 2.5f;
 	private float jumpspeed = 0.3f;
 	
@@ -45,7 +43,9 @@ public class Game {
 	 * Starts a new thread and begins the game
 	 */
 	public void startGame(){
+		
 
+		Sound.playSound(R.sound.music.getRandom());
 		
 		currentLevel = 1;
 		loadLevel(currentLevel);		
@@ -65,7 +65,6 @@ public class Game {
 		rule = gameObjects.get(gameObjects.size()-2);
 		rulette = gameObjects.get(gameObjects.size()-1);
 		selectedCharacter = rule;
-		DEBUG_ENTITY_LIST = gameObjects;
 		gameStatus = GAMESTATUS_PLAYING;
 	}
 	
@@ -81,6 +80,10 @@ public class Game {
 		// Check if Rule and Rulette have met
 		if( rule.getBounds().intersects(rulette.getBounds()) ){
 			
+			Physics.hearts = true;
+			
+			Physics.spawnHeart(this.getRule().getPosition().x, this.getRule().getPosition().y, 25);
+			Physics.spawnHeart(this.getRulette().getPosition().x, this.getRulette().getPosition().y, 25);
 			
 			// We have met, so stop the game and change level.
 						
@@ -102,6 +105,8 @@ public class Game {
 			// Reset time
 			lasttime = 0l;
 			
+			Physics.hearts = false;
+			
 			return;
 		}
 		
@@ -119,11 +124,11 @@ public class Game {
 		if(Input.isKeyDown(KeyEvent.VK_SPACE)) {			
 			Input.removeKey(KeyEvent.VK_SPACE);
 			if(selectedCharacter.touching > 0) {
-				Sound.playSound(R.sound.jump);
+				Sound.playSound(R.sound.effects.jump);
 				selectedCharacter.getBody().applyLinearImpulse(new Vec2(0, -jumpspeed), selectedCharacter.getBody().getLocalCenter());
 			}
 			if(getNotSelectedCharacter().touching > 0) {
-				Sound.playSound(R.sound.jump);
+				Sound.playSound(R.sound.effects.jump);
 				getNotSelectedCharacter().getBody().applyLinearImpulse(new Vec2(0, -jumpspeed), selectedCharacter.getBody().getLocalCenter());
 			}
 		}
