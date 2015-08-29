@@ -45,7 +45,7 @@ public class Game {
 	public void startGame(){
 		
 
-		Sound.playSound(R.sound.music.getRandom());
+		Sound.playMusic(R.sound.music.getRandom());
 		
 		currentLevel = 1;
 		loadLevel(currentLevel);		
@@ -90,7 +90,7 @@ public class Game {
 			// Pause for a second
 			gameStatus = GAMESTATUS_WON;
 			
-			if( lasttime == 0l ){
+			if( lasttime < 1000l ){
 				lasttime = System.currentTimeMillis();
 			}
 			
@@ -138,6 +138,29 @@ public class Game {
 			Entity e = gameObjects.get(i);
 			e.update(delta);			
 		}	
+		
+		
+		
+		if( Input.isKeyDown(KeyEvent.VK_PAGE_UP) ){
+			Sound.increaseClipVolume();
+		}
+		else if( Input.isKeyDown(KeyEvent.VK_PAGE_DOWN) ){
+			Sound.decreaseClipVolume();
+		}
+		else if( Input.isKeyDown(KeyEvent.VK_HOME) ){
+			Sound.increaseMusicVolume();
+		}
+		else if( Input.isKeyDown(KeyEvent.VK_END) ){
+			Sound.decreaseMusicVolume();
+		}
+		else if( Input.isKeyDown(KeyEvent.VK_INSERT) ){
+			if( Sound.isMusicMuted() ) Sound.unmuteMusic();
+			else Sound.muteMusic();
+		}
+		else if( Input.isKeyDown(KeyEvent.VK_DELETE) ){
+			if( Sound.isClipsMuted() ) Sound.unmuteClips();
+			else Sound.muteClips();
+		}
 	}
 
 	public Entity getRule() {
