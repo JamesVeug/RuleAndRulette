@@ -53,44 +53,24 @@ public class Game {
 	}
 	
 	/**
-	 * Everytime the game iterates. This runs moving all the characters
-	 * @param l
-	 */
-//	public void gameInteration(long l){
-//		float timetaken = lasttime != 0 ? (l-lasttime) : l;
-//		
-//		// Check if Rule and Rulette have met
-//		if( false ){
-//			
-//			// We have met, so stop the game and change level.
-//			
-//			// Pause for a second
-//			
-//			// Change level
-//		}
-//		
-//		// Move all the tokens
-//		for(int i = 0; i < gameObjects.size(); i++){
-//			Entity e = gameObjects.get(i);
-//			e.update(1f/timetaken);			
-//		}
-//		
-//		lasttime = l;		
-//	}
-	
-	/**
 	 * GameLoop provides the accurate delta time we need to step our entities
 	 * @param delta
 	 */
 	public void gameInteration(float delta){
 		// Check if Rule and Rulette have met
-		if( false ){
+		if( rule.getBounds().intersects(rulette.getBounds()) ){
 			
 			// We have met, so stop the game and change level.
-			
+						
 			// Pause for a second
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			
-			// Change level
+			// Change level			
+			gameObjects = Level.load(++currentLevel);
 		}
 		
 		Vec2 move = new Vec2();
@@ -142,8 +122,6 @@ public class Game {
 		}
 		
 		return rule;
-		
-//		return selectedCharacter == rule ? rulette : rule;
 	}
 
 	public void setRulette(Entity rulette) {
@@ -154,47 +132,9 @@ public class Game {
 		return gameObjects;
 	}
 
-	public void startMovingCharacterRight(){
-//		selectedCharacter.setVelocityX(speed);
-//		getNotSelectedCharacter().setVelocityX(-speed);
-	}
-	
-	public void startMovingCharacterLeft(){
-//		selectedCharacter.setVelocityX(-speed);
-//		getNotSelectedCharacter().setVelocityX(speed);
-	}
-	
-	public void startMovingCharacterUp(){ }
-	public void startMovingCharacterDown(){ }
-	
-	public void stopMovingCharacterRight(){		
-//		selectedCharacter.setVelocityX(0);
-//		getNotSelectedCharacter().setVelocityX(0);
-	}
-	
-	public void stopMovingCharacterLeft(){	
-//		selectedCharacter.setVelocityX(0);
-//		getNotSelectedCharacter().setVelocityX(0);
-	}
-	
-	public void stopMovingCharacterUp(){ }
-	public void stopMovingCharacterDown(){ }
-	
-	public void jumpMovingCharacter() {
-//		if(selectedCharacter.touching > 0) {
-//			selectedCharacter.getBody().applyLinearImpulse(new Vec2(0, -jumpspeed), selectedCharacter.getBody().getLocalCenter());
-//		}
-//		
-//		if(getNotSelectedCharacter().touching > 0) {
-//			getNotSelectedCharacter().getBody().applyLinearImpulse(new Vec2(0, -jumpspeed), selectedCharacter.getBody().getLocalCenter());
-//		}
-	}
-
-
 	public int getCurrentLevel() {
 		return currentLevel;
 	}
-
 
 	public void jump() {
 		currentLevel++;
