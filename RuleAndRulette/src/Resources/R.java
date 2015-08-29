@@ -56,6 +56,9 @@ public class R {
 	
 	public static class sound{
 		public static String jump =  loadSoundURL("Jump.wav");
+		public static String land_hard =  loadSoundURL("land_hard.wav");
+		public static String land_soft =  loadSoundURL("land_soft.wav");
+		public static String explosion =  loadSoundURL("explosion.wav");
 	}
 	
 	public static class animations {
