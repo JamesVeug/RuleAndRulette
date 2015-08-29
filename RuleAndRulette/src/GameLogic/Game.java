@@ -6,6 +6,7 @@ import java.util.Timer;
 
 import org.jbox2d.common.Vec2;
 
+import phys.Physics;
 import GameLogic.Characters.Entity;
 import Resources.R;
 import Sound.Sound;
@@ -27,7 +28,7 @@ public class Game {
 	private long lasttime = 0l;
 	
 	private Timer gameTimer;
-	private int currentLevel = 1;
+	private int currentLevel;
 
 
 	public Game(){
@@ -39,12 +40,26 @@ public class Game {
 	 * Starts a new thread and begins the game
 	 */
 	public void startGame(){
+
 		
-		gameObjects = World.CreateWorld(1);
+		currentLevel = 1;
+		loadLevel(currentLevel);		
+	}
+	
+	public void loadLevel(int number){
+		
+		// Remvoe world
+		if( gameObjects != null ){
+			for(Entity e : gameObjects){
+				Physics.world.destroyBody(e.getBody());
+			}
+		}
+		
+		
+		gameObjects = Level.load(number);
 		rule = gameObjects.get(gameObjects.size()-2);
 		rulette = gameObjects.get(gameObjects.size()-1);
 		selectedCharacter = rule;
-		
 		DEBUG_ENTITY_LIST = gameObjects;
 	}
 	
@@ -70,7 +85,7 @@ public class Game {
 			}
 			
 			// Change level			
-			gameObjects = Level.load(++currentLevel);
+			loadLevel(++currentLevel);
 		}
 		
 		Vec2 move = new Vec2();
