@@ -1,6 +1,7 @@
 package Main;
 
 import GUI.GUIFrame;
+import GUI.GUIGame;
 
 public class Main {
 

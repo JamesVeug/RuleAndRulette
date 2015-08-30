@@ -28,6 +28,29 @@ public class GUIGame extends GUIPanel implements MouseListener {
 	private static Point2D MUSIC_UIPOSITION = new Point2D.Double(896, 32);
 	
 	public static final Object CANVAS_LOCK = new Object();
+	
+	public static class WinStrings {
+		private static String[] words = new String[] {
+			"Success",
+			"Lover",
+			"Kind Hearted",
+			"Extraordinary",
+			"Fantastic",
+			"Super",
+			"Outstanding",
+			"Spectacular"
+		};
+		
+		private static String active = words[0];
+		
+		public static void change() {
+			active = words[((int)(Math.random()*words.length))];
+		}
+		
+		public static String get() {
+			return active;
+		}
+	}
 
 	public static void shake(final float intensity) {
 		new Thread(new Runnable() {
@@ -103,10 +126,11 @@ public class GUIGame extends GUIPanel implements MouseListener {
 		
 		g.setFont(new Font(R.fonts.kenpixel_mini_square.getName(), Font.PLAIN, 60));
 		g.setColor(Color.black);
-		Rectangle2D bounds = g.getFontMetrics().getStringBounds("Success", g);
+		String taunt = WinStrings.get();
+		Rectangle2D bounds = g.getFontMetrics().getStringBounds(taunt, g);
 		int x = (int) (centerOfScreen.getX() - bounds.getWidth()/2);
 		int y = (int) (centerOfScreen.getY() + bounds.getHeight()/2.1f);
-		g.drawString("Success", x, y);
+		g.drawString(taunt, x, y);
 		g.dispose();
 	}
 	

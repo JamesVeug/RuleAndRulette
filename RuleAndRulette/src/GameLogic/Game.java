@@ -6,6 +6,7 @@ import java.util.List;
 import org.jbox2d.common.Vec2;
 
 import phys.Physics;
+import GUI.GUIGame;
 import GameLogic.Characters.Entity;
 import GameLogic.Characters.Rule;
 import GameLogic.Characters.Rulette;
@@ -96,6 +97,8 @@ public class Game {
 		if( gameStatus == Game.GAMESTATUS_PLAYING ){
 			gameStatus = GAMESTATUS_WON;
 			lasttime = System.currentTimeMillis();
+			
+			GUIGame.WinStrings.change();
 			
 			Score.addScore(100000);
 			
