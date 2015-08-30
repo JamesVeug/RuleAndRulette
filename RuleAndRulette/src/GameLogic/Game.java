@@ -48,7 +48,7 @@ public class Game {
 
 		Sound.playMusic(R.sound.music.getRandom());
 		
-		currentLevel = 11;
+		currentLevel = 0;
 		loadLevel(currentLevel);		
 	}
 	
