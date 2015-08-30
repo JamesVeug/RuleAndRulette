@@ -53,6 +53,7 @@ public class R {
 		public static PixelImage block = loadPixelImage("assets/environment/block.png");
 		public static PixelImage spikes = loadPixelImage("assets/environment/spikes.png");
 		public static PixelImage heart = loadPixelImage("assets/environment/heart.png");
+		public static PixelImage broken_heart = loadPixelImage("assets/environment/broken_heart.png");
 		public static PixelImage level = loadPixelImage("assets/environment/level.png");
 	}
 	
