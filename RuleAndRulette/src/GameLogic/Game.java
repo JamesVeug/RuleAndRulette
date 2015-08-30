@@ -88,7 +88,7 @@ public class Game {
 	
 	private void gameWon(){
 		
-		Score.addScore(999999);
+		Score.addScore(1000);
 		
 		if(!Physics.hearts) {
 			Physics.spawnHeart(this.getRule().getPosition().x, this.getRule().getPosition().y, 50);

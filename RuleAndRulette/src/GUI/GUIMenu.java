@@ -30,7 +30,7 @@ public class GUIMenu extends GUIPanel implements KeyListener, MouseListener, Mou
 	
 	
 	private AnimatedSprite rule = R.animations.rule.idle.clone();
-	private AnimatedSprite rulette = R.animations.rulette.idle.clone();
+	private AnimatedSprite rulette = R.animations.rulette.happy.clone();
 	
 	
 	private GUIFrame frame;
@@ -52,7 +52,7 @@ public class GUIMenu extends GUIPanel implements KeyListener, MouseListener, Mou
 					frame.repaint();
 
 					try {
-						Thread.sleep(10);
+						Thread.sleep(20);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
