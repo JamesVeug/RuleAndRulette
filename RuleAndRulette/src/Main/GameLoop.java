@@ -180,9 +180,9 @@ public class GameLoop extends Thread {
 			}
 		}
 		
-		System.out.println("PhysPool: " + Physics.PhysPool.size());
-		System.out.println("HeartPool: " + Physics.HeartPool.size());
-		System.out.println("BrokenHeartPool: " + Physics.BrokenHeartPool.size());
+//		System.out.println("PhysPool: " + Physics.PhysPool.size());
+//		System.out.println("HeartPool: " + Physics.HeartPool.size());
+//		System.out.println("BrokenHeartPool: " + Physics.BrokenHeartPool.size());
 	}
 	
 	/**
