@@ -28,7 +28,7 @@ public class Game {
 	private List<Entity> gameObjects;
 	
 	private long lasttime = 0l;
-	private long levelTransitionTime = 2000;
+	private long levelTransitionTime = 3000;
 	
 	private int gameStatus = GAMESTATUS_PLAYING;
 	private int currentLevel;
@@ -48,7 +48,7 @@ public class Game {
 
 		Sound.playMusic(R.sound.music.getRandom());
 		
-		currentLevel = 4;
+		currentLevel = 0;
 		loadLevel(currentLevel);		
 	}
 	
@@ -131,7 +131,7 @@ public class Game {
 			lasttime = System.currentTimeMillis();
 			
 			// We have met, so stop the game and change level.
-			Score.addScore(-50);
+			Score.subtractScore(Score.getScore()/2);
 		}
 		
 		long timetaken = System.currentTimeMillis() - lasttime;

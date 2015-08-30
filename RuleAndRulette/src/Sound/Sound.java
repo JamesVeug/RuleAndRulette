@@ -190,23 +190,31 @@ public class Sound {
 	}
 
 	public static void increaseMusicVolume() {
-		volume_music = Math.min(1,volume_music+0.1f);
-		assignMusicVolume();
+		if( !isMusicMuted() ){
+			volume_music = Math.min(1,volume_music+0.1f);
+			assignMusicVolume();
+		}
 	}
 
 	public static void decreaseMusicVolume() {
-		volume_music = Math.max(0,volume_music-0.1f);
-		assignMusicVolume();
+		if( !isMusicMuted() ){
+			volume_music = Math.max(0,volume_music-0.1f);
+			assignMusicVolume();
+		}
 	}
 	
 	public static void increaseClipVolume() {
-		volume_clip = Math.min(1,volume_clip+0.1f);
-		assignClipVolume();
+		if( !isClipsMuted() ){
+			volume_clip = Math.min(1,volume_clip+0.1f);
+			assignClipVolume();
+		}
 	}
 
 	public static void decreaseClipVolume() {
-		volume_clip = Math.max(0,volume_clip-0.1f);
-		assignClipVolume();
+		if( !isClipsMuted() ){
+			volume_clip = Math.max(0,volume_clip-0.1f);
+			assignClipVolume();
+		}
 	}
 	
 	/**

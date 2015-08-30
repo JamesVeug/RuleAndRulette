@@ -28,6 +28,7 @@ public class GUIFrame extends JFrame {
 	public GUIFrame(){
 		super();
 		
+		this.setTitle("Rule And Rulette");
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
 		
