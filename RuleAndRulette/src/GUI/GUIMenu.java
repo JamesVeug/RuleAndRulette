@@ -32,13 +32,24 @@ public class GUIMenu extends GUIPanel implements KeyListener, MouseListener, Mou
 	private AnimatedSprite rule = R.animations.rule.idle.clone();
 	private AnimatedSprite rulette = R.animations.rulette.idle.clone();
 	
-	{
+	
+	private GUIFrame frame;
+
+	public GUIMenu(final GUIFrame frame){
+		super();
+		setBackgroundColor(Color.white);
+		
+		buttons.add(new GUIButton("Start Game",0,0,300,50));
+		buttons.add(new GUIButton("Quit",0,0,200,50));
+		this.frame = frame;
+		
 		new Thread(new Runnable() {
 			public void run() {
 				float delta = 1/60f;
 				for(;;) {
 					rule.update(delta);
 					rulette.update(delta);
+					frame.repaint();
 
 					try {
 						Thread.sleep(10);
@@ -49,17 +60,6 @@ public class GUIMenu extends GUIPanel implements KeyListener, MouseListener, Mou
 				}
 			}
 		}).start();
-	}
-	
-	private GUIFrame frame;
-
-	public GUIMenu(GUIFrame frame){
-		super();
-		setBackgroundColor(Color.white);
-		
-		buttons.add(new GUIButton("Start Game",0,0,300,50));
-		buttons.add(new GUIButton("Quit",0,0,200,50));
-		this.frame = frame;
 	}
 
 	@Override
@@ -165,7 +165,7 @@ public class GUIMenu extends GUIPanel implements KeyListener, MouseListener, Mou
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		if( frame.getState() == GUIFrame.STATES_GAME ){
+		/*if( frame.getState() == GUIFrame.STATES_GAME ){
 			return;
 		}
 		
@@ -178,7 +178,7 @@ public class GUIMenu extends GUIPanel implements KeyListener, MouseListener, Mou
 		
 		if( changed ){
 			frame.repaint();
-		}
+		}*/
 	}
 
 	@Override
