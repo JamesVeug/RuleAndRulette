@@ -94,7 +94,7 @@ public class GUIFrame extends JFrame {
 		game.startGame();
 		
 		//starts the game loop
-		GameLoop gameLoop = new GameLoop(60, 25, game, gamePanel, this);		
+		gameLoop = new GameLoop(60, 25, game, gamePanel, this);		
 		gameLoop.start();
 	}
 
@@ -131,16 +131,14 @@ public class GUIFrame extends JFrame {
 	}
 
 	public void stopGame() {
-		
-		/*gamePanel.setGame(null);
-		
+
+		// Stops the game loop		
+		gameLoop.stopGameLoop();
+
 		game.stopGame();
 		
-		//starts the game loop
-		GameLoop loop = new GameLoop(60, 25, game, gamePanel, this);		
-		loop.start();
+		gamePanel.setGame(null);
 		
-
-		game = new Game();*/
+		game = null;
 	}
 }

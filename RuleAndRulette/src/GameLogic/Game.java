@@ -30,7 +30,6 @@ public class Game {
 	private long levelTransitionTime = 2000;
 	
 	private int gameStatus = GAMESTATUS_PLAYING;
-	private Timer gameTimer;
 	private int currentLevel;
 
 
@@ -44,6 +43,7 @@ public class Game {
 	 */
 	public void startGame(){
 		
+		Score.resetScore();
 
 		Sound.playMusic(R.sound.music.getRandom());
 		
@@ -73,7 +73,17 @@ public class Game {
 	}
 	
 	public void stopGame(){
-		gameTimer.cancel();
+		
+		// Remove world
+		if( gameObjects != null ){
+			for(Entity e : gameObjects){
+				Physics.world.destroyBody(e.getBody());
+			}
+		}
+		
+		Sound.stopAllMusic();
+		Sound.stopAllSounds();
+		
 	}
 	
 	private void gameWon(){

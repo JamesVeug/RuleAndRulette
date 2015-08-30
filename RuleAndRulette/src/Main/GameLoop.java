@@ -20,6 +20,7 @@ import Resources.R;
  *
  */
 public class GameLoop extends Thread {
+	private boolean paused = false;
 	private boolean running = true;
 	private boolean runningSlow = false;
 	
@@ -71,12 +72,27 @@ public class GameLoop extends Thread {
 				fixedTick(fixedDeltaTime);
 				fixedTime += fixedDeltaTime;
 			}
-			tick(deltaTime);
-			render();
+			
+			if( !isPaused() ){
+				tick(deltaTime);
+				render();
+			}
 			sleepforabit(syncRate-(System.nanoTime()-timeLastFrame)); //syncRate - (time taken)
 		}
 	}
 	
+	public void toggledPause(){
+		paused = !paused;
+	}
+	
+	public boolean isPaused() {
+		return paused;
+	}
+	
+	public void stopGameLoop(){
+		running = false;
+	}
+
 	/**
 	 * Sets up all the time fields.
 	 */
