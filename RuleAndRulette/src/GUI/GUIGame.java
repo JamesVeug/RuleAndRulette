@@ -91,13 +91,13 @@ public class GUIGame extends GUIPanel {
 		
 
 		BufferedImage heart = R.gui.heart.asBufferedImage();
-		g.drawImage(heart, ((int)centerOfScreen.getX()-heart.getWidth()/2), ((int)(centerOfScreen.getY()/2)-heart.getHeight()/2), null);
+		g.drawImage(heart, ((int)centerOfScreen.getX()-heart.getWidth()/2), ((int)(centerOfScreen.getY()/1.6f)-heart.getHeight()/2), null);
 		
 		g.setFont(new Font(R.fonts.kenpixel_mini_square.getName(), Font.PLAIN, 60));
 		g.setColor(Color.black);
 		Rectangle2D bounds = g.getFontMetrics().getStringBounds("Success", g);
 		int x = (int) (centerOfScreen.getX() - bounds.getWidth()/2);
-		int y = (int) (centerOfScreen.getY() + bounds.getHeight()/4);
+		int y = (int) (centerOfScreen.getY() + bounds.getHeight()/2.1f);
 		g.drawString("Success", x, y);
 		g.dispose();
 	}
