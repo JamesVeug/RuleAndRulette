@@ -22,7 +22,6 @@ import Resources.R;
  *
  */
 public class GameLoop extends Thread {
-	private boolean paused = false;
 	private boolean running = true;
 	private boolean runningSlow = false;
 	
@@ -69,26 +68,17 @@ public class GameLoop extends Thread {
 	public void run() {
 		setupTime();
 		while(running) {
+			
 			updateTime();
 			while(fixedTime < timeElapsed) {
 				fixedTick(fixedDeltaTime);
 				fixedTime += fixedDeltaTime;
 			}
 			
-			if( !isPaused() ){
 				tick(deltaTime);
 				render();
-			}
 			sleepforabit(syncRate-(System.nanoTime()-timeLastFrame)); //syncRate - (time taken)
 		}
-	}
-	
-	public void toggledPause(){
-		paused = !paused;
-	}
-	
-	public boolean isPaused() {
-		return paused;
 	}
 	
 	public void stopGameLoop(){
@@ -175,8 +165,8 @@ public class GameLoop extends Thread {
 			} 
 		}
 		
-		System.out.println("PhysPool: " + Physics.PhysPool.size());
-		System.out.println("HeartPool: " + Physics.HeartPool.size());
+		//System.out.println("PhysPool: " + Physics.PhysPool.size());
+		//System.out.println("HeartPool: " + Physics.HeartPool.size());
 	}
 	
 	/**

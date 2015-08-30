@@ -33,6 +33,7 @@ import GameLogic.Characters.Block;
 import GameLogic.Characters.Entity;
 import GameLogic.Characters.Rule;
 import GameLogic.Characters.Rulette;
+import GameLogic.Characters.Spike;
 import Resources.R;
 import Sound.Sound;
 
@@ -250,6 +251,15 @@ public class Physics implements ContactListener {
 				if(Math.random() < 0.02f) { ((Rulette)a).hurt(); }
 			}
 			
+			if( a.getClass() == Rulette.class && b != null && b.getClass() == Spike.class ){
+				Rulette r = (Rulette)a;
+				r.setDead(true);
+			}
+			else if( a.getClass() == Rule.class && b != null && b.getClass() == Spike.class ){
+				Rule r = (Rule)a;
+				r.setDead(true);
+			}
+			
 			a.touching++;
 			
 		}
@@ -276,6 +286,14 @@ public class Physics implements ContactListener {
 	//			spawn(a.getPosition().x, a.getPosition().y, 20);
 			}
 			
+			if( b.getClass() == Rulette.class && a != null && a.getClass() == Spike.class ){
+				Rulette r = (Rulette)a;
+				r.setDead(true);
+			}
+			else if( b.getClass() == Rule.class && a != null && a.getClass() == Spike.class ){
+				Rule r = (Rule)a;
+				r.setDead(true);
+			}
 			
 			b.touching++;
 			

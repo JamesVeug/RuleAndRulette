@@ -2,7 +2,6 @@ package GUI;
 
 import java.awt.Color;
 import java.awt.Graphics;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
@@ -14,6 +13,7 @@ import Main.GameLoop;
 public class GUIFrame extends JFrame {
 	private static final long serialVersionUID = -1822196509785001746L;
 
+	private JPanel mainPanel;
 	private GUIGame gamePanel;
 	private GUIMenu menuPanel;
 	private Game game;
@@ -34,7 +34,7 @@ public class GUIFrame extends JFrame {
 		gamePanel = new GUIGame();
 		menuPanel = new GUIMenu(this);
 		
-		JPanel customPanel = new JPanel(){
+		mainPanel = new JPanel(){
 			
 			@Override
 			public void paintComponent(Graphics g){
@@ -69,18 +69,33 @@ public class GUIFrame extends JFrame {
 				menuPanel.paintComponent(g, getWidth(), getHeight());
 			}
 		};
-		customPanel.addKeyListener(Input.instance);
-		//customPanel.addKeyListener(this);
-		customPanel.addMouseMotionListener(Input.instance);
-		customPanel.addMouseListener(Input.instance);
-		customPanel.addKeyListener(menuPanel);
-		customPanel.addMouseMotionListener(menuPanel);
-		customPanel.addMouseListener(menuPanel);
-		add(customPanel);
+		mainPanel.addKeyListener(menuPanel);
+		mainPanel.addMouseMotionListener(Input.instance);
+		mainPanel.addMouseListener(Input.instance);
+		add(mainPanel);
 		
 		setSize(1024,600);
 		setVisible(true);
-		customPanel.requestFocus();
+		mainPanel.requestFocus();
+		setState(STATES_MENU);
+	}
+	
+	public void setState(int newState){
+		this.STATE = newState;
+		
+		if( newState == STATES_MENU ){
+			mainPanel.addMouseMotionListener(menuPanel);
+			mainPanel.addMouseListener(menuPanel);
+			
+			mainPanel.removeMouseListener(gamePanel);
+			mainPanel.removeKeyListener(Input.instance);
+		}else if( newState == STATES_GAME ){
+			mainPanel.removeMouseMotionListener(menuPanel);
+			mainPanel.removeMouseListener(menuPanel);
+			
+			mainPanel.addMouseListener(gamePanel);	
+			mainPanel.addKeyListener(Input.instance);		
+		}
 	}
 	
 	/**
@@ -104,7 +119,7 @@ public class GUIFrame extends JFrame {
 	 */
 	public void startGame() {
 		setupGame();
-		STATE = STATES_GAME;
+		setState(STATES_GAME);
 	}
 	
 	public Game getGame(){
@@ -123,17 +138,25 @@ public class GUIFrame extends JFrame {
 	}
 
 	public void returnToMenu() {
-		STATE = STATES_MENU;
+		setState(STATES_MENU);
 	}
 
 	public void returnToGame() {
-		STATE = STATES_GAME;
+		setState(STATES_GAME);
 	}
 
 	public void stopGame() {
 
 		// Stops the game loop		
 		gameLoop.stopGameLoop();
+		while(gameLoop.isAlive()){
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 
 		game.stopGame();
 		

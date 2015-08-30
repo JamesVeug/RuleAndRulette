@@ -2,12 +2,13 @@ package GameLogic;
 
 import java.awt.event.KeyEvent;
 import java.util.List;
-import java.util.Timer;
 
 import org.jbox2d.common.Vec2;
 
 import phys.Physics;
 import GameLogic.Characters.Entity;
+import GameLogic.Characters.Rule;
+import GameLogic.Characters.Rulette;
 import Resources.R;
 import Sound.Sound;
 
@@ -21,8 +22,8 @@ public class Game {
 	
 	private Entity selectedCharacter;
 	
-	private Entity rule;
-	private Entity rulette;
+	private Rule rule;
+	private Rulette rulette;
 	
 	private List<Entity> gameObjects;
 	
@@ -62,8 +63,8 @@ public class Game {
 		
 		
 		gameObjects = Level.load(number);
-		rule = gameObjects.get(gameObjects.size()-2);
-		rulette = gameObjects.get(gameObjects.size()-1);
+		rule = (Rule) gameObjects.get(gameObjects.size()-2);
+		rulette = (Rulette) gameObjects.get(gameObjects.size()-1);
 		selectedCharacter = rule;
 		gameStatus = GAMESTATUS_PLAYING;
 	}
@@ -158,7 +159,7 @@ public class Game {
 			gameWon();			
 			return;
 		}
-		else if( false ){
+		else if( rule.isDead() || rulette.isDead() ){
 			// If we have died
 			gameLost();
 		}
@@ -226,7 +227,7 @@ public class Game {
 		return rule;
 	}
 
-	public void setRule(Entity rule) {
+	public void setRule(Rule rule) {
 		this.rule = rule;
 	}
 
@@ -243,7 +244,7 @@ public class Game {
 		return rule;
 	}
 
-	public void setRulette(Entity rulette) {
+	public void setRulette(Rulette rulette) {
 		this.rulette = rulette;
 	}
 	
