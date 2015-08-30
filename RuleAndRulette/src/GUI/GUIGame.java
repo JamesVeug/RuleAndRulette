@@ -195,7 +195,6 @@ public class GUIGame extends GUIPanel implements MouseListener {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		System.out.println("Mouse Pressed");
 		if( e.getX() > MUSIC_UIPOSITION.getX() && e.getX() < MUSIC_UIPOSITION.getX()+32 && 
 				e.getY() > MUSIC_UIPOSITION.getY() && e.getY() < MUSIC_UIPOSITION.getY()+32 ){
 			if( Sound.Sound.isMusicMuted() ){

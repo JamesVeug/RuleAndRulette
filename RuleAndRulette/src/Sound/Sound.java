@@ -252,6 +252,7 @@ public class Sound {
         float diff = control.getMaximum()-control.getMinimum();
         float change = diff*volume_clip;
         float value = control.getMinimum()+change;
+        float scaled = value *= 1;
         return limit(control,value);
 	}
 	

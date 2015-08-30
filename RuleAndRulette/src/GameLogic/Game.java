@@ -28,7 +28,7 @@ public class Game {
 	private List<Entity> gameObjects;
 	
 	private long lasttime = 0l;
-	private long levelTransitionTime = 3000;
+	private long levelTransitionTime = 2500;
 	
 	private int gameStatus = GAMESTATUS_PLAYING;
 	private int currentLevel;
@@ -48,7 +48,7 @@ public class Game {
 
 		Sound.playMusic(R.sound.music.getRandom());
 		
-		currentLevel = 0;
+		currentLevel = 11;
 		loadLevel(currentLevel);		
 	}
 	
