@@ -26,6 +26,8 @@ public class GUIGame extends GUIPanel implements MouseListener {
 	private static Vec2 camera = new Vec2();
 	private static Point2D SOUND_UIPOSITION = new Point2D.Double(800, 32);
 	private static Point2D MUSIC_UIPOSITION = new Point2D.Double(896, 32);
+	
+	public static final Object CANVAS_LOCK = new Object();
 
 	public static void shake(final float intensity) {
 		new Thread(new Runnable() {
@@ -70,8 +72,10 @@ public class GUIGame extends GUIPanel implements MouseListener {
 //		drawUI(g);
 //		
 //		drawStatus(getCanvas());
+		synchronized(CANVAS_LOCK) {
+			g.drawImage(getCanvas().asBufferedImage(), null, (int) (camera.x), (int) (camera.y));
+		}
 		
-		g.drawImage(getCanvas().asBufferedImage(), null, (int) (camera.x), (int) (camera.y));
 	};
 	
 	public void __RENDER() {
