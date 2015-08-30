@@ -76,7 +76,6 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener{
 	@Override
 	public void mousePressed(MouseEvent e) {
 		isMousePressedDown = true;
-		
 	}
 
 	@Override

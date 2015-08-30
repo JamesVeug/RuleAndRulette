@@ -165,26 +165,10 @@ public class GUIMenu extends GUIPanel implements KeyListener, MouseListener, Mou
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		/*if( frame.getState() == GUIFrame.STATES_GAME ){
-			return;
-		}
-		
-		boolean changed = false;
-		
-		for( GUIButton b : buttons){
-			boolean sg = b.setHovering(b.onButton(e.getX(), e.getY()));
-			changed = changed != true ? sg : true;
-		}
-		
-		if( changed ){
-			frame.repaint();
-		}*/
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

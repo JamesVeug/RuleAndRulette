@@ -12,6 +12,7 @@ import Resources.R;
 public class Rulette extends Entity{
 	
 	private boolean flipped = false;
+	private boolean isDead = false;
 	
 	private AnimatedSprite anim;
 	
@@ -58,5 +59,13 @@ public class Rulette extends Entity{
 	
 	public void hurt() {
 		this.hurt = 0.2f;
+	}
+
+	public boolean isDead() {
+		return isDead;
+	}
+
+	public void setDead(boolean isDead) {
+		this.isDead = isDead;
 	}
 }

@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
@@ -18,10 +20,12 @@ import GameLogic.Input;
 import GameLogic.Score;
 import Resources.R;
 
-public class GUIGame extends GUIPanel {
+public class GUIGame extends GUIPanel implements MouseListener {
 	private static final long serialVersionUID = -2946375771339622409L;
 
 	private static Vec2 camera = new Vec2();
+	private static Point2D SOUND_UIPOSITION = new Point2D.Double(800, 32);
+	private static Point2D MUSIC_UIPOSITION = new Point2D.Double(896, 32);
 
 	public static void shake(final float intensity) {
 		new Thread(new Runnable() {
@@ -143,8 +147,8 @@ public class GUIGame extends GUIPanel {
 		//
 		
 		// Clip Sound
-		int clipSpeakerX = 800;
-		int clipSpeakerY = 32;
+		int clipSpeakerX = (int)SOUND_UIPOSITION.getX();
+		int clipSpeakerY = (int)SOUND_UIPOSITION.getY();
 		if( Sound.Sound.isClipsMuted() ){
 			g2d.drawImage(R.gui.volume.mute.getScaledInstance(2).asBufferedImage(), clipSpeakerX, clipSpeakerY, null);
 		}
@@ -155,8 +159,8 @@ public class GUIGame extends GUIPanel {
 		g2d.drawString(clipVolume + "%", clipSpeakerX+32, clipSpeakerY+26);
 		
 		// Music Sound
-		int musicSpeakerX = 896;
-		int musicSpeakerY = 32;
+		int musicSpeakerX = (int)MUSIC_UIPOSITION.getX();
+		int musicSpeakerY = (int)MUSIC_UIPOSITION.getY();
 		if( Sound.Sound.isMusicMuted() ){
 			g2d.drawImage(R.gui.volume.mute.getScaledInstance(2).asBufferedImage(), musicSpeakerX, musicSpeakerY, null);
 		}
@@ -169,6 +173,53 @@ public class GUIGame extends GUIPanel {
 		
 		
 		g2d.dispose();		
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		System.out.println("Mouse Pressed");
+		if( e.getX() > MUSIC_UIPOSITION.getX() && e.getX() < MUSIC_UIPOSITION.getX()+32 && 
+				e.getY() > MUSIC_UIPOSITION.getY() && e.getY() < MUSIC_UIPOSITION.getY()+32 ){
+			if( Sound.Sound.isMusicMuted() ){
+				Sound.Sound.unmuteMusic();
+			}
+			else{
+				Sound.Sound.muteMusic();
+			}			
+		}
+		else if( e.getX() > SOUND_UIPOSITION.getX() && e.getX() < SOUND_UIPOSITION.getX()+32 && 
+				e.getY() > SOUND_UIPOSITION.getY() && e.getY() < SOUND_UIPOSITION.getY()+32 ){
+			if( Sound.Sound.isClipsMuted() ){
+				Sound.Sound.unmuteClips();
+			}
+			else{
+				Sound.Sound.muteClips();
+			}			
+		}
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

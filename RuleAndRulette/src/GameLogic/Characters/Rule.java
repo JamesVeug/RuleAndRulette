@@ -16,6 +16,7 @@ import Resources.R;
 public class Rule extends Entity{
 	
 	boolean flipped = false;
+	private boolean isDead = false;
 	
 	private AnimatedSprite anim;
 
@@ -62,6 +63,14 @@ public class Rule extends Entity{
 	@Override
 	public Rectangle2D getBounds() {
 		return new Rectangle2D.Float(this.getPosition().x - R.characters.rule.getWidth()/2f, this.getPosition().y - R.characters.rule.getHeight()/2f, R.characters.rule.getWidth(), R.characters.rule.getHeight());
+	}
+
+	public boolean isDead() {
+		return isDead;
+	}
+
+	public void setDead(boolean isDead) {
+		this.isDead = isDead;
 	}
 
 	
