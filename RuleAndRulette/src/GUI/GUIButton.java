@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
+import GameLogic.Input;
 import Resources.R;
 
 public class GUIButton {
@@ -16,7 +17,6 @@ public class GUIButton {
 	private int y;
 	private int width;
 	private int height;
-	private boolean isHovering = false;
 
 	public GUIButton(String words, int x, int y, int width, int height){
 		this.words = words;
@@ -29,7 +29,7 @@ public class GUIButton {
 	public void drawButton(Graphics2D g){
 		g.setColor(Color.white);
 		
-		if( isHovering ){
+		if( isHovering() ){
 			g.setStroke(new BasicStroke(10));
 		}else{
 			g.setStroke(new BasicStroke(2));
@@ -61,13 +61,7 @@ public class GUIButton {
 	}
 
 	public boolean isHovering() {
-		return isHovering;
-	}
-
-	public boolean setHovering(boolean isHovering) {
-		boolean changed = isHovering != this.isHovering;
-		this.isHovering = isHovering;
-		return changed;
+		return onButton(Input.instance.getMouseX(), Input.instance.getMouseY());
 	}
 
 	public int getX() {
