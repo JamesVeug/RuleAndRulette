@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.concurrent.locks.LockSupport;
 
 import phys.Physics;
+import phys.Physics.BrokenHeartBox;
 import phys.Physics.HeartBox;
 import phys.Physics.IDeadable;
 import phys.Physics.PhysBox;
@@ -174,11 +175,14 @@ public class GameLoop extends Thread {
 				Physics.PhysPool.free((PhysBox) e);
 			} else if(e.getClass() == HeartBox.class) {
 				Physics.HeartPool.free((HeartBox) e);
-			} 
+			} else if(e.getClass() == BrokenHeartBox.class) {
+				Physics.BrokenHeartPool.free((BrokenHeartBox) e);
+			}
 		}
 		
-//		System.out.println("PhysPool: " + Physics.PhysPool.size());
-//		System.out.println("HeartPool: " + Physics.HeartPool.size());
+		System.out.println("PhysPool: " + Physics.PhysPool.size());
+		System.out.println("HeartPool: " + Physics.HeartPool.size());
+		System.out.println("BrokenHeartPool: " + Physics.BrokenHeartPool.size());
 	}
 	
 	/**

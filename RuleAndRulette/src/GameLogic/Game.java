@@ -97,7 +97,7 @@ public class Game {
 			gameStatus = GAMESTATUS_WON;
 			lasttime = System.currentTimeMillis();
 			
-			Score.addScore(1000);
+			Score.addScore(100000);
 			
 			if(!Physics.hearts) {
 				Physics.spawnHeart(this.getRule().getPosition().x, this.getRule().getPosition().y, 50);
@@ -135,6 +135,7 @@ public class Game {
 					
 		// Pause for a second
 		if( gameStatus == Game.GAMESTATUS_PLAYING ){
+			
 			gameStatus = GAMESTATUS_FAILED;
 			lasttime = System.currentTimeMillis();
 			
@@ -144,6 +145,7 @@ public class Game {
 			Score.subtractScore(Score.getScore()/2);
 			
 			if( rule.isDead() ){
+				Physics.spawnBrokenHeart(this.getRule().getPosition().x, this.getRule().getPosition().y, 50);
 				Physics.world.destroyBody(rule.getBody());
 			}else if( rulette.isDead() ){
 				Physics.world.destroyBody(rulette.getBody());				

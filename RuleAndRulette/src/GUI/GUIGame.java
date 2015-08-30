@@ -47,7 +47,7 @@ public class GUIGame extends GUIPanel implements MouseListener {
 						LockSupport.parkNanos(100000);
 					}
 				}
-
+				
 				camera.setZero();
 			}
 		}).start();
@@ -138,16 +138,14 @@ public class GUIGame extends GUIPanel implements MouseListener {
 		g2d.drawString("Level: " + level, 36, 56);
 		
 		// Score
+		Rectangle2D textBounds = g2d.getFontMetrics().getStringBounds("Score: 9999999999999", g2d);
+		
 		g2d.setColor(Score.isDecreasing() ? Color.red : Color.black);
-		int scoreX = 300;
+		int scoreX = (int) (getCanvas().getWidth()/2 - textBounds.getWidth()/2);
 		int scoreY = 56;
 		String string = String.valueOf(Score.getScore());
 		while( string.length() < 13){ string = "0"+string; }
-		
-		string = "Score: " + string;
-		Rectangle2D bounds = g2d.getFontMetrics().getStringBounds(string, g2d);
-		scoreX = (int) (getCanvas().getWidth()/2 - bounds.getWidth()/2);
-		g2d.drawString(string, scoreX, scoreY);
+		g2d.drawString("Score: " + string, scoreX, scoreY);
 		
 		
 		//

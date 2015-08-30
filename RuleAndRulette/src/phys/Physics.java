@@ -85,6 +85,32 @@ public class Physics implements ContactListener {
 		body.createFixture(pshape, 0);
 	}
 	
+	public static class BrokenHeartPool {
+		private static Queue<BrokenHeartBox> items = new LinkedList<BrokenHeartBox>();
+		
+		public static int size() { return items.size(); }
+		
+		public static BrokenHeartBox get(float x, float y) {
+			if(!items.isEmpty()) {
+				BrokenHeartBox out = items.poll();
+				out.getBody().setActive(true);
+				out.setPosition(x, y);
+				out.time = 0f;
+				out.isDead = false;
+				return out;
+			} else {
+				return new BrokenHeartBox(x, y);
+			}
+		}
+		
+		public static void free(BrokenHeartBox item) {
+			Physics.spawned.remove(item);
+			item.setPosition(-1000, -1000);
+			item.getBody().setActive(false);
+			items.offer(item);
+		}
+	}
+	
 	public static class HeartPool {
 		private static Queue<HeartBox> items = new LinkedList<HeartBox>();
 		
@@ -205,7 +231,7 @@ public class Physics implements ContactListener {
 			Entity entity = PhysPool.get(x+MathUtils.randomFloat(0, 1), y+MathUtils.randomFloat(0, 1));
 			entity.getBody().applyLinearImpulse(new Vec2(MathUtils.randomFloat(-1, 1), MathUtils.randomFloat(-1, 1)).mulLocal(0.2f), entity.getBody().getLocalCenter());
 			spawned.add(entity);
-//			Score.addScore(999);
+			Score.addScore(numBoxes);
 		}
 	}
 	
@@ -218,10 +244,22 @@ public class Physics implements ContactListener {
 			Entity entity = HeartPool.get(x+MathUtils.randomFloat(0, 1), y+MathUtils.randomFloat(0, 1));
 			entity.getBody().applyLinearImpulse(new Vec2(MathUtils.randomFloat(-1, 1), MathUtils.randomFloat(-1, 1)).mulLocal(0.2f), entity.getBody().getLocalCenter());
 			spawned.add(entity);
-//			Score.addScore(999);
+			Score.addScore(numBoxes);
 		}
 	}
 
+	public static void spawnBrokenHeart(final float x, final float y, int numBoxes) {
+		
+		Sound.playSound(R.sound.effects.explosion);
+		
+		for(int i = 0; i < numBoxes; i++) {
+//			Entity entity = new HeartBox(x, y);
+			Entity entity = BrokenHeartPool.get(x+MathUtils.randomFloat(0, 1), y+MathUtils.randomFloat(0, 1));
+			entity.getBody().applyLinearImpulse(new Vec2(MathUtils.randomFloat(-1, 1), MathUtils.randomFloat(-1, 1)).mulLocal(0.2f), entity.getBody().getLocalCenter());
+			spawned.add(entity);
+			Score.addScore(numBoxes);
+		}
+	}
 	
 	
 	@Override
@@ -241,7 +279,7 @@ public class Physics implements ContactListener {
 			}
 			
 			if((a.getClass() == Rule.class && a.touching == 0)) { 
-				GUIGame.shake(5f);
+				GUIGame.shake(50f);
 				Physics.a = a;
 				if(Math.random() < 0.02f) { ((Rule)a).hurt(); }
 //				spawn(a.getPosition().x, a.getPosition().y, 20);
@@ -499,6 +537,70 @@ public class Physics implements ContactListener {
 		private PixelImage image = heart;
 		
 		public HeartBox(float x, float y) {
+			super(x, y, false);
+			time = 0f;
+			
+//			this.getBody().applyLinearImpulse(new Vec2(MathUtils.randomFloat(-1, 1), MathUtils.randomFloat(-1, 1)).mulLocal(0.25f), this.getBody().getLocalCenter());
+		}
+		
+		public void reset() {
+			this.isDead = false;
+			this.time = 0;
+		}
+
+		@Override
+		public void update(float delta) {
+			time += delta;
+			
+			if(time >= lifetime) {
+				isDead = true;
+			}
+			
+		}
+
+//		@Override
+//		public void render(Graphics2D g) {
+//			// TODO Auto-generated method stub
+//			
+//		}
+
+		@Override
+		public void render(PixelImage canvas) {
+			Point p = getRenderPoint();
+			PixelImage.blit(image, canvas, p.x, p.y);
+		}
+
+		@Override
+		public Rectangle2D getBounds() {
+			return new Rectangle2D.Float(this.getPosition().x-heart.getWidth()/2, this.getPosition().y-heart.getHeight()/2, heart.getWidth()-1, heart.getHeight()-1);
+		}
+
+		@Override
+		public boolean isDead() {
+			return isDead;
+		}
+
+		@Override
+		public void setDead(boolean isDead) {
+			this.isDead = isDead;
+		}
+		
+	}
+	
+	public static class BrokenHeartBox extends Entity implements IDeadable {
+		
+		public static float LIFETIME = 1.5f;
+		
+		private float lifetime = (float)(Math.random())*LIFETIME*1f;
+		private float time;
+		
+		public boolean isDead = false;
+		
+		private static PixelImage heart = R.environment.broken_heart.getScaledInstance(0.5f);
+		
+		private PixelImage image = heart;
+		
+		public BrokenHeartBox(float x, float y) {
 			super(x, y, false);
 			time = 0f;
 			
