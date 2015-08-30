@@ -104,6 +104,12 @@ public class Game {
 				Physics.spawnHeart(this.getRulette().getPosition().x, this.getRulette().getPosition().y, 50);
 			}
 			
+			rule.setDead(true);
+			Physics.world.destroyBody(rule.getBody());
+			
+			rulette.setDead(true);
+			Physics.world.destroyBody(rulette.getBody());
+			
 			Physics.hearts = true;
 		}
 		
@@ -132,6 +138,12 @@ public class Game {
 			
 			// We have met, so stop the game and change level.
 			Score.subtractScore(Score.getScore()/2);
+			
+			if( rule.isDead() ){
+				Physics.world.destroyBody(rule.getBody());
+			}else if( rulette.isDead() ){
+				Physics.world.destroyBody(rulette.getBody());				
+			}
 		}
 		
 		long timetaken = System.currentTimeMillis() - lasttime;

@@ -13,6 +13,8 @@ import GUI.PixelImage;
 import GameLogic.Game;
 import GameLogic.Time;
 import GameLogic.Characters.Entity;
+import GameLogic.Characters.Rule;
+import GameLogic.Characters.Rulette;
 import Resources.R;
 
 /**
@@ -192,6 +194,18 @@ public class GameLoop extends Thread {
 		
 		if(game != null && game.getEntities() != null) {
 			for(Entity e : game.getEntities()) {
+				if( e.getClass() == Rule.class ){
+					if( ((Rule)e).isDead() ){
+						continue;
+					}
+				}
+				
+				if( e.getClass() == Rulette.class ){
+					if( ((Rulette)e).isDead() ){
+						continue;
+					}
+				}
+				
 				e.render(panel.getCanvas());
 			}
 		}

@@ -115,8 +115,8 @@ public class GUIMenu extends GUIPanel implements KeyListener, MouseListener, Mou
 		
 		String subTile3 = "Pixel Jam 2015";
 		Rectangle2D bounds3 = g.getFontMetrics().getStringBounds(subTile3,g);
-		int subTextX3 = (int) (subTextX+bounds.getWidth()/2-bounds3.getWidth()/2);
-		int subTextY3 = (int) (subTextY2+bounds.getHeight());
+		int subTextX3 = (int) (width/2-bounds3.getWidth()/2);
+		int subTextY3 = (int) (subTextY2+bounds.getHeight()*2);
 
 		if( frame.getGame() != null ){
 			g.setColor(Color.white);
