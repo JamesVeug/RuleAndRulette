@@ -71,7 +71,7 @@ public class R {
 		
 //		public static PixelImage heart = loadPixelImage("assets/gui/heart.png");
 		public static PixelImage heart = loadPixelImage("assets/environment/heart.png").getScaledInstance(5);
-		public static PixelImage broken_heart = loadPixelImage("assets/gui/broken_heart.png");
+		public static PixelImage broken_heart = loadPixelImage("assets/environment/broken_heart.png").getScaledInstance(5);
 		public static PixelImage success = loadPixelImage("assets/gui/success.png");
 		public static PixelImage failed = loadPixelImage("assets/gui/failed.png");
 		
@@ -126,11 +126,13 @@ public class R {
 			public static AnimatedSprite idle = new AnimatedSprite(loadPixelImage("assets/animations/rule/rule_idle_f8_w32_h32.png"), 8, 8);
 			public static AnimatedSprite walk = new AnimatedSprite(loadPixelImage("assets/animations/rule/rule_walk_f7_w32_h32.png"), 7, 16);
 			public static AnimatedSprite hurt = new AnimatedSprite(loadPixelImage("assets/animations/rule/rule_hurt_f1_w32_h32.png"), 1, 1);
+			public static AnimatedSprite look = new AnimatedSprite(loadPixelImage("assets/animations/rule/rule_look_f8_w32_h32.png"), 8, 8);
 		}
 		
 		public static class rulette {
 			public static AnimatedSprite idle = new AnimatedSprite(loadPixelImage("assets/animations/rulette/rulette_idle_f8_w32_h32.png"), 8, 8);
 			public static AnimatedSprite walk = new AnimatedSprite(loadPixelImage("assets/animations/rulette/rulette_walk_f7_w32_h32.png"), 7, 16);
+			public static AnimatedSprite happy = new AnimatedSprite(loadPixelImage("assets/animations/rulette/rulette_happy_f7_w32_h32.png"), 7, 16);
 			public static AnimatedSprite hurt = new AnimatedSprite(loadPixelImage("assets/animations/rulette/rulette_hurt_f1_w32_h32.png"), 1, 1);
 		}
 		

@@ -90,7 +90,6 @@ public class Game {
 	private void gameWon(){
 		
 		
-		
 		// We have met, so stop the game and change level.
 					
 		// Pause for a second
@@ -98,7 +97,7 @@ public class Game {
 			gameStatus = GAMESTATUS_WON;
 			lasttime = System.currentTimeMillis();
 			
-			Score.addScore(999999);
+			Score.addScore(1000);
 			
 			if(!Physics.hearts) {
 				Physics.spawnHeart(this.getRule().getPosition().x, this.getRule().getPosition().y, 50);
@@ -132,7 +131,7 @@ public class Game {
 			lasttime = System.currentTimeMillis();
 			
 			// We have met, so stop the game and change level.
-			Score.addScore(-99999);
+			Score.addScore(-50);
 		}
 		
 		long timetaken = System.currentTimeMillis() - lasttime;
