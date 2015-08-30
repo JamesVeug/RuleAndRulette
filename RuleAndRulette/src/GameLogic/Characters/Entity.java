@@ -90,8 +90,8 @@ public abstract class Entity {
 	}
 	
 	public void setPosition(float x, float y) {
-//		body.setTransform(new Vec2(x*INVSCALE, y*INVSCALE), body.getAngle());
-		body.m_xf.p.set(x*INVSCALE, y*INVSCALE);
+		body.setTransform(new Vec2(x*INVSCALE, y*INVSCALE), body.getAngle());
+//		body.m_xf.p.set(x*INVSCALE, y*INVSCALE);
 	}
 	
 	public void setPosition(Vec2 position) {

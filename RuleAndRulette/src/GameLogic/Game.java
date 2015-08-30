@@ -87,10 +87,15 @@ public class Game {
 	}
 	
 	private void gameWon(){
-		Physics.hearts = true;
 		
-		Physics.spawnHeart(this.getRule().getPosition().x, this.getRule().getPosition().y, 25);
-		Physics.spawnHeart(this.getRulette().getPosition().x, this.getRulette().getPosition().y, 25);
+		Score.addScore(999999);
+		
+		if(!Physics.hearts) {
+			Physics.spawnHeart(this.getRule().getPosition().x, this.getRule().getPosition().y, 50);
+			Physics.spawnHeart(this.getRulette().getPosition().x, this.getRulette().getPosition().y, 50);
+		}
+		
+		Physics.hearts = true;
 		
 		// We have met, so stop the game and change level.
 					
@@ -117,8 +122,8 @@ public class Game {
 	private void gameLost(){
 		Physics.hearts = true;
 		
-		Physics.spawnHeart(this.getRule().getPosition().x, this.getRule().getPosition().y, 25);
-		Physics.spawnHeart(this.getRulette().getPosition().x, this.getRulette().getPosition().y, 25);
+//		Physics.spawnHeart(this.getRule().getPosition().x, this.getRule().getPosition().y, 25);
+//		Physics.spawnHeart(this.getRulette().getPosition().x, this.getRulette().getPosition().y, 25);
 		
 		// We have met, so stop the game and change level.
 					

@@ -4,7 +4,9 @@ import java.util.HashSet;
 import java.util.concurrent.locks.LockSupport;
 
 import phys.Physics;
+import phys.Physics.HeartBox;
 import phys.Physics.IDeadable;
+import phys.Physics.PhysBox;
 import GUI.GUIFrame;
 import GUI.GUIGame;
 import GUI.PixelImage;
@@ -162,11 +164,19 @@ public class GameLoop extends Thread {
 			}
 		}
 		
-		Physics.spawned.removeAll(deads);
+//		Physics.spawned.removeAll(deads);
 		
 		for(Entity e : deads) {
-			Physics.world.destroyBody(e.getBody());
+//			Physics.world.destroyBody(e.getBody());
+			if(e.getClass() == PhysBox.class) {
+				Physics.PhysPool.free((PhysBox) e);
+			} else if(e.getClass() == HeartBox.class) {
+				Physics.HeartPool.free((HeartBox) e);
+			} 
 		}
+		
+		System.out.println("PhysPool: " + Physics.PhysPool.size());
+		System.out.println("HeartPool: " + Physics.HeartPool.size());
 	}
 	
 	/**
@@ -177,28 +187,17 @@ public class GameLoop extends Thread {
 		
 		PixelImage.blit(R.environment.level, panel.getCanvas(), 0, 0);
 		
-		for(Entity e : game.getEntities()) {
-			e.render(panel.getCanvas());
+		if(game != null && game.getEntities() != null) {
+			for(Entity e : game.getEntities()) {
+				e.render(panel.getCanvas());
+			}
 		}
 		
 		for(Entity e : Physics.spawned) {
 			e.render(panel.getCanvas());
 		}
 		
-//		boolean first = true;
-//		for(Iterator<Entity> iter = Physics.spawned.iterator(); iter.hasNext();) {
-//			
-//			if(first) {
-//				Entity e = iter.next();
-//				Physics.world.destroyBody(e.getBody());
-//				iter.remove();
-//				first = false;
-//			} else {
-//				Entity entity = iter.next();
-//				entity.getBody().getFixtureList().setSensor(true);
-//				break;
-//			}
-//		}
+		panel.__RENDER();
 
 		frame.repaint();
 	}

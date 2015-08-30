@@ -15,6 +15,8 @@ public class Rulette extends Entity{
 	
 	private AnimatedSprite anim;
 	
+	private float hurt = 0f;
+	
 	public Rulette(float x, float y) {
 		super(x, y, false);
 		anim = R.animations.rulette.idle;
@@ -46,6 +48,15 @@ public class Rulette extends Entity{
 			anim = R.animations.rulette.idle;
 		}
 		
+		if(hurt > 0) {
+			anim = R.animations.rulette.hurt;
+			hurt -= delta;
+		}
+		
 		anim.update(delta);
+	}
+	
+	public void hurt() {
+		this.hurt = 0.2f;
 	}
 }

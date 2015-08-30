@@ -6,6 +6,7 @@ import java.awt.Graphics;
 public abstract class GUIPanel{
 	
 	private PixelImage canvas;
+
 	private Color backgroundColor;
 	
 	public GUIPanel(){
