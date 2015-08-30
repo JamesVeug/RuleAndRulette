@@ -48,7 +48,7 @@ public class Game {
 
 		Sound.playMusic(R.sound.music.getRandom());
 		
-		currentLevel = 0;
+		currentLevel = 4;
 		loadLevel(currentLevel);		
 	}
 	
@@ -89,14 +89,7 @@ public class Game {
 	
 	private void gameWon(){
 		
-		Score.addScore(999999);
 		
-		if(!Physics.hearts) {
-			Physics.spawnHeart(this.getRule().getPosition().x, this.getRule().getPosition().y, 50);
-			Physics.spawnHeart(this.getRulette().getPosition().x, this.getRulette().getPosition().y, 50);
-		}
-		
-		Physics.hearts = true;
 		
 		// We have met, so stop the game and change level.
 					
@@ -104,6 +97,15 @@ public class Game {
 		if( gameStatus == Game.GAMESTATUS_PLAYING ){
 			gameStatus = GAMESTATUS_WON;
 			lasttime = System.currentTimeMillis();
+			
+			Score.addScore(999999);
+			
+			if(!Physics.hearts) {
+				Physics.spawnHeart(this.getRule().getPosition().x, this.getRule().getPosition().y, 50);
+				Physics.spawnHeart(this.getRulette().getPosition().x, this.getRulette().getPosition().y, 50);
+			}
+			
+			Physics.hearts = true;
 		}
 		
 		long timetaken = System.currentTimeMillis() - lasttime;
@@ -121,17 +123,16 @@ public class Game {
 	}
 	
 	private void gameLost(){
-		Physics.hearts = true;
+		Physics.hearts = false;
 		
-//		Physics.spawnHeart(this.getRule().getPosition().x, this.getRule().getPosition().y, 25);
-//		Physics.spawnHeart(this.getRulette().getPosition().x, this.getRulette().getPosition().y, 25);
-		
-		// We have met, so stop the game and change level.
 					
 		// Pause for a second
 		if( gameStatus == Game.GAMESTATUS_PLAYING ){
 			gameStatus = GAMESTATUS_FAILED;
 			lasttime = System.currentTimeMillis();
+			
+			// We have met, so stop the game and change level.
+			Score.addScore(-99999);
 		}
 		
 		long timetaken = System.currentTimeMillis() - lasttime;
@@ -139,8 +140,9 @@ public class Game {
 			return;
 		}
 		
+		
 		// Change level			
-		loadLevel(++currentLevel);
+		loadLevel(currentLevel);
 		
 		// Reset time
 		lasttime = 0l;
@@ -159,9 +161,11 @@ public class Game {
 			gameWon();			
 			return;
 		}
-		else if( rule.isDead() || rulette.isDead() ){
+		else if( rule.isDead() || rulette.isDead() || gameStatus == GAMESTATUS_FAILED ){
+			
 			// If we have died
 			gameLost();
+			return;
 		}
 		
 		Vec2 move = new Vec2();

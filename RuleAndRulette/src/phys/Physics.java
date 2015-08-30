@@ -287,11 +287,11 @@ public class Physics implements ContactListener {
 			}
 			
 			if( b.getClass() == Rulette.class && a != null && a.getClass() == Spike.class ){
-				Rulette r = (Rulette)a;
+				Rulette r = (Rulette)b;
 				r.setDead(true);
 			}
 			else if( b.getClass() == Rule.class && a != null && a.getClass() == Spike.class ){
-				Rule r = (Rule)a;
+				Rule r = (Rule)b;
 				r.setDead(true);
 			}
 			
