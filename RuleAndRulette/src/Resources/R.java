@@ -112,6 +112,8 @@ public class R {
 			public static String land_hard =  loadSoundURL("effects/land_hard.wav");
 			public static String land_soft =  loadSoundURL("effects/land_soft.wav");
 			public static String explosion =  loadSoundURL("effects/explosion.wav");
+			public static String win =  loadSoundURL("effects/win.wav");
+			public static String lose =  loadSoundURL("effects/lose.wav");
 		}
 		
 //		public static String jump =  loadSoundURL("Jump.wav");

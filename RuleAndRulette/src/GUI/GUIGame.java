@@ -73,7 +73,7 @@ public class GUIGame extends GUIPanel implements MouseListener {
 //		
 //		drawStatus(getCanvas());
 		synchronized(CANVAS_LOCK) {
-			g.drawImage(getCanvas().asBufferedImage(), null, (int) (camera.x), (int) (camera.y));
+			g.drawImage(getCanvas().getScaledInstance(2).asBufferedImage(), null, (int) (camera.x), (int) (camera.y));
 		}
 		
 	};

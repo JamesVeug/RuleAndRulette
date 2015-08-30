@@ -105,6 +105,8 @@ public class Game {
 			}
 			
 			Physics.hearts = true;
+			
+			Sound.playSound(R.sound.effects.win);
 		}
 		
 		long timetaken = System.currentTimeMillis() - lasttime;
@@ -132,6 +134,8 @@ public class Game {
 			
 			// We have met, so stop the game and change level.
 			Score.addScore(-50);
+			
+			Sound.playSound(R.sound.effects.lose);
 		}
 		
 		long timetaken = System.currentTimeMillis() - lasttime;

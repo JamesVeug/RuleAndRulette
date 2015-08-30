@@ -188,21 +188,21 @@ public class GameLoop extends Thread {
 		
 		
 		
-		PixelImage.blit(R.environment.level, panel.getCanvas(), 0, 0);
-		
-		if(game != null && game.getEntities() != null) {
-			for(Entity e : game.getEntities()) {
+			PixelImage.blit(R.environment.level, panel.getCanvas(), 0, 0);
+			
+			if(game != null && game.getEntities() != null) {
+				for(Entity e : game.getEntities()) {
+					e.render(panel.getCanvas());
+				}
+			}
+			
+			for(Entity e : Physics.spawned) {
 				e.render(panel.getCanvas());
 			}
-		}
-		
-		for(Entity e : Physics.spawned) {
-			e.render(panel.getCanvas());
-		}
-		
-		panel.__RENDER();
-
-		frame.repaint();
+			
+			panel.__RENDER();
+	
+			frame.repaint();
 		}
 	}
 	
