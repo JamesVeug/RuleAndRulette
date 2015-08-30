@@ -45,8 +45,8 @@ public class R {
 	}
 	
 	public static class characters {
-		public static PixelImage rule = loadPixelImage("assets/characters/rule.jpg");
-		public static PixelImage rulette = loadPixelImage("assets/characters/rulette.jpg");
+		public static PixelImage rule = loadPixelImage("assets/characters/rule.png");
+		public static PixelImage rulette = loadPixelImage("assets/characters/rulette.png");
 	}
 	
 	public static class environment {
@@ -80,6 +80,12 @@ public class R {
 			public static PixelImage unmute = loadPixelImage("assets/gui/volume_unmute.png");
 		}
 		
+	}
+	
+	public static class controls {
+		public static PixelImage wasd = loadPixelImage("assets/controls/wasd.png");
+		public static PixelImage controls = loadPixelImage("assets/controls/controls.png");
+		public static PixelImage controls_2 = loadPixelImage("assets/controls/controls_2.png");
 	}
 	
 	public static class sound{

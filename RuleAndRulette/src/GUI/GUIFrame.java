@@ -94,7 +94,7 @@ public class GUIFrame extends JFrame {
 		game.startGame();
 		
 		//starts the game loop
-		GameLoop gameLoop = new GameLoop(60, 25, game, gamePanel, this);		
+		GameLoop gameLoop = new GameLoop(30, 25, game, gamePanel, this);		
 		gameLoop.start();
 	}
 

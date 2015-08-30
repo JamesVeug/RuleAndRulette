@@ -13,6 +13,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
+import visual.AnimatedSprite;
 import Resources.R;
 
 @SuppressWarnings("serial")
@@ -27,6 +28,28 @@ public class GUIMenu extends GUIPanel implements KeyListener, MouseListener, Mou
 	public static final int BUTTON_STARTGAME = 0;
 	public static final int BUTTON_QUIT = 1;
 	
+	
+	private AnimatedSprite rule = R.animations.rule.idle.clone();
+	private AnimatedSprite rulette = R.animations.rulette.idle.clone();
+	
+	{
+		new Thread(new Runnable() {
+			public void run() {
+				float delta = 1/60f;
+				for(;;) {
+					rule.update(delta);
+					rulette.update(delta);
+
+					try {
+						Thread.sleep(10);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		}).start();
+	}
 	
 	private GUIFrame frame;
 
@@ -47,7 +70,10 @@ public class GUIMenu extends GUIPanel implements KeyListener, MouseListener, Mou
 		
 		drawButtons(g,width,height);
 		
+		g.drawImage(rule.getImage().getScaledInstance(6).asBufferedImage(), null, 30, 30);
+		g.drawImage(rulette.getImage().getScaledInstance(6).asBufferedImage(), null, (int)(g.getClipBounds().getWidth()-R.characters.rulette.getWidth()*6-30), 30);
 		
+		g.drawImage(R.controls.controls.getScaledInstance(2).asBufferedImage(), null, (int)(g.getClipBounds().getWidth()/2-R.controls.controls.getWidth()*2/2), (int)(g.getClipBounds().getHeight()-R.controls.controls.getHeight()*2-10));
 	}
 
 	private void drawTitle(Graphics2D g, int width, int height) {
