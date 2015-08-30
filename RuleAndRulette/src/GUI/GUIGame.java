@@ -138,7 +138,7 @@ public class GUIGame extends GUIPanel implements MouseListener {
 		g2d.drawString("Level: " + level, 36, 56);
 		
 		// Score
-		g2d.setColor(Color.black);
+		g2d.setColor(Score.isDecreasing() ? Color.red : Color.black);
 		int scoreX = 300;
 		int scoreY = 56;
 		String string = String.valueOf(Score.getScore());
@@ -160,6 +160,8 @@ public class GUIGame extends GUIPanel implements MouseListener {
 			g2d.drawImage(R.gui.volume.unmute.getScaledInstance(2).asBufferedImage(), clipSpeakerX, clipSpeakerY, null);
 		}
 		int clipVolume = Math.round(Sound.Sound.getClipVolume()*100);
+
+		g2d.setColor(Color.black);
 		g2d.drawString(clipVolume + "%", clipSpeakerX+32, clipSpeakerY+26);
 		
 		// Music Sound
@@ -172,6 +174,8 @@ public class GUIGame extends GUIPanel implements MouseListener {
 			g2d.drawImage(R.gui.volume.unmute.getScaledInstance(2).asBufferedImage(), musicSpeakerX, musicSpeakerY, null);
 		}
 		int musicVolume = Math.round(Sound.Sound.getMusicVolume()*100);
+
+		g2d.setColor(Color.black);
 		g2d.drawString(musicVolume + "%", musicSpeakerX+32, musicSpeakerY+26);
 		
 		

@@ -28,7 +28,7 @@ public class Game {
 	private List<Entity> gameObjects;
 	
 	private long lasttime = 0l;
-	private long levelTransitionTime = 2000;
+	private long levelTransitionTime = 3000;
 	
 	private int gameStatus = GAMESTATUS_PLAYING;
 	private int currentLevel;
@@ -48,7 +48,7 @@ public class Game {
 
 		Sound.playMusic(R.sound.music.getRandom());
 		
-		currentLevel = 4;
+		currentLevel = 0;
 		loadLevel(currentLevel);		
 	}
 	
@@ -104,6 +104,12 @@ public class Game {
 				Physics.spawnHeart(this.getRulette().getPosition().x, this.getRulette().getPosition().y, 50);
 			}
 			
+			rule.setDead(true);
+			Physics.world.destroyBody(rule.getBody());
+			
+			rulette.setDead(true);
+			Physics.world.destroyBody(rulette.getBody());
+			
 			Physics.hearts = true;
 			
 			Sound.playSound(R.sound.effects.win);
@@ -133,9 +139,15 @@ public class Game {
 			lasttime = System.currentTimeMillis();
 			
 			// We have met, so stop the game and change level.
-			Score.addScore(-50);
-			
 			Sound.playSound(R.sound.effects.lose);
+			
+			Score.subtractScore(Score.getScore()/2);
+			
+			if( rule.isDead() ){
+				Physics.world.destroyBody(rule.getBody());
+			}else if( rulette.isDead() ){
+				Physics.world.destroyBody(rulette.getBody());				
+			}
 		}
 		
 		long timetaken = System.currentTimeMillis() - lasttime;

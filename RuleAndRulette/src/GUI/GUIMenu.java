@@ -111,18 +111,25 @@ public class GUIMenu extends GUIPanel implements KeyListener, MouseListener, Mou
 		Rectangle2D bounds2 = g.getFontMetrics().getStringBounds(subTile2,g);
 		int subTextX2 = (int) (subTextX+bounds.getWidth()/2-bounds2.getWidth()/2);
 		int subTextY2 = (int) (subTextY+bounds.getHeight());
+		
+		
+		String subTile3 = "Pixel Jam 2015";
+		Rectangle2D bounds3 = g.getFontMetrics().getStringBounds(subTile3,g);
+		int subTextX3 = (int) (width/2-bounds3.getWidth()/2);
+		int subTextY3 = (int) (subTextY2+bounds.getHeight()*2);
 
 		if( frame.getGame() != null ){
 			g.setColor(Color.white);
-			g.fillRect(subTextX2-10, (int)(subTextY-bounds.getHeight()/2-10), (int)bounds2.getWidth()+20, 60);
+			g.fillRect(subTextX2-10, (int)(subTextY-bounds.getHeight()/2-10), (int)bounds2.getWidth()+20, 80);
 		
 			g.setColor(Color.black);
-			g.drawRect(subTextX2-10, (int)(subTextY-bounds.getHeight()/2-10), (int)bounds2.getWidth()+20, 60);
+			g.drawRect(subTextX2-10, (int)(subTextY-bounds.getHeight()/2-10), (int)bounds2.getWidth()+20, 80);
 		}
 		
 		g.setColor(Color.black);
 		g.drawString(subTile, subTextX, subTextY);		
 		g.drawString(subTile2, subTextX2, subTextY2);
+		g.drawString(subTile3, subTextX3, subTextY3);
 	}
 
 	private void drawButtons(Graphics2D g, int width, int height) {

@@ -29,15 +29,20 @@ public class Score {
 		currentScore += amount;
 	}
 	
-	public static void subtractScore(int amount){
-		currentScore -= amount;
+	public static void subtractScore(long l){
+		currentScore -= l;
 	}
 	
 	public static void resetScore(){
 		currentScore = 0;
+		laggedScore = 0;
 	}
 	
 	public static long getScore(){
 		return laggedScore;
+	}
+	
+	public static boolean isDecreasing(){
+		return currentScore < laggedScore;
 	}
 }
