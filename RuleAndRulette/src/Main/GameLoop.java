@@ -207,6 +207,7 @@ public class GameLoop extends Thread {
 							continue;
 						}
 					}
+					e.render(panel.getCanvas());
 				}
 			}
 			

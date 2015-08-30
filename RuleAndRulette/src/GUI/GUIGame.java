@@ -73,7 +73,7 @@ public class GUIGame extends GUIPanel implements MouseListener {
 //		
 //		drawStatus(getCanvas());
 		synchronized(CANVAS_LOCK) {
-			g.drawImage(getCanvas().getScaledInstance(2).asBufferedImage(), null, (int) (camera.x), (int) (camera.y));
+			g.drawImage(getCanvas().asBufferedImage(), null, (int) (camera.x), (int) (camera.y));
 		}
 		
 	};
@@ -143,7 +143,11 @@ public class GUIGame extends GUIPanel implements MouseListener {
 		int scoreY = 56;
 		String string = String.valueOf(Score.getScore());
 		while( string.length() < 13){ string = "0"+string; }
-		g2d.drawString("Score: " + string, scoreX, scoreY);
+		
+		string = "Score: " + string;
+		Rectangle2D bounds = g2d.getFontMetrics().getStringBounds(string, g2d);
+		scoreX = (int) (getCanvas().getWidth()/2 - bounds.getWidth()/2);
+		g2d.drawString(string, scoreX, scoreY);
 		
 		
 		//
