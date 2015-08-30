@@ -101,7 +101,7 @@ public class GUIMenu extends GUIPanel implements KeyListener, MouseListener, Mou
 		
 		
 		
-		String subTile = "By Hamish Rae";
+		String subTile = "By Hamish Rae-Hodgson";
 		bounds = g.getFontMetrics().getStringBounds(subTile,g);
 		int subTextX = ((int)(width/2-bounds.getWidth()/2));
 		int subTextY = ((int)(textY+bounds.getHeight()*2));
