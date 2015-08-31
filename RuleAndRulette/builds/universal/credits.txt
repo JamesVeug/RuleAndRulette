@@ -1,0 +1,19 @@
+A game made by two guys over 48 hours for the 2015
+Pixel Jam held at Victoria University of Wellington.
+
+Programmers:
+ - Hamish Rae-Hodgson
+ - James Veugelaers
+
+ Character design:
+ - James Veugelaers
+
+ Art & Animations:
+ - Hamish Rae-Hodgson
+
+ Music (Generators)
+  - autotracker.py (wibblymat)
+  - www.bfxr.net (increpare)
+
+ Font
+  - Kenney.nl
