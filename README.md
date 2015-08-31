@@ -5,22 +5,22 @@ Programmers:
  - Hamish Rae-Hodgson
  - James Veugelaers
 
- Character design:
+Character design:
  - James Veugelaers
 
- Art & Animations:
+Art & Animations:
  - Hamish Rae-Hodgson
 
- Music (Generators)
-  - autotracker.py (wibblymat)
-  - www.bfxr.net (increpare)
+Music (Generators)
+ - autotracker.py (wibblymat)
+ - www.bfxr.net (increpare)
 
- Font
-  - Kenney.nl
+Font
+ - Kenney.nl
 
 ----------------------------------------------------
 
-WASD to move.
+WASD to move
 SPACE to jump
 ESC for pause menu
 R to reset the level
