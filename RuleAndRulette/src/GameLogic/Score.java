@@ -8,7 +8,7 @@ public class Score {
 	
 	static {
 		new Thread(new Runnable() {
-			float delta = 1/60f;
+			float delta = 0.09f;
 			public void run() {
 				for(;;) {
 //					laggedScore = (long) (delta*laggedScore + (1-delta)*currentScore);
