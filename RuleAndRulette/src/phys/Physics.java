@@ -55,6 +55,7 @@ public class Physics implements ContactListener {
 	public static Entity a = null;
 	public static Entity b = null;
 	
+	public static boolean isRunningSlow = false;
 	
 	private Physics() { 
 		world.setContactListener(this);
@@ -224,6 +225,10 @@ public class Physics implements ContactListener {
 	
 	public static void spawn(final float x, final float y, int numBoxes) {
 		
+		if(Physics.isRunningSlow) {
+			numBoxes *= 0.1f;
+		}
+		
 		Sound.playSound(R.sound.effects.explosion);
 		
 		for(int i = 0; i < numBoxes; i++) {
@@ -237,6 +242,10 @@ public class Physics implements ContactListener {
 	
 	public static void spawnHeart(final float x, final float y, int numBoxes) {
 		
+		if(Physics.isRunningSlow) {
+			numBoxes *= 0.1f;
+		}
+		
 		Sound.playSound(R.sound.effects.explosion);
 		
 		for(int i = 0; i < numBoxes; i++) {
@@ -249,6 +258,10 @@ public class Physics implements ContactListener {
 	}
 
 	public static void spawnBrokenHeart(final float x, final float y, int numBoxes) {
+		
+		if(Physics.isRunningSlow) {
+			numBoxes *= 0.1f;
+		}
 		
 		Sound.playSound(R.sound.effects.explosion);
 		

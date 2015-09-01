@@ -228,9 +228,11 @@ public class GameLoop extends Thread {
 	private void sleepforabit(long nanos) {
 		if(nanos > 0)  {
 			runningSlow = false;
+			Physics.isRunningSlow = runningSlow;
 			LockSupport.parkNanos(nanos);
 		} else {
 			runningSlow = true;
+			Physics.isRunningSlow = runningSlow;
 		}
 	}
 	
